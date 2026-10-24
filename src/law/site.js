@@ -83,6 +83,12 @@ function describe(document) {
   };
 }
 
+// Bulk collections (the eCFR) start after everything else, so they cannot use
+// up the HTML budget before the smaller laws are published.
+const LATE_PRIORITY = 6;
+
+const sourceOf = (job) => job.target?.source ?? job.collection.source;
+
 class SiteBuilder {
   constructor(options) {
     this.options = options;
@@ -161,6 +167,7 @@ class SiteBuilder {
 
   async collection(job) {
     const { id } = job.collection;
+    const entries = [];
     let count = 0;
     try {
       for await (const target of collectionTargets(
@@ -175,11 +182,11 @@ class SiteBuilder {
           break;
         }
         count += 1;
-        this.entries.push(await this.target({ ...target, title: null }));
+        entries.push(await this.target({ ...target, title: null }));
       }
     } catch (error) {
       this.log(`✗ ${id}: ${error.message}`);
-      this.entries.push({
+      entries.push({
         key: id,
         id,
         collection: id,
@@ -190,16 +197,39 @@ class SiteBuilder {
         priority: job.priority,
       });
     }
+    return entries;
+  }
+
+  async job(job) {
+    return job.target ? [await this.target(job.target)] : this.collection(job);
+  }
+
+  /**
+   * Each source is one lane: its jobs run in plan order while the lanes of
+   * other sources run at the same time (the fetcher still spaces requests
+   * per host). Entries come back in plan order.
+   */
+  async lanes(jobs) {
+    const bySource = new Map();
+    for (const job of jobs) {
+      const source = sourceOf(job);
+      bySource.set(source, [...(bySource.get(source) ?? []), job]);
+    }
+    const done = new Map();
+    await Promise.all(
+      [...bySource.values()].map(async (lane) => {
+        for (const job of lane) {
+          done.set(job, await this.job(job));
+        }
+      })
+    );
+    return jobs.flatMap((job) => done.get(job));
   }
 
   async run(jobs) {
-    for (const job of jobs) {
-      if (job.target) {
-        this.entries.push(await this.target(job.target));
-      } else {
-        await this.collection(job);
-      }
-    }
+    const early = jobs.filter((job) => job.priority < LATE_PRIORITY);
+    const late = jobs.filter((job) => job.priority >= LATE_PRIORITY);
+    this.entries = [...(await this.lanes(early)), ...(await this.lanes(late))];
     return this.entries;
   }
 }

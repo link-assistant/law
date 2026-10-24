@@ -290,6 +290,55 @@ describe('static site build', () => {
   });
 });
 
+describe('concurrent site build', () => {
+  it('builds different sources at the same time, entries in plan order', async () => {
+    const outDir = await mkdtemp(join(tmpdir(), 'law-site-'));
+    const events = [];
+    let otherStarted;
+    const started = new Promise((resolve) => {
+      otherStarted = resolve;
+    });
+    // A sequential build would only reach r2.test after this times out.
+    const slow = async () => {
+      await Promise.race([started, new Promise((r) => setTimeout(r, 1000))]);
+      events.push('a done');
+      return new Response(page('Первая'));
+    };
+    const twoSources = registryText
+      .replace(
+        '  closed:',
+        "  other:\n    name 'Other'\n    homepage 'https://r2.test'\n    jurisdiction RU\n    legal:\n      status not-copyrightable\n      mirror allowed\n      basis 'Official'\n      basisUrl 'https://example.org/basis'\n  closed:"
+      )
+      .replace('  ru/b:\n    source open', '  ru/b:\n    source other')
+      .replace("url 'https://r.test/b'", "url 'https://r2.test/b'");
+    try {
+      const fetcher = fastFetcher({
+        'https://r.test/robots.txt': '',
+        'https://r2.test/robots.txt': '',
+        'https://r.test/a': slow,
+        'https://r2.test/b': () => {
+          events.push('b started');
+          otherStarted();
+          return new Response(page('Вторая'));
+        },
+      });
+      const result = await buildSite({
+        registryText: twoSources,
+        outDir,
+        fetcher,
+      });
+      expect(events).toEqual(['b started', 'a done']);
+      expect(result.entries.map((entry) => entry.key)).toEqual([
+        'cn/c/zh',
+        'ru/a/ru',
+        'ru/b/ru',
+      ]);
+    } finally {
+      await rm(outDir, { recursive: true, force: true });
+    }
+  });
+});
+
 describe('source probe', () => {
   it('reports status, CORS and robots.txt verdicts as Markdown', async () => {
     const registry = parseRegistry(registryText);
