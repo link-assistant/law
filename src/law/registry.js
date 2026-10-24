@@ -165,6 +165,9 @@ function sourceProblems(id, source) {
       problems.push(`source ${id}: missing ${key}`);
     }
   }
+  if (source.crawlDelay !== undefined && !(Number(source.crawlDelay) > 0)) {
+    problems.push(`source ${id}: crawlDelay must be a positive number`);
+  }
   if (!source.legal?.status || !source.legal?.basis || !source.legal?.mirror) {
     problems.push(`source ${id}: legal status, basis and mirror are required`);
   }
@@ -186,6 +189,21 @@ function targetProblems(target) {
     problems.push(`${target.key}: html documents need a profile`);
   }
   return problems;
+}
+
+/**
+ * Per-host request intervals in ms, from the `crawlDelay` (seconds) a source
+ * declares for its homepage origin.
+ */
+export function hostIntervals(registry) {
+  return Object.fromEntries(
+    Object.values(registry.sources)
+      .filter((source) => Number(source.crawlDelay) > 0 && source.homepage)
+      .map((source) => [
+        new URL(source.homepage).origin,
+        Number(source.crawlDelay) * 1000,
+      ])
+  );
 }
 
 /** Validate a parsed registry; returns a list of problems. */

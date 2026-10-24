@@ -1,7 +1,7 @@
 import { describe, it, expect } from 'test-anywhere';
 import { zipSync, strToU8 } from 'fflate';
 
-import { USER_AGENT, applyProxy } from '../src/law/fetcher.js';
+import { PoliteFetcher, USER_AGENT, applyProxy } from '../src/law/fetcher.js';
 import { parseRobots } from '../src/law/robots.js';
 import {
   buildTarget,
@@ -12,7 +12,7 @@ import {
 } from '../src/law/pipeline.js';
 import { parseRegistry } from '../src/law/registry.js';
 import { zipEntry, zipEntryNames } from '../src/law/zip.js';
-import { fastFetcher as fast } from './helpers/mock-fetch.js';
+import { fastFetcher as fast, mockFetch } from './helpers/mock-fetch.js';
 
 describe('robots.txt', () => {
   it('prefers the own group, longest match and allow on ties', () => {
@@ -109,6 +109,42 @@ describe('PoliteFetcher', () => {
       error = caught;
     }
     expect(error.message).toBe('reset');
+  });
+
+  it('leaves a host alone after it refuses a request', async () => {
+    const calls = [];
+    const fetcher = fast(
+      {
+        'https://r.test/robots.txt': '',
+        'https://r.test/a': new Response('no', { status: 403 }),
+        'https://r.test/b': 'ok',
+        'https://s.test/robots.txt': '',
+        'https://s.test/c': 'ok',
+      },
+      calls
+    );
+    const failure = async (url) => {
+      try {
+        await fetcher.text(url);
+      } catch (caught) {
+        return caught;
+      }
+      return null;
+    };
+    expect((await failure('https://r.test/a')).status).toBe(403);
+    const skipped = await failure('https://r.test/b');
+    expect(skipped.code).toBe('HOST_REFUSED');
+    expect(calls.some((call) => call.url === 'https://r.test/b')).toBe(false);
+    expect(await fetcher.text('https://s.test/c')).toBe('ok');
+  });
+
+  it('applies registry host intervals', () => {
+    const fetcher = new PoliteFetcher({
+      fetch: mockFetch({}),
+      hostIntervals: { 'https://k.test': 6000 },
+    });
+    expect(fetcher.host('https://k.test').intervalMs).toBe(6000);
+    expect(fetcher.host('https://o.test').intervalMs).toBe(1500);
   });
 
   it('throws on HTTP errors with the status', async () => {
@@ -288,6 +324,7 @@ describe('target builds and collection adapters', () => {
       'https://g.test/json/ECFR': JSON.stringify({
         files: [
           { folder: true, cfrTitle: 2, link: 'https://g.test/json/ECFR/2' },
+          { folder: true, cfrTitle: 0, link: 'https://g.test/json/resources' },
           { folder: false, name: 'readme' },
         ],
       }),

@@ -77,6 +77,7 @@ sources:
     homepage 'http://www.kremlin.ru/acts/bank'
     terms 'http://www.kremlin.ru/about/copyrights'
     cors false
+    crawlDelay 6
     legal:
       status not-copyrightable
       mirror allowed

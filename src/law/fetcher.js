@@ -5,8 +5,11 @@
  *   the robots.txt Crawl-delay when it is larger).
  * - robots.txt is honoured for automated runs (Node.js / CI). In the browser
  *   the user is the agent, so `robots: false` is the default there.
+ * - Per-host intervals from the registry (`crawlDelay` on a source).
  * - Retries on 429 / 5xx / network errors with exponential back-off and
- *   `Retry-After` support.
+ *   `Retry-After` support. A host that still answers 403 or 429 is left
+ *   alone for the rest of the run: later requests fail without a network
+ *   call, so a refusal is never answered with more traffic.
  * - An optional proxy template (`https://proxy.example/?url={url}`) lets the
  *   browser reach publishers that do not send CORS headers.
  */
@@ -41,12 +44,14 @@ function retryDelay(response, attempt, baseMs) {
 }
 
 const retryable = (status) => status === 429 || status >= 500;
+const REFUSALS = new Set([403, 429]);
 
 export class PoliteFetcher {
   /**
    * @param {object} [options]
    * @param {typeof fetch} [options.fetch]
    * @param {number} [options.intervalMs]
+   * @param {Record<string, number>} [options.hostIntervals] origin → ms
    * @param {boolean} [options.robots]
    * @param {string} [options.proxy]
    * @param {number} [options.retries]
@@ -57,6 +62,7 @@ export class PoliteFetcher {
   constructor(options = {}) {
     this.fetchImpl = options.fetch ?? globalThis.fetch.bind(globalThis);
     this.intervalMs = options.intervalMs ?? 1500;
+    this.hostIntervals = options.hostIntervals ?? {};
     this.robots = options.robots ?? !isBrowser();
     this.proxy = options.proxy ?? '';
     this.retries = options.retries ?? 3;
@@ -71,8 +77,9 @@ export class PoliteFetcher {
       this.hosts.set(origin, {
         tail: Promise.resolve(),
         last: 0,
-        intervalMs: this.intervalMs,
+        intervalMs: Math.max(this.intervalMs, this.hostIntervals[origin] ?? 0),
         rules: null,
+        refused: 0,
       });
     }
     return this.hosts.get(origin);
@@ -159,6 +166,15 @@ export class PoliteFetcher {
         });
       }
     }
+    const state = this.host(parsed.origin);
+    if (state.refused) {
+      throw Object.assign(
+        new Error(
+          `${parsed.origin} refused an earlier request (HTTP ${state.refused}); skipped ${url}`
+        ),
+        { code: 'HOST_REFUSED', status: state.refused }
+      );
+    }
     for (let attempt = 0; ; attempt += 1) {
       let response;
       try {
@@ -174,6 +190,9 @@ export class PoliteFetcher {
         continue;
       }
       if (!retryable(response.status) || attempt >= this.retries) {
+        if (REFUSALS.has(response.status)) {
+          state.refused = response.status;
+        }
         return response;
       }
       this.log(`retry ${attempt + 1} for ${url}: HTTP ${response.status}`);

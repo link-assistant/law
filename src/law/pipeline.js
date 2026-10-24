@@ -151,7 +151,8 @@ const listing = { headers: { accept: 'application/json' }, timeoutMs: 30000 };
 async function* govinfoEcfr(collection, { fetcher }) {
   const index = await fetcher.json(collection.index, listing);
   const titles = index.files
-    .filter((item) => item.folder && Number.isFinite(item.cfrTitle))
+    // Title folders carry cfrTitle 1..50; the `resources` folder uses 0.
+    .filter((item) => item.folder && item.cfrTitle >= 1)
     .sort((a, b) => a.cfrTitle - b.cfrTitle);
   for (const folder of titles) {
     const title = String(folder.cfrTitle);

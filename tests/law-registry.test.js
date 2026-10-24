@@ -6,6 +6,7 @@ import {
   JURISDICTIONS,
   expandRegistry,
   fillTemplate,
+  hostIntervals,
   parseRegistry,
   validateRegistry,
 } from '../src/law/registry.js';
@@ -121,5 +122,17 @@ documents:
     const problems = validateRegistry(broken).join('\n');
     expect(problems).toMatch(/XX/u);
     expect(problems).toMatch(/missing/u);
+  });
+
+  it('slows down sources that declare a crawl delay', () => {
+    expect(hostIntervals(registry)).toEqual({ 'http://www.kremlin.ru': 6000 });
+    const broken = parseRegistry(`sources:
+  s:
+    jurisdiction RU
+    name S
+    homepage 'https://s.test/'
+    crawlDelay fast
+`);
+    expect(validateRegistry(broken).join('\n')).toMatch(/crawlDelay/u);
   });
 });
