@@ -17,6 +17,24 @@ import { promisify } from 'node:util';
 import { describe, it, expect } from 'test-anywhere';
 import { itUnless, sandboxed } from './helpers/skip.js';
 
+function removeTempDir(path) {
+  try {
+    rmSync(path, {
+      recursive: true,
+      force: true,
+      maxRetries: 10,
+      retryDelay: 200,
+    });
+  } catch (error) {
+    // Windows may hold a handle on the temporary directory for a moment
+    // after the spawned CLI exits; the OS temp cleanup removes it later.
+    const locked = ['EBUSY', 'EPERM'].includes(error.code);
+    if (process.platform !== 'win32' || !locked) {
+      throw error;
+    }
+  }
+}
+
 const config = JSON.parse(readFileSync('.changeset/config.json', 'utf8'));
 const execFileAsync = promisify(execFile);
 
@@ -177,12 +195,7 @@ describe('Changesets release formatter', () => {
             unlinkSync(link);
           }
         }
-        rmSync(cwd, {
-          recursive: true,
-          force: true,
-          maxRetries: 3,
-          retryDelay: 100,
-        });
+        removeTempDir(cwd);
       }
     }
   );
