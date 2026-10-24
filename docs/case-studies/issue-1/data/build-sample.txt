@@ -1,0 +1,44 @@
+✓ cn/constitution/zh: 157 units
+✓ ge/constitution/en: 90 units
+✓ ge/constitution/ka: 90 units
+✓ ge/constitution/ru: 91 units
+✓ ru/constitution/ru: 156 units
+✓ us/constitution/en: 89 units
+✓ eu/treaties/de: 943 units
+✓ eu/treaties/en: 943 units
+✓ eu/treaties/fr: 909 units
+✓ ge/civil-code/en: 1671 units
+✓ ge/civil-code/ka: 1703 units
+✓ ge/civil-code/ru: 1608 units
+✓ ge/criminal-code/en: 447 units
+✓ ge/criminal-code/ka: 621 units
+✓ ge/criminal-code/ru: 632 units
+✗ ru/civil-code-1/ru: HTTP 403 for http://www.kremlin.ru/acts/bank/7279/page/40
+✓ us/usc/t1/en: 43 units
+✓ us/usc/t2/en: 1790 units
+✓ eu/ai-act/de: 156 units
+✓ eu/ai-act/en: 156 units
+✓ eu/ai-act/fr: 155 units
+✓ eu/dma/de: 62 units
+✓ eu/dma/en: 62 units
+✓ eu/dma/fr: 61 units
+✓ eu/dsa/de: 111 units
+✓ eu/dsa/en: 111 units
+✓ eu/dsa/fr: 110 units
+✓ eu/gdpr/de: 126 units
+✓ eu/gdpr/en: 126 units
+✓ eu/gdpr/fr: 125 units
+✗ ru/administrative-offences-code/ru: HTTP 403 for http://www.kremlin.ru/acts/bank/17704
+✗ ru/criminal-procedure-code/ru: HTTP 403 for http://www.kremlin.ru/acts/bank/17643
+✗ ru/tax-code-1/ru: HTTP 403 for http://www.kremlin.ru/acts/bank/12755
+✗ ru/budget-code/ru: HTTP 403 for http://www.kremlin.ru/acts/bank/12754
+✗ ru/tax-code-2/ru: HTTP 403 for http://www.kremlin.ru/acts/bank/15925
+✗ us/cfr/t0/en: No XML file in https://www.govinfo.gov/bulkdata/json/ECFR/resources
+retry 1 for https://www.govinfo.gov/bulkdata/json/ECFR/title-1: The operation was aborted due to timeout
+retry 2 for https://www.govinfo.gov/bulkdata/json/ECFR/title-1: The operation was aborted due to timeout
+✓ us/cfr/t1/en: 367 units
+{"summary":{"ok":30,"blocked":2,"error":7},"htmlBytes":20812021}
+
+real	5m43.798s
+user	0m13.544s
+sys	0m3.231s

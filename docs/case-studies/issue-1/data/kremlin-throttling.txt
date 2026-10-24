@@ -1,0 +1,11 @@
+2026-10-24T12:34:09.687Z 1 50232 6485
+2026-10-24T12:34:15.861Z 2 49931 6174
+2026-10-24T12:34:22.025Z 3 49945 6164
+2026-10-24T12:34:28.175Z 4 49945 6150
+2026-10-24T12:34:34.345Z 5 49945 6170
+2026-10-24T12:34:40.506Z 6 49945 6161
+2026-10-24T12:34:50.468Z retry 1 for http://www.kremlin.ru/acts/bank/7279/page/7: fetch failed: UND_ERR_SOCKET: other side closed
+2026-10-24T12:35:07.195Z retry 2 for http://www.kremlin.ru/acts/bank/7279/page/7: fetch failed: UND_ERR_CONNECT_TIMEOUT: Connect Timeout Error (attempted addresses: 95.173.136.72:80, 95.173.136.70:80, 95.173.136.71:80, timeout: 10000ms)
+2026-10-24T12:35:23.694Z retry 3 for http://www.kremlin.ru/acts/bank/7279/page/7: fetch failed: UND_ERR_CONNECT_TIMEOUT: Connect Timeout Error (attempted addresses: 95.173.136.72:80, 95.173.136.70:80, 95.173.136.71:80, timeout: 10000ms)
+2026-10-24T12:35:42.195Z 7 ERR fetch failed UND_ERR_CONNECT_TIMEOUT
+2026-10-24T12:35:48.446Z 8 49945 6251
