@@ -50,9 +50,13 @@ describe('pull-request Docker build check', () => {
     // layer exports crowd the repository-wide 10 GB LRU pool.
     const sources = [
       releaseWorkflow,
-      ...['links.yml', 'security.yml', 'workflows.yml', 'example-app.yml'].map(
-        (name) => readFileSync(`.github/workflows/${name}`, 'utf8')
-      ),
+      ...[
+        'links.yml',
+        'security.yml',
+        'workflows.yml',
+        'example-app.yml',
+        'laws.yml',
+      ].map((name) => readFileSync(`.github/workflows/${name}`, 'utf8')),
       readFileSync('.github/actions/publish-dockerhub/action.yml', 'utf8'),
     ];
     const unscoped = [];

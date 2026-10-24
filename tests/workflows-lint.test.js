@@ -7,6 +7,7 @@ function readWorkflow(filePath) {
 
 const activeWorkflows = [
   '.github/workflows/example-app.yml',
+  '.github/workflows/laws.yml',
   '.github/workflows/links.yml',
   '.github/workflows/release.yml',
   '.github/workflows/security.yml',
@@ -134,6 +135,7 @@ describe('third-party actions', () => {
       '.github/workflows/security.yml': readWorkflow(
         '.github/workflows/security.yml'
       ),
+      '.github/workflows/laws.yml': readWorkflow('.github/workflows/laws.yml'),
     })) {
       for (const match of workflow.matchAll(/^\s*(?:- )?uses: (\S+)$/gm)) {
         const [, reference] = match;
@@ -173,6 +175,7 @@ describe('third-party actions', () => {
       '.github/workflows/security.yml': readWorkflow(
         '.github/workflows/security.yml'
       ),
+      '.github/workflows/laws.yml': readWorkflow('.github/workflows/laws.yml'),
     })) {
       for (const match of workflow.matchAll(/^\s*(?:- uses|image): (\S+)$/gm)) {
         const [, reference] = match;

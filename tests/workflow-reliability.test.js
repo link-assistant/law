@@ -213,6 +213,7 @@ describe('workflow concurrency policy', () => {
       '.github/workflows/example-app.yml',
       '.github/workflows/release.yml',
       '.github/workflows/links.yml',
+      '.github/workflows/laws.yml',
     ];
 
     for (const workflowPath of workflowPaths) {
@@ -275,6 +276,7 @@ describe('workflow reliability policy', () => {
       '.github/workflows/example-app.yml',
       '.github/workflows/release.yml',
       '.github/workflows/links.yml',
+      '.github/workflows/laws.yml',
     ];
     const gitDefaultBranchEnv = [
       'env:',
@@ -366,10 +368,13 @@ describe('workflow artifact and writer reliability', () => {
     const instantReleaseJob = getJobBlock(releaseWorkflow, 'instant-release');
     const dockerPublishJob = getJobBlock(releaseWorkflow, 'docker-publish');
     const changesetPrJob = getJobBlock(releaseWorkflow, 'changeset-pr');
-    const pagesDeployJob = getJobBlock(exampleAppWorkflow, 'pages-deploy');
+    const lawsWorkflow = readWorkflow('.github/workflows/laws.yml');
+    const pagesDeployJob = getJobBlock(lawsWorkflow, 'pages-deploy');
+    const catalogCommitJob = getJobBlock(lawsWorkflow, 'catalog-commit');
 
     expectMainWriterConcurrency(previewRegenJob);
     expectMainWriterConcurrency(pagesDeployJob);
+    expectMainWriterConcurrency(catalogCommitJob);
     expectMainWriterConcurrency(releaseJob);
     expectMainWriterConcurrency(instantReleaseJob);
     expectMainWriterConcurrency(dockerPublishJob);
@@ -378,6 +383,9 @@ describe('workflow artifact and writer reliability', () => {
       'node scripts/push-main-with-rebase-retry.mjs'
     );
     expect(previewRegenJob).not.toContain('git push origin HEAD:main');
+    expect(catalogCommitJob).toContain(
+      'node scripts/push-main-with-rebase-retry.mjs'
+    );
     expect(versionAndCommit).toContain(
       'node scripts/push-main-with-rebase-retry.mjs'
     );

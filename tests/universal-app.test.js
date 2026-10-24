@@ -85,9 +85,9 @@ describe('universal React example app', () => {
     );
     expect(workflow).toContain('npm run example:web:build');
     expect(workflow).toContain('npm run example:desktop:package');
-    expect(workflow).toContain('actions/configure-pages@v6');
-    expect(workflow).toContain('actions/upload-pages-artifact');
-    expect(workflow).toContain('actions/deploy-pages');
+    // GitHub Pages hosts the laws browser (laws.yml); the app is an artifact.
+    expect(workflow).toContain('name: universal-example-web');
+    expect(workflow).not.toContain('actions/deploy-pages');
     expect(workflow).toContain('EXAMPLE_APP_ENABLE_ANDROID_BUILD');
     expect(workflow).toContain('EXAMPLE_APP_ENABLE_IOS_BUILD');
   });

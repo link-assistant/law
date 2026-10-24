@@ -52,17 +52,12 @@ jobs:
           cache: npm
           cache-dependency-path: examples/universal-app/package-lock.json
 
-      - name: Configure GitHub Pages
-        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
-        uses: actions/configure-pages@v6
-
       - name: Install app dependencies
         run: npm ci --prefix examples/universal-app --no-audit --no-fund
 
       - name: Build app
         run: npm run example:web:build
         env:
-          GITHUB_PAGES: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
           VITE_REPOSITORY_URL: https://github.com/${{ github.repository }}
 
       - name: Upload web build artifact
@@ -71,35 +66,6 @@ jobs:
           name: universal-example-web
           path: examples/universal-app/dist
           if-no-files-found: error
-
-      - name: Upload GitHub Pages artifact
-        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
-        uses: actions/upload-pages-artifact@v5
-        with:
-          path: examples/universal-app/dist
-
-  # Requires Settings → Pages → Source = GitHub Actions to be set once
-  # in the repository before this job can succeed. See README → "Deploying
-  # the example app". The Pages source cannot be configured from a workflow.
-  pages-deploy:
-    name: Deploy GitHub Pages
-    needs: [web-build]
-    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
-    runs-on: ubuntu-24.04
-    timeout-minutes: 10
-    concurrency:
-      group: main-writer-${{ github.repository }}-main
-      cancel-in-progress: false
-    permissions:
-      pages: write
-      id-token: write
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    steps:
-      - name: Deploy Pages artifact
-        id: deployment
-        uses: actions/deploy-pages@v5
 
   desktop-package:
     name: Package desktop app (${{ matrix.os }})
@@ -356,7 +322,6 @@ jobs:
       !cancelled()
     needs:
       - web-build
-      - pages-deploy
       - desktop-package
       - android-build
       - ios-build

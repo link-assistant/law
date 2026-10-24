@@ -1,0 +1,296 @@
+name: Laws
+
+# Download every law listed in data/registry.lino, convert it to the unified
+# model and publish the static laws browser on GitHub Pages. Pull requests
+# validate the registry and build a small subset; main, the schedule and
+# manual runs build the full site, deploy it and commit data/catalog.lino.
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+    paths:
+      - 'data/registry.lino'
+      - 'src/law/**'
+      - 'src/web/**'
+      - 'bin/law.js'
+      - 'package.json'
+      - 'package-lock.json'
+      - '.github/workflows/laws.yml'
+  push:
+    branches:
+      - main
+    # data/catalog.lino is written by this workflow and is left out on purpose.
+    paths:
+      - 'data/registry.lino'
+      - 'src/law/**'
+      - 'src/web/**'
+      - 'bin/law.js'
+      - 'package.json'
+      - 'package-lock.json'
+      - '.github/workflows/laws.yml'
+  schedule:
+    # Daily refresh; unchanged sources keep their catalog entry untouched.
+    - cron: '23 4 * * *'
+  workflow_dispatch:
+    inputs:
+      only:
+        description: 'Comma-separated key prefixes to build (empty = all)'
+        required: false
+        default: ''
+      limit:
+        description: 'Max documents per collection (0 = all)'
+        required: false
+        default: '0'
+
+permissions:
+  contents: read
+
+# Provide Git config to actions/checkout itself; checkout runs git init before
+# any workflow step can configure Git.
+env:
+  GIT_CONFIG_COUNT: '1'
+  GIT_CONFIG_KEY_0: init.defaultBranch
+  GIT_CONFIG_VALUE_0: main
+  LAW_SITE_URL: https://link-assistant.github.io/law
+
+jobs:
+  validate:
+    name: Validate registry
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    concurrency:
+      group: check-${{ github.workflow }}-${{ github.ref }}-validate
+      cancel-in-progress: true
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          persist-credentials: false
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: '24.x'
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci --no-audit --no-fund
+
+      - name: Validate data/registry.lino
+        run: npm run law:validate
+
+      - name: List documents and modes
+        run: node bin/law.js list
+
+  probe:
+    name: Probe sources
+    needs: [validate]
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    concurrency:
+      group: check-${{ github.workflow }}-${{ github.ref }}-probe
+      cancel-in-progress: true
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          persist-credentials: false
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: '24.x'
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci --no-audit --no-fund
+
+      # Records reachability, robots.txt and CORS from a GitHub-hosted runner.
+      # The probe reports problems without failing: sources change on their own.
+      - name: Probe every source
+        run: node bin/law.js probe --output probe.md && cat probe.md >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Upload probe report
+        uses: actions/upload-artifact@v7
+        with:
+          name: law-probe
+          path: probe.md
+          if-no-files-found: error
+
+  build:
+    name: Build laws site
+    needs: [validate]
+    runs-on: ubuntu-24.04
+    timeout-minutes: 180
+    concurrency:
+      group: check-${{ github.workflow }}-${{ github.ref }}-build
+      cancel-in-progress: true
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          persist-credentials: false
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: '24.x'
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci --no-audit --no-fund
+
+      - name: Build a subset (pull request)
+        if: github.event_name == 'pull_request'
+        run: >-
+          node bin/law.js build
+          --out build/site
+          --only us/constitution,eu/gdpr/en,ru/constitution,ge/constitution/en,cn/constitution,in/
+          --min-ok 3
+          --catalog data/catalog.lino
+
+      - name: Build the full site
+        if: github.event_name != 'pull_request'
+        env:
+          ONLY: ${{ inputs.only }}
+          LIMIT: ${{ inputs.limit || '0' }}
+        run: >-
+          node bin/law.js build
+          --out build/site
+          --only "$ONLY"
+          --limit "$LIMIT"
+          --previous "$LAW_SITE_URL"
+          --catalog data/catalog.lino
+          --min-ok 10
+
+      - name: Report site size
+        run: du -sh build/site build/site/laws
+
+      - name: Upload catalog
+        uses: actions/upload-artifact@v7
+        with:
+          name: law-catalog
+          path: data/catalog.lino
+          if-no-files-found: error
+
+      - name: Upload site artifact
+        if: github.event_name == 'pull_request'
+        uses: actions/upload-artifact@v7
+        with:
+          name: law-site
+          path: build/site
+          include-hidden-files: true
+          if-no-files-found: error
+
+      - name: Upload GitHub Pages artifact
+        if: github.event_name != 'pull_request'
+        uses: actions/upload-pages-artifact@v5
+        with:
+          path: build/site
+
+  # Requires Settings → Pages → Source = GitHub Actions.
+  pages-deploy:
+    name: Deploy GitHub Pages
+    needs: [build]
+    if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    concurrency:
+      group: main-writer-${{ github.repository }}-main
+      cancel-in-progress: false
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy Pages artifact
+        id: deployment
+        uses: actions/deploy-pages@v5
+
+  catalog-commit:
+    name: Commit catalog
+    needs: [pages-deploy]
+    if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    concurrency:
+      group: main-writer-${{ github.repository }}-main
+      cancel-in-progress: false
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          ref: main
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: '24.x'
+
+      - name: Download catalog
+        uses: actions/download-artifact@v8
+        with:
+          name: law-catalog
+          path: build/catalog
+
+      - name: Commit data/catalog.lino to main
+        env:
+          GH_TOKEN: ${{ secrets.RELEASE_PR_TOKEN }}
+          RELEASE_PR_TOKEN: ${{ secrets.RELEASE_PR_TOKEN }}
+        run: |
+          cp build/catalog/catalog.lino data/catalog.lino
+          if git diff --quiet -- data/catalog.lino && git ls-files --error-unmatch data/catalog.lino >/dev/null 2>&1; then
+            echo "::notice::data/catalog.lino is already current."
+            exit 0
+          fi
+          if [[ -z "$RELEASE_PR_TOKEN" ]]; then
+            echo "::error::RELEASE_PR_TOKEN is required to commit data/catalog.lino; add it under Settings → Secrets and variables → Actions."
+            exit 1
+          fi
+          # Configure gh as a step-scoped Git credential helper.
+          gh auth setup-git
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/catalog.lino
+          git commit -m "chore(law): update data/catalog.lino"
+          node scripts/push-main-with-rebase-retry.mjs origin main --label law-catalog
+
+  # Terminal status gate: runs even when the jobs above fail or are
+  # cancelled, and turns a `timeout-minutes` kill (reported as cancelled)
+  # into a red run. needs is derived and checked by the status-gate-coverage
+  # job in workflows.yml.
+  pipeline-status:
+    name: Pipeline Status
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    concurrency:
+      group: check-${{ github.workflow }}-${{ github.ref }}-pipeline-status
+      cancel-in-progress: true
+    # A status function is required: without one the gate inherits the
+    # implicit "every dependency succeeded" condition and is skipped in
+    # exactly the runs it exists to report.
+    if: >-
+      !cancelled()
+    needs:
+      - validate
+      - probe
+      - build
+      - pages-deploy
+      - catalog-commit
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          persist-credentials: false
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: '24.x'
+
+      - name: Fail the run when a required job was cancelled or failed
+        env:
+          NEEDS_JSON: ${{ toJSON(needs) }}
+          RUN_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+          BRANCH_NAME: ${{ github.head_ref || github.ref_name }}
+        run: bash scripts/check-pipeline-status.sh
