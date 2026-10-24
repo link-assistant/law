@@ -1,0 +1,247 @@
+sources:
+  us-archives:
+    jurisdiction US
+    name 'U.S. National Archives and Records Administration'
+    homepage 'https://www.archives.gov/founding-docs'
+    terms 'https://www.archives.gov/global-pages/privacy.html'
+    cors false
+    legal:
+      status public-domain
+      mirror allowed
+      basis '17 U.S.C. § 105: works of the United States Government are not subject to copyright; the Constitution (1787) predates copyright.'
+      basisUrl 'https://www.copyright.gov/title17/92chap1.html#105'
+      attribution 'Transcript: U.S. National Archives (archives.gov)'
+  us-olrc:
+    jurisdiction US
+    name 'Office of the Law Revision Counsel, U.S. House of Representatives'
+    homepage 'https://uscode.house.gov/'
+    terms 'https://uscode.house.gov/about_code.xhtml'
+    cors false
+    legal:
+      status public-domain
+      mirror allowed
+      basis '17 U.S.C. § 105: the United States Code is a work of the U.S. Government and is in the public domain.'
+      basisUrl 'https://www.copyright.gov/title17/92chap1.html#105'
+      attribution 'United States Code, Office of the Law Revision Counsel (uscode.house.gov)'
+  us-govinfo:
+    jurisdiction US
+    name 'U.S. Government Publishing Office, govinfo bulk data (eCFR)'
+    homepage 'https://www.govinfo.gov/bulkdata/ECFR'
+    terms 'https://www.govinfo.gov/about/policies'
+    live 'https://www.ecfr.gov/api/versioner/v1/full/{date}/title-{title}.xml'
+    cors false
+    liveCors true
+    legal:
+      status public-domain
+      mirror allowed
+      basis '17 U.S.C. § 105: the Code of Federal Regulations is a work of the U.S. Government and is in the public domain.'
+      basisUrl 'https://www.copyright.gov/title17/92chap1.html#105'
+      attribution 'Electronic Code of Federal Regulations, Office of the Federal Register and GPO (govinfo.gov, ecfr.gov)'
+  eu-cellar:
+    jurisdiction EU
+    name 'Publications Office of the European Union, Cellar'
+    homepage 'https://op.europa.eu/en/web/cellar'
+    terms 'https://eur-lex.europa.eu/content/legal-notice/legal-notice.html'
+    cors false
+    legal:
+      status reuse-with-attribution
+      mirror allowed
+      basis 'Commission Decision 2011/833/EU on the reuse of Commission documents: reuse is authorised provided the source is acknowledged; Official Journal texts are not subject to copyright restrictions on reuse.'
+      basisUrl 'https://eur-lex.europa.eu/eli/dec/2011/833/oj'
+      attribution '© European Union, https://eur-lex.europa.eu. Only the Official Journal of the European Union is authentic.'
+  cn-govcn:
+    jurisdiction CN
+    name 'Central People''s Government of the PRC (gov.cn)'
+    homepage 'https://www.gov.cn/'
+    cors true
+    legal:
+      status not-copyrightable
+      mirror allowed
+      basis 'Copyright Law of the PRC, Article 5(1): laws, regulations and other documents of a legislative, administrative or judicial nature and their official translations are not protected.'
+      basisUrl 'https://www.gov.cn/guoqing/2021-10/29/content_5647633.htm'
+      attribution 'Source: www.gov.cn'
+  cn-npc:
+    jurisdiction CN
+    name 'National People''s Congress, National Database of Laws and Regulations'
+    homepage 'https://flk.npc.gov.cn/'
+    cors false
+    blocked 'robots.txt of flk.npc.gov.cn forbids any automated tool, script or crawler (User-agent: * Disallow: /); not crawled.'
+    legal:
+      status not-copyrightable
+      mirror not-allowed
+      basis 'Law texts are not protected (Copyright Law of the PRC, Article 5), but the database forbids automated collection.'
+      basisUrl 'https://flk.npc.gov.cn/robots.txt'
+  ru-kremlin:
+    jurisdiction RU
+    name 'President of Russia (kremlin.ru), Bank of documents'
+    homepage 'http://www.kremlin.ru/acts/bank'
+    terms 'http://www.kremlin.ru/about/copyrights'
+    cors false
+    legal:
+      status not-copyrightable
+      mirror allowed
+      basis 'Civil Code of the Russian Federation, Article 1259(6): laws and other official documents and their official translations are not objects of copyright; kremlin.ru materials are published under CC BY 4.0.'
+      basisUrl 'http://www.kremlin.ru/about/copyrights'
+      attribution 'Source: kremlin.ru (CC BY 4.0). Texts in the Bank of documents are the versions as signed.'
+  ge-matsne:
+    jurisdiction GE
+    name 'Legislative Herald of Georgia (matsne.gov.ge)'
+    homepage 'https://matsne.gov.ge/'
+    cors false
+    legal:
+      status not-copyrightable
+      mirror allowed
+      basis 'Law of Georgia on Copyright and Related Rights, Article 8: official documents (laws, decrees, resolutions) and their official translations are not protected.'
+      basisUrl 'https://matsne.gov.ge/en/document/view/16198'
+      attribution 'Source: Legislative Herald of Georgia, matsne.gov.ge. Only the Georgian text is official; translations are informational.'
+  in-indiacode:
+    jurisdiction IN
+    name 'India Code (Legislative Department, Ministry of Law and Justice)'
+    homepage 'https://www.indiacode.nic.in/'
+    cors false
+    blocked 'indiacode.nic.in and legislative.gov.in answer HTTP 403 to the identified User-Agent (the same URL answers 200 to browser User-Agents; we do not spoof), no CORS headers, and texts are published as PDF.'
+    legal:
+      status conditional
+      mirror not-allowed
+      basis 'Copyright Act, 1957, s. 52(1)(q)(ii): an Act of a Legislature may be reproduced only together with commentary or other original matter, so verbatim mirrors are avoided and texts are loaded on the client.'
+documents:
+  us/constitution:
+    source us-archives
+    title 'Constitution of the United States'
+    languages en
+    format html
+    profile us-constitution
+    selector '#block-system-main'
+    pages 'https://www.archives.gov/founding-docs/constitution-transcript' 'https://www.archives.gov/founding-docs/bill-of-rights-transcript' 'https://www.archives.gov/founding-docs/amendments-11-27'
+    priority 1
+  eu/treaties:
+    source eu-cellar
+    title 'Consolidated versions of the Treaty on European Union and the Treaty on the Functioning of the European Union, Protocols, Declarations and the Charter of Fundamental Rights (OJ C 202, 7.6.2016)'
+    languages en de fr
+    format html
+    profile eu-oj-issue
+    selector body
+    url 'http://publications.europa.eu/resource/oj/JOC_2016_202_R.{LANG3}.xhtml'
+    accept 'application/xhtml+xml'
+    sourceUrl 'https://eur-lex.europa.eu/legal-content/{LANG}/TXT/?uri=OJ:C:2016:202:TOC'
+    priority 2
+  eu/gdpr:
+    source eu-cellar
+    title 'Regulation (EU) 2016/679 (General Data Protection Regulation)'
+    celex 32016R0679
+    languages en de fr
+    priority 3
+  eu/ai-act:
+    source eu-cellar
+    title 'Regulation (EU) 2024/1689 (Artificial Intelligence Act)'
+    celex 32024R1689
+    languages en de fr
+    priority 3
+  eu/dsa:
+    source eu-cellar
+    title 'Regulation (EU) 2022/2065 (Digital Services Act)'
+    celex 32022R2065
+    languages en de fr
+    priority 3
+  eu/dma:
+    source eu-cellar
+    title 'Regulation (EU) 2022/1925 (Digital Markets Act)'
+    celex 32022R1925
+    languages en de fr
+    priority 3
+  cn/constitution:
+    source cn-govcn
+    title '中华人民共和国宪法'
+    languages zh
+    format html
+    profile zh
+    selector '#UCAP-CONTENT'
+    url 'https://www.gov.cn/guoqing/2018-03/22/content_5276318.htm'
+    priority 1
+  cn/civil-code:
+    source cn-npc
+    title '中华人民共和国民法典'
+    languages zh
+    format html
+    profile zh
+    url 'https://flk.npc.gov.cn/detail2.html?ZmY4MDgxODE3MmI1MjhkMjAxNzJiNWFlYWJlMjAwMDY'
+    priority 2
+  ru/constitution:
+    source ru-kremlin
+    title 'Конституция Российской Федерации'
+    languages ru
+    format html
+    profile ru
+    selector '.lead--constitution, .read__internal_content'
+    url 'http://www.kremlin.ru/acts/constitution'
+    priority 1
+  ru/civil-code-1:
+    source ru-kremlin
+    title 'Гражданский кодекс Российской Федерации. Часть первая (от 30.11.1994 № 51-ФЗ)'
+    bank 7279
+    priority 2
+  ru/tax-code-1:
+    source ru-kremlin
+    title 'Налоговый кодекс Российской Федерации. Часть первая (от 31.07.1998 № 146-ФЗ)'
+    bank 12755
+    priority 4
+  ru/tax-code-2:
+    source ru-kremlin
+    title 'Налоговый кодекс Российской Федерации. Часть вторая (от 05.08.2000 № 117-ФЗ)'
+    bank 15925
+    priority 5
+  ru/budget-code:
+    source ru-kremlin
+    title 'Бюджетный кодекс Российской Федерации (от 31.07.1998 № 145-ФЗ)'
+    bank 12754
+    priority 5
+  ru/criminal-procedure-code:
+    source ru-kremlin
+    title 'Уголовно-процессуальный кодекс Российской Федерации (от 18.12.2001 № 174-ФЗ)'
+    bank 17643
+    priority 4
+  ru/administrative-offences-code:
+    source ru-kremlin
+    title 'Кодекс Российской Федерации об административных правонарушениях (от 30.12.2001 № 195-ФЗ)'
+    bank 17704
+    priority 4
+  ge/constitution:
+    source ge-matsne
+    title 'Constitution of Georgia'
+    matsne 30346
+    languages ka en ru
+    priority 1
+  ge/civil-code:
+    source ge-matsne
+    title 'Civil Code of Georgia'
+    matsne 31702
+    languages ka en ru
+    priority 2
+  ge/criminal-code:
+    source ge-matsne
+    title 'Criminal Code of Georgia'
+    matsne 16426
+    languages ka en ru
+    priority 2
+  in/constitution:
+    source in-indiacode
+    title 'The Constitution of India'
+    languages en
+    format pdf
+    profile in
+    url 'https://legislative.gov.in/constitution-of-india/'
+    priority 1
+collections:
+  us/usc:
+    source us-olrc
+    adapter uscode
+    title 'United States Code'
+    index 'https://uscode.house.gov/download/download.shtml'
+    indexFallback 'https://uscode.house.gov/download.html'
+    priority 2
+  us/cfr:
+    source us-govinfo
+    adapter govinfo-ecfr
+    title 'Code of Federal Regulations (eCFR)'
+    index 'https://www.govinfo.gov/bulkdata/json/ECFR'
+    priority 6
