@@ -9,6 +9,8 @@
  * already open closes back to its level, a new kind nests below the current
  * one, so the same rules work for any nesting a publisher uses.
  * `scoped` leaf ids are prefixed by their parent (`article-1-section-2`),
+ * `namespace` units (numbered by occurrence) prefix every leaf below them,
+ * `merge` joins consecutive matches of one rule into a single heading,
  * `reset` closes every open level, `skipText`/`skipClass` drop page chrome
  * and `stopAt` marks a table of contents to skip.
  */
@@ -37,32 +39,56 @@ const usConstitution = {
   skipText: /^Print This Page$/u,
 };
 
+const ojClass = (name) => new RegExp(`(?:^|\\s)(?:oj-)?${name}(?:\\s|$)`, 'u');
+
+const ojRules = [
+  {
+    kind: 'annex',
+    reset: true,
+    className: ojClass('doc-ti'),
+    pattern:
+      /^(?<label>ANNEX|ANHANG|ANNEXE|ALLEGATO|BIJLAGE|ANEXO|ZAŁĄCZNIK)\s*(?<num>[IVXLC\d]*)$/u,
+  },
+  {
+    kind: 'heading',
+    className: ojClass('ti-section-1'),
+    kindFromLabel: true,
+    pattern: /^(?<label>\S+)\s+(?<num>\S+)$/u,
+    headingNext: ojClass('ti-section-2'),
+  },
+  {
+    kind: 'article',
+    leaf: true,
+    className: ojClass('ti-art'),
+    pattern: /^(?<label>\S+)\s+(?<num>\d+[a-z]*)$/u,
+    headingNext: ojClass('sti-art'),
+  },
+];
+
+const ojSkip = /(?:^|\s)(?:oj-)?(?:hd-|note|separator|doc-end)/u;
+
 /** Official Journal of the EU (Cellar/EUR-Lex XHTML), any language. */
-const euOfficialJournal = {
+const euOfficialJournal = { rules: ojRules, skipClass: ojSkip };
+
+/**
+ * A whole Official Journal issue holding several acts (e.g. OJ C 202/2016:
+ * TEU, TFEU, protocols, declarations, the Charter). Every document title
+ * opens a namespace so article ids stay unique (`document-2-article-1`).
+ */
+const euOfficialJournalIssue = {
   rules: [
+    ojRules[0],
     {
-      kind: 'annex',
+      kind: 'document',
       reset: true,
-      className: /(?:^|\s)oj-doc-ti(?:\s|$)/u,
-      pattern:
-        /^(?<label>ANNEX|ANHANG|ANNEXE|ALLEGATO|BIJLAGE|ANEXO|ZAŁĄCZNIK)\s*(?<num>[IVXLC\d]*)$/u,
+      namespace: true,
+      merge: true,
+      className: ojClass('doc-ti'),
+      pattern: /^(?<heading>.+)$/u,
     },
-    {
-      kind: 'heading',
-      className: /(?:^|\s)oj-ti-section-1(?:\s|$)/u,
-      kindFromLabel: true,
-      pattern: /^(?<label>\S+)\s+(?<num>\S+)$/u,
-      headingNext: /(?:^|\s)oj-ti-section-2(?:\s|$)/u,
-    },
-    {
-      kind: 'article',
-      leaf: true,
-      className: /(?:^|\s)oj-ti-art(?:\s|$)/u,
-      pattern: /^(?<label>\S+)\s+(?<num>\d+[a-z]*)$/u,
-      headingNext: /(?:^|\s)oj-sti-art(?:\s|$)/u,
-    },
+    ...ojRules.slice(1),
   ],
-  skipClass: /(?:^|\s)oj-(?:hd-|note|separator|doc-end)/u,
+  skipClass: ojSkip,
 };
 
 const chineseNumber = '[零〇一二两三四五六七八九十百千\\d]+';
@@ -206,6 +232,7 @@ const indian = {
 export const profiles = {
   'us-constitution': usConstitution,
   'eu-oj': euOfficialJournal,
+  'eu-oj-issue': euOfficialJournalIssue,
   zh: chinese,
   ru: russian,
   ge: georgian,

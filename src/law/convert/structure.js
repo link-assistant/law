@@ -101,15 +101,25 @@ function openStack(stack, rule, kind) {
   return open >= 0 ? stack.slice(0, open) : stack;
 }
 
-function structuralUnit({ rule, groups, kind, heading, text, stack }) {
+function localId(kind, num) {
+  return num ? `${slug(kind)}-${slug(normalizeNumber(num))}` : slug(kind);
+}
+
+function unitIdFor({ rule, local, parent, namespace }) {
+  if (parent && (!rule.leaf || rule.scoped)) {
+    return `${parent.id}-${local}`;
+  }
+  return namespace ? `${namespace.id}-${local}` : local;
+}
+
+function structuralUnit(options) {
+  const { rule, groups, kind, heading, text, stack, ordinal } = options;
   const num = groups.num ? cleanLine(groups.num) : '';
-  const local = num
-    ? `${slug(kind)}-${slug(normalizeNumber(num))}`
-    : slug(kind);
+  const local = localId(kind, num || ordinal);
   const parent = stack[stack.length - 1] ?? null;
-  const scoped = !rule.leaf || rule.scoped;
+  const namespace = stack.find((item) => item.kind === options.namespaceKind);
   const value = unit({
-    id: scoped && parent ? `${parent.id}-${local}` : local,
+    id: unitIdFor({ rule, local, parent, namespace }),
     kind,
     num: marker(text, groups) || num || undefined,
     heading,
@@ -122,12 +132,32 @@ function structuralUnit({ rule, groups, kind, heading, text, stack }) {
   return value;
 }
 
+/** Continue a heading split over consecutive blocks (`merge` rules). */
+function mergeHeading(state, rule, groups) {
+  const { current, lastRule } = state;
+  if (!rule.merge || lastRule !== rule || !current || current.text) {
+    return false;
+  }
+  current.heading = cleanLine(`${current.heading ?? ''} ${groups.heading}`);
+  return true;
+}
+
+function ordinalFor(rule, counters) {
+  if (!rule.namespace) {
+    return '';
+  }
+  counters.set(rule, (counters.get(rule) ?? 0) + 1);
+  return String(counters.get(rule));
+}
+
 function runProfile(blocks, profile, { leafKind, contents }) {
   const units = [];
   const front = { text: '' };
   const skipper = contentsSkipper(profile, contents);
+  const namespaceKind = profile.rules.find((rule) => rule.namespace)?.kind;
+  const counters = new Map();
+  const state = { current: null, lastRule: null };
   let stack = [];
-  let current = null;
   for (let index = 0; index < blocks.length; index += 1) {
     const block = blocks[index];
     const text = cleanLine(block.text);
@@ -135,16 +165,31 @@ function runProfile(blocks, profile, { leafKind, contents }) {
       continue;
     }
     const matched = matchRule(profile, { ...block, text });
+    const lastRule = state.lastRule;
+    state.lastRule = matched?.rule ?? null;
     if (!matched) {
-      appendText(current ?? front, text);
+      appendText(state.current ?? front, text);
       continue;
     }
     const { rule, groups } = matched;
+    if (mergeHeading({ ...state, lastRule }, rule, groups)) {
+      continue;
+    }
     const kind = rule.leaf && leafKind ? leafKind : kindOf(rule, groups);
     const { heading, consumed } = takeHeading(rule, groups, blocks[index + 1]);
     index += consumed ? 1 : 0;
     stack = openStack(stack, rule, kind);
-    current = structuralUnit({ rule, groups, kind, heading, text, stack });
+    const current = structuralUnit({
+      rule,
+      groups,
+      kind,
+      heading,
+      text,
+      stack,
+      namespaceKind,
+      ordinal: ordinalFor(rule, counters),
+    });
+    state.current = current;
     units.push(current);
     if (!rule.leaf) {
       stack.push(current);
