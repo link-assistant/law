@@ -36,6 +36,16 @@ export default [
         AbortSignal: 'readonly',
         setTimeout: 'readonly',
         clearTimeout: 'readonly',
+        // Web platform globals shared by Node.js 20+, Bun, Deno and browsers
+        URL: 'readonly',
+        URLSearchParams: 'readonly',
+        Headers: 'readonly',
+        Response: 'readonly',
+        TextEncoder: 'readonly',
+        TextDecoder: 'readonly',
+        Blob: 'readonly',
+        CompressionStream: 'readonly',
+        DecompressionStream: 'readonly',
         // Runtime-specific globals
         Bun: 'readonly',
         Deno: 'readonly',
