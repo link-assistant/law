@@ -275,6 +275,19 @@ describe('static site build', () => {
       await rm(dir, { recursive: true, force: true });
     }
   });
+
+  it('keeps catalog records outside a partial build', () => {
+    const previous = {
+      old: { status: 'ok', sha256: 'a', updated: 'run-1' },
+      k: { status: 'ok', sha256: 'b', updated: 'run-1' },
+    };
+    const entry = { key: 'k', status: 'ok', sha256: 'c', retrievedAt: 'run-2' };
+    const partial = catalogLino([entry], previous, { partial: true });
+    expect(partial).toContain('old');
+    expect(partial).toContain('updated run-2');
+    // A full build drops keys that left the registry.
+    expect(catalogLino([entry], previous)).not.toContain('old');
+  });
 });
 
 describe('source probe', () => {

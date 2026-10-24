@@ -188,7 +188,9 @@ jobs:
   pages-deploy:
     name: Deploy GitHub Pages
     needs: [build]
-    if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
+    # A manual run limited by `only` or `limit` is a trial build: publishing
+    # it would drop every other law from the site and the catalog.
+    if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main' && !inputs.only && (inputs.limit || '0') == '0'
     runs-on: ubuntu-24.04
     timeout-minutes: 15
     concurrency:
@@ -208,7 +210,9 @@ jobs:
   catalog-commit:
     name: Commit catalog
     needs: [pages-deploy]
-    if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
+    # A manual run limited by `only` or `limit` is a trial build: publishing
+    # it would drop every other law from the site and the catalog.
+    if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main' && !inputs.only && (inputs.limit || '0') == '0'
     runs-on: ubuntu-24.04
     timeout-minutes: 15
     concurrency:

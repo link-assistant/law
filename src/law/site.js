@@ -234,9 +234,13 @@ export function buildMarkdown(entries) {
   return `${lines.join('\n')}\n`;
 }
 
-/** Catalog as Links Notation, keyed by document key (stable fields only). */
-export function catalogLino(entries, previous = {}) {
-  const records = {};
+/**
+ * Catalog as Links Notation, keyed by document key (stable fields only).
+ * A partial build (`only` or `limit`) keeps the records it did not rebuild;
+ * a full build drops keys that are no longer in the registry.
+ */
+export function catalogLino(entries, previous = {}, { partial = false } = {}) {
+  const records = partial ? { ...previous } : {};
   for (const entry of entries) {
     const before = previous[entry.key] ?? {};
     const changed = !before.sha256 || before.sha256 !== entry.sha256;
@@ -355,7 +359,8 @@ export async function buildSite(options) {
   const previous = options.catalog
     ? await readCatalogLino(options.catalog)
     : {};
-  const lino = catalogLino(entries, previous);
+  const partial = Boolean(options.only?.length || options.limit);
+  const lino = catalogLino(entries, previous, { partial });
   const out = options.outDir;
   await put(
     join(out, 'catalog.json'),

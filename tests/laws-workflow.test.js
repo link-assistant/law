@@ -37,6 +37,13 @@ describe('laws workflow', () => {
         "if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'"
       );
     }
+    // A manual run limited by `only` or `limit` is a trial build: publishing
+    // it would drop every other law from the site and the catalog.
+    for (const name of ['pages-deploy', 'catalog-commit']) {
+      expect(job(name)).toContain(
+        "&& !inputs.only && (inputs.limit || '0') == '0'"
+      );
+    }
     expect(job('pages-deploy')).toContain('actions/deploy-pages');
     const commit = job('catalog-commit');
     expect(commit).toContain('RELEASE_PR_TOKEN is required');
