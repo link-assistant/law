@@ -171,6 +171,81 @@ describe('PoliteFetcher', () => {
   });
 });
 
+describe('PoliteFetcher safeguards', () => {
+  it('checks robots.txt on every redirect target', async () => {
+    const calls = [];
+    const moved = (location) => () =>
+      new Response(null, { status: 301, headers: { location } });
+    const fetcher = fast(
+      {
+        'https://a.test/robots.txt': '',
+        'https://a.test/old': moved('/new'),
+        'https://a.test/new': moved('https://b.test/private/law'),
+        'https://a.test/loop': moved('/loop'),
+        'https://b.test/robots.txt': 'User-agent: *\nDisallow: /private',
+        'https://b.test/private/law': 'secret',
+        'https://a.test/ok': moved('https://b.test/law'),
+        'https://b.test/law': 'law',
+      },
+      calls
+    );
+    const failure = (url) => fetcher.text(url).catch((caught) => caught);
+    expect((await failure('https://a.test/old')).code).toBe(
+      'ROBOTS_DISALLOWED'
+    );
+    expect(
+      calls.some((call) => call.url === 'https://b.test/private/law')
+    ).toBe(false);
+    expect((await failure('https://a.test/loop')).code).toBe(
+      'TOO_MANY_REDIRECTS'
+    );
+    expect(await fetcher.text('https://a.test/ok')).toBe('law');
+  });
+
+  it('stops at hosts whose Crawl-delay exceeds a minute', async () => {
+    const calls = [];
+    const fetcher = fast(
+      {
+        'https://slow.test/robots.txt': 'User-agent: *\nCrawl-delay: 120',
+        'https://slow.test/law': 'law',
+      },
+      calls
+    );
+    const error = await fetcher.text('https://slow.test/law').catch((e) => e);
+    expect(error.code).toBe('CRAWL_DELAY_TOO_LONG');
+    expect(calls.map((call) => call.url)).toEqual([
+      'https://slow.test/robots.txt',
+    ]);
+  });
+
+  it('limits response bodies to maxBytes', async () => {
+    const fetcher = fast({
+      'https://big.test/robots.txt': '',
+      'https://big.test/declared': () =>
+        new Response('x'.repeat(10), { headers: { 'content-length': '10' } }),
+      'https://big.test/streamed': () =>
+        new Response(
+          new globalThis.ReadableStream({
+            start(controller) {
+              controller.enqueue(new Uint8Array(6));
+              controller.enqueue(new Uint8Array(6));
+              controller.close();
+            },
+          })
+        ),
+      'https://big.test/small': 'tiny',
+    });
+    fetcher.maxBytes = 8;
+    for (const url of [
+      'https://big.test/declared',
+      'https://big.test/streamed',
+    ]) {
+      expect((await fetcher.bytes(url).catch((e) => e)).code).toBe('TOO_LARGE');
+    }
+    expect(await fetcher.text('https://big.test/small')).toBe('tiny');
+  });
+});
+
 describe('download pipeline', () => {
   it('detects the charset from headers or <meta>', () => {
     const bytes = strToU8('<meta charset="windows-1251">');

@@ -3,14 +3,19 @@
  *
  * - One queue per host with a minimum interval (default 1500 ms, raised to
  *   the robots.txt Crawl-delay when it is larger).
- * - robots.txt is honoured for automated runs (Node.js / CI). In the browser
- *   the user is the agent, so `robots: false` is the default there.
+ * - robots.txt is honoured for automated runs (Node.js / CI), on every
+ *   redirect target too. In the browser the user is the agent, so
+ *   `robots: false` is the default there. A Crawl-delay above one minute
+ *   stops requests to that host; the delay is never shortened.
  * - Per-host intervals from the registry (`crawlDelay` on a source).
  * - Retries on 429 / 5xx / network errors with exponential back-off and
  *   `Retry-After` support; each failed attempt also doubles the host
- *   interval (up to a minute) for the rest of the run. A host that still answers 403 or 429 is left
- *   alone for the rest of the run: later requests fail without a network
- *   call, so a refusal is never answered with more traffic.
+ *   interval (up to a minute) for the rest of the run. A host that still
+ *   answers 403 or 429 is left alone for the rest of the run: later requests
+ *   fail without a network call, so a refusal is never answered with more
+ *   traffic.
+ * - Bodies read through `text`, `bytes` and `json` are limited to
+ *   `maxBytes` (default 512 MiB).
  * - An optional proxy template (`https://proxy.example/?url={url}`) lets the
  *   browser reach publishers that do not send CORS headers.
  */
@@ -54,6 +59,46 @@ function retryDelay(response, attempt, baseMs) {
 const retryable = (status) => status === 429 || status >= 500;
 const REFUSALS = new Set([403, 429]);
 const MAX_INTERVAL_MS = 60000;
+const MAX_REDIRECTS = 5;
+const REDIRECTS = new Set([301, 302, 303, 307, 308]);
+export const DEFAULT_MAX_BYTES = 512 * 1024 * 1024;
+
+const failure = (message, extra) => Object.assign(new Error(message), extra);
+
+export function concatBytes(parts) {
+  const out = new Uint8Array(parts.reduce((sum, part) => sum + part.length, 0));
+  let offset = 0;
+  for (const part of parts) {
+    out.set(part, offset);
+    offset += part.length;
+  }
+  return out;
+}
+
+/** Read a body, giving up as soon as it exceeds `maxBytes`. */
+export async function readLimited(response, maxBytes, url) {
+  const tooLarge = () =>
+    failure(`Response larger than ${maxBytes} bytes: ${url}`, {
+      code: 'TOO_LARGE',
+    });
+  if (Number(response.headers.get('content-length')) > maxBytes) {
+    await response.body?.cancel();
+    throw tooLarge();
+  }
+  if (!response.body) {
+    return new Uint8Array(await response.arrayBuffer());
+  }
+  const parts = [];
+  let size = 0;
+  for await (const part of response.body) {
+    size += part.length;
+    if (size > maxBytes) {
+      throw tooLarge();
+    }
+    parts.push(part);
+  }
+  return concatBytes(parts);
+}
 
 export class PoliteFetcher {
   /**
@@ -66,6 +111,7 @@ export class PoliteFetcher {
    * @param {number} [options.retries]
    * @param {number} [options.retryBaseMs]
    * @param {number} [options.timeoutMs]
+   * @param {number} [options.maxBytes]
    * @param {(message: string) => void} [options.log]
    */
   constructor(options = {}) {
@@ -77,6 +123,7 @@ export class PoliteFetcher {
     this.retries = options.retries ?? 3;
     this.retryBaseMs = options.retryBaseMs ?? 2000;
     this.timeoutMs = options.timeoutMs ?? 120000;
+    this.maxBytes = options.maxBytes ?? DEFAULT_MAX_BYTES;
     this.log = options.log ?? (() => {});
     this.hosts = new Map();
   }
@@ -142,7 +189,9 @@ export class PoliteFetcher {
       this.log(`robots.txt unavailable for ${origin}: ${describeError(error)}`);
     }
     const rules = parseRobots(text, ROBOTS_TOKEN);
-    if (rules.crawlDelay) {
+    if (rules.crawlDelay * 1000 > MAX_INTERVAL_MS) {
+      state.tooSlow = rules.crawlDelay;
+    } else if (rules.crawlDelay) {
       state.intervalMs = Math.max(state.intervalMs, rules.crawlDelay * 1000);
     }
     return rules;
@@ -171,24 +220,61 @@ export class PoliteFetcher {
    */
   async fetch(url, init = {}) {
     const { robots = this.robots, ...rest } = init;
+    if (!robots) {
+      return this.hop(url, rest, false);
+    }
+    // Follow redirects here so robots.txt is checked for every target.
+    let current = url;
+    for (let hops = 0; ; hops += 1) {
+      const response = await this.hop(
+        current,
+        { ...rest, redirect: 'manual' },
+        true
+      );
+      const location = response.headers.get('location');
+      if (!REDIRECTS.has(response.status) || !location) {
+        return response;
+      }
+      if (hops >= MAX_REDIRECTS) {
+        throw failure(`Too many redirects from ${url}`, {
+          code: 'TOO_MANY_REDIRECTS',
+        });
+      }
+      await response.body?.cancel();
+      current = new URL(location, current).href;
+    }
+  }
+
+  /** Refuse requests robots.txt or an earlier refusal rules out. */
+  async admit(url, robots) {
     const parsed = new URL(url);
     if (robots) {
       const rules = await this.rulesFor(url);
       if (!rules.allows(`${parsed.pathname}${parsed.search}`)) {
-        throw Object.assign(new Error(`Disallowed by robots.txt: ${url}`), {
+        throw failure(`Disallowed by robots.txt: ${url}`, {
           code: 'ROBOTS_DISALLOWED',
         });
       }
     }
     const state = this.host(parsed.origin);
+    if (robots && state.tooSlow) {
+      throw failure(
+        `${parsed.origin} asks for a ${state.tooSlow} s Crawl-delay, above the ${MAX_INTERVAL_MS / 1000} s limit; skipped ${url}`,
+        { code: 'CRAWL_DELAY_TOO_LONG' }
+      );
+    }
     if (state.refused) {
-      throw Object.assign(
-        new Error(
-          `${parsed.origin} refused an earlier request (HTTP ${state.refused}); skipped ${url}`
-        ),
+      throw failure(
+        `${parsed.origin} refused an earlier request (HTTP ${state.refused}); skipped ${url}`,
         { code: 'HOST_REFUSED', status: state.refused }
       );
     }
+    return { parsed, state };
+  }
+
+  /** One request with retries, without following redirects itself. */
+  async hop(url, rest, robots) {
+    const { parsed, state } = await this.admit(url, robots);
     for (let attempt = 0; ; attempt += 1) {
       let response;
       try {
@@ -226,15 +312,16 @@ export class PoliteFetcher {
     return response;
   }
 
-  async text(url, init) {
-    return (await this.ok(url, init)).text();
+  /** Body bytes of a successful response, within `maxBytes`. */
+  async bytes(url, init) {
+    return readLimited(await this.ok(url, init), this.maxBytes, url);
   }
 
-  async bytes(url, init) {
-    return new Uint8Array(await (await this.ok(url, init)).arrayBuffer());
+  async text(url, init) {
+    return new TextDecoder().decode(await this.bytes(url, init));
   }
 
   async json(url, init) {
-    return (await this.ok(url, init)).json();
+    return JSON.parse(await this.text(url, init));
   }
 }

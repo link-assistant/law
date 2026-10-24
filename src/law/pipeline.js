@@ -4,6 +4,7 @@
  * `PoliteFetcher`, storage is left to the caller.
  */
 import { convert } from './convert/index.js';
+import { concatBytes, readLimited } from './fetcher.js';
 import { sha256Hex } from './hash.js';
 import { lawDocument } from './model.js';
 import { zipEntry, zipEntryNames } from './zip.js';
@@ -20,19 +21,9 @@ export function detectCharset(bytes, contentType = '') {
   return (metaCharset.exec(head)?.[1] ?? 'utf-8').toLowerCase();
 }
 
-function concatBytes(parts) {
-  const out = new Uint8Array(parts.reduce((sum, part) => sum + part.length, 0));
-  let offset = 0;
-  for (const part of parts) {
-    out.set(part, offset);
-    offset += part.length;
-  }
-  return out;
-}
-
 async function fetchPage(fetcher, url, headers) {
   const response = await fetcher.ok(url, { headers });
-  const bytes = new Uint8Array(await response.arrayBuffer());
+  const bytes = await readLimited(response, fetcher.maxBytes, url);
   const charset = detectCharset(bytes, response.headers.get('content-type'));
   return { bytes, text: new TextDecoder(charset).decode(bytes) };
 }
