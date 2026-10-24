@@ -7,7 +7,8 @@
  *   the user is the agent, so `robots: false` is the default there.
  * - Per-host intervals from the registry (`crawlDelay` on a source).
  * - Retries on 429 / 5xx / network errors with exponential back-off and
- *   `Retry-After` support. A host that still answers 403 or 429 is left
+ *   `Retry-After` support; each failed attempt also doubles the host
+ *   interval (up to a minute) for the rest of the run. A host that still answers 403 or 429 is left
  *   alone for the rest of the run: later requests fail without a network
  *   call, so a refusal is never answered with more traffic.
  * - An optional proxy template (`https://proxy.example/?url={url}`) lets the
@@ -22,6 +23,13 @@ export const ROBOTS_TOKEN = 'link-assistant-law';
 const isBrowser = () =>
   typeof globalThis.window !== 'undefined' &&
   typeof globalThis.document !== 'undefined';
+
+/** `fetch failed` plus the network cause (ECONNRESET, timeout, …). */
+export function describeError(error) {
+  const cause = error?.cause;
+  const detail = cause ? [cause.code, cause.message].filter(Boolean) : [];
+  return [error?.message, ...detail].join(': ');
+}
 
 const wait = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
@@ -45,6 +53,7 @@ function retryDelay(response, attempt, baseMs) {
 
 const retryable = (status) => status === 429 || status >= 500;
 const REFUSALS = new Set([403, 429]);
+const MAX_INTERVAL_MS = 60000;
 
 export class PoliteFetcher {
   /**
@@ -103,6 +112,11 @@ export class PoliteFetcher {
     return run;
   }
 
+  /** Double the host interval (up to a minute) after a failed attempt. */
+  slowDown(state) {
+    state.intervalMs = Math.min(state.intervalMs * 2, MAX_INTERVAL_MS);
+  }
+
   rulesFor(url) {
     const { origin } = new URL(url);
     const state = this.host(origin);
@@ -125,7 +139,7 @@ export class PoliteFetcher {
         text = await response.text();
       }
     } catch (error) {
-      this.log(`robots.txt unavailable for ${origin}: ${error.message}`);
+      this.log(`robots.txt unavailable for ${origin}: ${describeError(error)}`);
     }
     const rules = parseRobots(text, ROBOTS_TOKEN);
     if (rules.crawlDelay) {
@@ -185,7 +199,8 @@ export class PoliteFetcher {
         if (attempt >= this.retries) {
           throw error;
         }
-        this.log(`retry ${attempt + 1} for ${url}: ${error.message}`);
+        this.slowDown(state);
+        this.log(`retry ${attempt + 1} for ${url}: ${describeError(error)}`);
         await wait(this.retryBaseMs * 2 ** attempt);
         continue;
       }
@@ -195,6 +210,7 @@ export class PoliteFetcher {
         }
         return response;
       }
+      this.slowDown(state);
       this.log(`retry ${attempt + 1} for ${url}: HTTP ${response.status}`);
       await wait(retryDelay(response, attempt, this.retryBaseMs));
     }

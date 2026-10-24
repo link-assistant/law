@@ -98,8 +98,10 @@ describe('PoliteFetcher', () => {
           : new Response('done');
       },
     });
+    fetcher.host('https://c.test').intervalMs = 1;
     expect(await fetcher.text('https://c.test/flaky')).toBe('done');
     expect(attempts).toBe(3);
+    expect(fetcher.hosts.get('https://c.test').intervalMs).toBe(4);
     const failing = fast({ 'https://d.test/x': new Error('reset') });
     failing.robots = false;
     let error;
