@@ -67,9 +67,12 @@ describe('Deno lock and npm install script policies', () => {
       ...pkg.dependencies,
       ...pkg.devDependencies,
     })
+      // Deno writes `^0.x.y` as `~0.x.y` and `^N.0.0` as `N` in its lock.
       .map(
         ([name, range]) =>
-          `npm:${name}@${range.replace(/^\^(0\.[1-9]\d*\.\d+)/, '~$1')}`
+          `npm:${name}@${range
+            .replace(/^\^(0\.[1-9]\d*\.\d+)/, '~$1')
+            .replace(/^\^([1-9]\d*)\.0\.0$/, '$1')}`
       )
       .sort();
     expect([...lock.workspace.packageJson.dependencies].sort()).toEqual(

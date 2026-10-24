@@ -1,0 +1,13 @@
+✓ ru/constitution/ru: 156 units
+✓ ru/civil-code-1/ru: 662 units
+✓ ru/administrative-offences-code/ru: 1168 units
+✓ ru/criminal-procedure-code/ru: 644 units
+retry 1 for http://www.kremlin.ru/acts/bank/12755/page/24: fetch failed: UND_ERR_SOCKET: other side closed
+✓ ru/tax-code-1/ru: 323 units
+✓ ru/budget-code/ru: 493 units
+✓ ru/tax-code-2/ru: 569 units
+{"summary":{"ok":7},"htmlBytes":25579663}
+
+real	119m46.647s
+user	0m17.958s
+sys	0m4.074s

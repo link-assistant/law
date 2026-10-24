@@ -1,0 +1,122 @@
+:root {
+  color-scheme: light dark;
+  --muted: #6b7280;
+  --accent: #2563eb;
+  --line: #d1d5db;
+}
+body {
+  font:
+    16px/1.55 system-ui,
+    -apple-system,
+    'Segoe UI',
+    sans-serif;
+  max-width: 60rem;
+  margin: 0 auto;
+  padding: 1rem 1.25rem 4rem;
+}
+a {
+  color: var(--accent);
+}
+small,
+.facts dt,
+.legal {
+  color: var(--muted);
+}
+.facts {
+  display: grid;
+  grid-template-columns: max-content 1fr;
+  gap: 0.15rem 1rem;
+  font-size: 0.9rem;
+  overflow-wrap: anywhere;
+}
+.facts dd {
+  margin: 0;
+}
+.unit {
+  scroll-margin-top: 1rem;
+}
+.unit:target {
+  background: color-mix(in srgb, var(--accent) 12%, transparent);
+}
+.unit h2,
+.unit h3,
+.unit h4,
+.unit h5,
+.unit h6 {
+  margin: 1.2rem 0 0.4rem;
+}
+.unit .anchor {
+  color: inherit;
+  text-decoration: none;
+}
+.unit .anchor:hover {
+  text-decoration: underline;
+}
+.unit p {
+  margin: 0.35rem 0;
+}
+.level-1 {
+  margin-left: 0.75rem;
+}
+.level-2 {
+  margin-left: 1.5rem;
+}
+.level-3 {
+  margin-left: 2.25rem;
+}
+.level-4 {
+  margin-left: 3rem;
+}
+.level-5,
+.level-6,
+.level-7 {
+  margin-left: 3.75rem;
+}
+.contents {
+  list-style: none;
+  padding: 0;
+}
+.catalog {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.95rem;
+  table-layout: fixed;
+  overflow-wrap: anywhere;
+}
+/* Same column widths in every jurisdiction section. */
+.catalog th:nth-child(1) {
+  width: 42%;
+}
+.catalog th:nth-child(2) {
+  width: 8%;
+}
+.catalog th:nth-child(3) {
+  width: 30%;
+}
+.catalog th,
+.catalog td {
+  text-align: left;
+  vertical-align: top;
+  border-bottom: 1px solid var(--line);
+  padding: 0.4rem 0.5rem;
+}
+.status-error,
+.status-blocked,
+.error {
+  color: #b91c1c;
+}
+.status-reused {
+  color: #b45309;
+}
+#filter,
+#proxy {
+  font: inherit;
+  padding: 0.3rem 0.5rem;
+  max-width: 100%;
+}
+#filter {
+  width: 100%;
+}
+nav.parts {
+  margin: 1rem 0;
+}

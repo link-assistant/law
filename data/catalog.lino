@@ -1,0 +1,1585 @@
+documents:
+  cn/constitution/zh:
+    title 中华人民共和国宪法
+    jurisdiction CN
+    language zh
+    source cn-govcn
+    mode mirror
+    status ok
+    units 157
+    sha256 c529b6c76c44d7d54e208075c32697430144875183a3d3beb8ff4d8752b5ab98
+    updated '2026-10-24T13:54:06.043Z'
+    sourceUrl 'https://www.gov.cn/guoqing/2018-03/22/content_5276318.htm'
+  ge/constitution/en:
+    title 'Constitution of Georgia'
+    jurisdiction GE
+    language en
+    source ge-matsne
+    mode mirror
+    status ok
+    units 90
+    sha256 5e4fb6d549bf3676ec11c2a877a79d46e58024856d1c96600527c92ed6a1dba1
+    updated '2026-10-24T13:54:06.043Z'
+    sourceUrl 'https://matsne.gov.ge/en/document/view/30346'
+  ge/constitution/ka:
+    title 'Constitution of Georgia'
+    jurisdiction GE
+    language ka
+    source ge-matsne
+    mode mirror
+    status ok
+    units 90
+    sha256 8088eeaaa6377e3ccb7011b3558a4b480bcadef31a96dcf719d64483e1014dd3
+    updated '2026-10-24T13:54:06.043Z'
+    sourceUrl 'https://matsne.gov.ge/ka/document/view/30346'
+  ge/constitution/ru:
+    title 'Constitution of Georgia'
+    jurisdiction GE
+    language ru
+    source ge-matsne
+    mode mirror
+    status ok
+    units 91
+    sha256 2f6f666bd7ee6189c97d871e85c0f6d139685248788f62f81f9fb79892dc2346
+    updated '2026-10-24T13:54:06.043Z'
+    sourceUrl 'https://matsne.gov.ge/ru/document/view/30346'
+  in/constitution/en:
+    title 'The Constitution of India'
+    jurisdiction IN
+    language en
+    source in-indiacode
+    mode blocked
+    status blocked
+    sourceUrl 'https://legislative.gov.in/constitution-of-india/'
+    error 'indiacode.nic.in and legislative.gov.in answer HTTP 403 to the identified User-Agent (the same URL answers 200 to browser User-Agents; we do not spoof), no CORS headers, and texts are published as PDF.'
+  us/constitution/en:
+    title 'Constitution of the United States'
+    jurisdiction US
+    language en
+    source us-archives
+    mode mirror
+    status ok
+    units 89
+    sha256 6962c4eb5990f193ce8524c7eb1f74d02ca5eb01267ec44ddeb91cf4e319cd2d
+    updated '2026-10-24T13:54:06.043Z'
+    sourceUrl 'https://www.archives.gov/founding-docs/constitution-transcript'
+  cn/civil-code/zh:
+    title 中华人民共和国民法典
+    jurisdiction CN
+    language zh
+    source cn-npc
+    mode blocked
+    status blocked
+    sourceUrl 'https://flk.npc.gov.cn/detail2.html?ZmY4MDgxODE3MmI1MjhkMjAxNzJiNWFlYWJlMjAwMDY'
+    error 'robots.txt of flk.npc.gov.cn forbids any automated tool, script or crawler (User-agent: * Disallow: /); not crawled.'
+  eu/treaties/bg:
+    title 'Consolidated versions of the Treaty on European Union and the Treaty on the Functioning of the European Union, Protocols, Declarations and the Charter of Fundamental Rights (OJ C 202, 7.6.2016)'
+    jurisdiction EU
+    language bg
+    source eu-cellar
+    mode mirror
+    status ok
+    units 959
+    sha256 f9d5f9ab0e96fe9d0ad8e1697aea1863dddfdcba8e218a6c72cc5d84a54fb78a
+    updated '2026-10-24T13:54:06.043Z'
+    sourceUrl 'https://eur-lex.europa.eu/legal-content/BG/TXT/?uri=OJ:C:2016:202:TOC'
+  eu/treaties/cs:
+    title 'Consolidated versions of the Treaty on European Union and the Treaty on the Functioning of the European Union, Protocols, Declarations and the Charter of Fundamental Rights (OJ C 202, 7.6.2016)'
+    jurisdiction EU
+    language cs
+    source eu-cellar
+    mode mirror
+    status ok
+    units 958
+    sha256 a8b0ab1783644c4c5f26ba5becb0602bb303c1540997f819815202bfcb372ae3
+    updated '2026-10-24T13:54:06.043Z'
+    sourceUrl 'https://eur-lex.europa.eu/legal-content/CS/TXT/?uri=OJ:C:2016:202:TOC'
+  eu/treaties/da:
+    title 'Consolidated versions of the Treaty on European Union and the Treaty on the Functioning of the European Union, Protocols, Declarations and the Charter of Fundamental Rights (OJ C 202, 7.6.2016)'
+    jurisdiction EU
+    language da
+    source eu-cellar
+    mode mirror
+    status ok
+    units 958
+    sha256 e75fc317f328d0639a8e9f2bdc4660f0386319dd447afcba1a54b17a5f3e6804
+    updated '2026-10-24T13:54:06.043Z'
+    sourceUrl 'https://eur-lex.europa.eu/legal-content/DA/TXT/?uri=OJ:C:2016:202:TOC'
+  eu/treaties/de:
+    title 'Consolidated versions of the Treaty on European Union and the Treaty on the Functioning of the European Union, Protocols, Declarations and the Charter of Fundamental Rights (OJ C 202, 7.6.2016)'
+    jurisdiction EU
+    language de
+    source eu-cellar
+    mode mirror
+    status ok
+    units 958
+    sha256 4e6e894678519038451cb46f9ae2e18327960c65047a77dab4bb0a5cff0969d0
+    updated '2026-10-24T13:54:06.043Z'
+    sourceUrl 'https://eur-lex.europa.eu/legal-content/DE/TXT/?uri=OJ:C:2016:202:TOC'
+  eu/treaties/el:
+    title 'Consolidated versions of the Treaty on European Union and the Treaty on the Functioning of the European Union, Protocols, Declarations and the Charter of Fundamental Rights (OJ C 202, 7.6.2016)'
+    jurisdiction EU
+    language el
+    source eu-cellar
+    mode mirror
+    status ok
+    units 958
+    sha256 4d13dcc289cb7f2e0a21a849d1492b4f19b5c99835ab9c19b90f7ae9e7aedfdd
+    updated '2026-10-24T13:54:06.043Z'
+    sourceUrl 'https://eur-lex.europa.eu/legal-content/EL/TXT/?uri=OJ:C:2016:202:TOC'
+  eu/treaties/en:
+    title 'Consolidated versions of the Treaty on European Union and the Treaty on the Functioning of the European Union, Protocols, Declarations and the Charter of Fundamental Rights (OJ C 202, 7.6.2016)'
+    jurisdiction EU
+    language en
+    source eu-cellar
+    mode mirror
+    status ok
+    units 958
+    sha256 07ae23eaaa980495904d0ea724fc9e0b7d3dd7e4ed0a10316548a0dc6da2332e
+    updated '2026-10-24T13:54:06.043Z'
+    sourceUrl 'https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=OJ:C:2016:202:TOC'
+  eu/treaties/es:
+    title 'Consolidated versions of the Treaty on European Union and the Treaty on the Functioning of the European Union, Protocols, Declarations and the Charter of Fundamental Rights (OJ C 202, 7.6.2016)'
+    jurisdiction EU
+    language es
+    source eu-cellar
+    mode mirror
+    status ok
+    units 958
+    sha256 2d243d35965e154471aa66915ffce60273aaf76452d3fe6156e4aa315111a657
+    updated '2026-10-24T13:54:06.043Z'
+    sourceUrl 'https://eur-lex.europa.eu/legal-content/ES/TXT/?uri=OJ:C:2016:202:TOC'
+  eu/treaties/et:
+    title 'Consolidated versions of the Treaty on European Union and the Treaty on the Functioning of the European Union, Protocols, Declarations and the Charter of Fundamental Rights (OJ C 202, 7.6.2016)'
+    jurisdiction EU
+    language et
+    source eu-cellar
+    mode mirror
+    status ok
+    units 957
+    sha256 640f795b871afc951c858f61a8a7ff6af61e919dc30c9b1f9fa4ce99be2740d7
+    updated '2026-10-24T13:54:06.043Z'
+    sourceUrl 'https://eur-lex.europa.eu/legal-content/ET/TXT/?uri=OJ:C:2016:202:TOC'
+  eu/treaties/fi:
+    title 'Consolidated versions of the Treaty on European Union and the Treaty on the Functioning of the European Union, Protocols, Declarations and the Charter of Fundamental Rights (OJ C 202, 7.6.2016)'
+    jurisdiction EU
+    language fi
+    source eu-cellar
+    mode mirror
+    status ok
+    units 958
+    sha256 ebc44c62c31c6db30f86aa5020bcc1dbe4d26f6d807f81c3f5cb27143d7c350e
+    updated '2026-10-24T13:54:06.043Z'
+    sourceUrl 'https://eur-lex.europa.eu/legal-content/FI/TXT/?uri=OJ:C:2016:202:TOC'
+  eu/treaties/fr:
+    title 'Consolidated versions of the Treaty on European Union and the Treaty on the Functioning of the European Union, Protocols, Declarations and the Charter of Fundamental Rights (OJ C 202, 7.6.2016)'
+    jurisdiction EU
+    language fr
+    source eu-cellar
+    mode mirror
+    status ok
+    units 958
+    sha256 c8f7fe1041da31d47f0b2976842b0767f707d7370f1fd05852bb4952bcb06ba4
+    updated '2026-10-24T13:54:06.043Z'
+    sourceUrl 'https://eur-lex.europa.eu/legal-content/FR/TXT/?uri=OJ:C:2016:202:TOC'
+  eu/treaties/ga:
+    title 'Consolidated versions of the Treaty on European Union and the Treaty on the Functioning of the European Union, Protocols, Declarations and the Charter of Fundamental Rights (OJ C 202, 7.6.2016)'
+    jurisdiction EU
+    language ga
+    source eu-cellar
+    mode mirror
+    status ok
+    units 958
+    sha256 2b11f9bc2735287177a3b92b022cb0f7747e2645f0e30f1509574540e55a1d95
+    updated '2026-10-24T13:54:06.043Z'
+    sourceUrl 'https://eur-lex.europa.eu/legal-content/GA/TXT/?uri=OJ:C:2016:202:TOC'
+  eu/treaties/hr:
+    title 'Consolidated versions of the Treaty on European Union and the Treaty on the Functioning of the European Union, Protocols, Declarations and the Charter of Fundamental Rights (OJ C 202, 7.6.2016)'
+    jurisdiction EU
+    language hr
+    source eu-cellar
+    mode mirror
+    status ok
+    units 959
+    sha256 ec864602d789ac3ff404277334e138a5ab9dde51538b60ffcc3d261b2266ccbe
+    updated '2026-10-24T13:54:06.043Z'
+    sourceUrl 'https://eur-lex.europa.eu/legal-content/HR/TXT/?uri=OJ:C:2016:202:TOC'
+  eu/treaties/hu:
+    title 'Consolidated versions of the Treaty on European Union and the Treaty on the Functioning of the European Union, Protocols, Declarations and the Charter of Fundamental Rights (OJ C 202, 7.6.2016)'
+    jurisdiction EU
+    language hu
+    source eu-cellar
+    mode mirror
+    status ok
+    units 959
+    sha256 9a5492bedf9eeec3bea292dae03c74b951275e3200f23b2e8a58a89ba36f19f4
+    updated '2026-10-24T13:54:06.043Z'
+    sourceUrl 'https://eur-lex.europa.eu/legal-content/HU/TXT/?uri=OJ:C:2016:202:TOC'
+  eu/treaties/it:
+    title 'Consolidated versions of the Treaty on European Union and the Treaty on the Functioning of the European Union, Protocols, Declarations and the Charter of Fundamental Rights (OJ C 202, 7.6.2016)'
+    jurisdiction EU
+    language it
+    source eu-cellar
+    mode mirror
+    status ok
+    units 958
+    sha256 430992a045627f98cff16316e99fc20158eaaa5aeed9d92673559f614453018b
+    updated '2026-10-24T13:54:06.043Z'
+    sourceUrl 'https://eur-lex.europa.eu/legal-content/IT/TXT/?uri=OJ:C:2016:202:TOC'
+  eu/treaties/lt:
+    title 'Consolidated versions of the Treaty on European Union and the Treaty on the Functioning of the European Union, Protocols, Declarations and the Charter of Fundamental Rights (OJ C 202, 7.6.2016)'
+    jurisdiction EU
+    language lt
+    source eu-cellar
+    mode mirror
+    status ok
+    units 958
+    sha256 cbcf99806bd82bb4575cbeefa0334ddfe86a6d22fbda38d7aa7cdd7eec5328b7
+    updated '2026-10-24T13:54:06.043Z'
+    sourceUrl 'https://eur-lex.europa.eu/legal-content/LT/TXT/?uri=OJ:C:2016:202:TOC'
+  eu/treaties/lv:
+    title 'Consolidated versions of the Treaty on European Union and the Treaty on the Functioning of the European Union, Protocols, Declarations and the Charter of Fundamental Rights (OJ C 202, 7.6.2016)'
+    jurisdiction EU
+    language lv
+    source eu-cellar
+    mode mirror
+    status ok
+    units 958
+    sha256 8aa44ed37b0809dd7541a9678283d08bddf329e6e1d2da184babe23f97b1ae7f
+    updated '2026-10-24T13:54:06.043Z'
+    sourceUrl 'https://eur-lex.europa.eu/legal-content/LV/TXT/?uri=OJ:C:2016:202:TOC'
+  eu/treaties/mt:
+    title 'Consolidated versions of the Treaty on European Union and the Treaty on the Functioning of the European Union, Protocols, Declarations and the Charter of Fundamental Rights (OJ C 202, 7.6.2016)'
+    jurisdiction EU
+    language mt
+    source eu-cellar
+    mode mirror
+    status ok
+    units 959
+    sha256 5828223d2d66ffc6d22f19a4a17892e456863a8d3d4df1190a98e8a6be040b01
+    updated '2026-10-24T13:54:06.043Z'
+    sourceUrl 'https://eur-lex.europa.eu/legal-content/MT/TXT/?uri=OJ:C:2016:202:TOC'
+  eu/treaties/nl:
+    title 'Consolidated versions of the Treaty on European Union and the Treaty on the Functioning of the European Union, Protocols, Declarations and the Charter of Fundamental Rights (OJ C 202, 7.6.2016)'
+    jurisdiction EU
+    language nl
+    source eu-cellar
+    mode mirror
+    status ok
+    units 958
+    sha256 4a9a84581758dd707dea02d0bdee382e10f255f7fd48c67c2c124a9d8f4fad37
+    updated '2026-10-24T13:54:06.043Z'
+    sourceUrl 'https://eur-lex.europa.eu/legal-content/NL/TXT/?uri=OJ:C:2016:202:TOC'
+  eu/treaties/pl:
+    title 'Consolidated versions of the Treaty on European Union and the Treaty on the Functioning of the European Union, Protocols, Declarations and the Charter of Fundamental Rights (OJ C 202, 7.6.2016)'
+    jurisdiction EU
+    language pl
+    source eu-cellar
+    mode mirror
+    status ok
+    units 958
+    sha256 8920567a98d8ab750dca0e44425d44e722905bd541671f5f24fdd414638165a6
+    updated '2026-10-24T13:54:06.043Z'
+    sourceUrl 'https://eur-lex.europa.eu/legal-content/PL/TXT/?uri=OJ:C:2016:202:TOC'
+  eu/treaties/pt:
+    title 'Consolidated versions of the Treaty on European Union and the Treaty on the Functioning of the European Union, Protocols, Declarations and the Charter of Fundamental Rights (OJ C 202, 7.6.2016)'
+    jurisdiction EU
+    language pt
+    source eu-cellar
+    mode mirror
+    status ok
+    units 958
+    sha256 b650b1cb99316c03f80fdaf5c9afc630250bd8007b768d30ccc6598a41090091
+    updated '2026-10-24T13:54:06.043Z'
+    sourceUrl 'https://eur-lex.europa.eu/legal-content/PT/TXT/?uri=OJ:C:2016:202:TOC'
+  eu/treaties/ro:
+    title 'Consolidated versions of the Treaty on European Union and the Treaty on the Functioning of the European Union, Protocols, Declarations and the Charter of Fundamental Rights (OJ C 202, 7.6.2016)'
+    jurisdiction EU
+    language ro
+    source eu-cellar
+    mode mirror
+    status ok
+    units 957
+    sha256 04c01cb9e2fe1abba78d2ad732faa432b615463a109225c8051c04c3702cd93a
+    updated '2026-10-24T13:54:06.043Z'
+    sourceUrl 'https://eur-lex.europa.eu/legal-content/RO/TXT/?uri=OJ:C:2016:202:TOC'
+  eu/treaties/sk:
+    title 'Consolidated versions of the Treaty on European Union and the Treaty on the Functioning of the European Union, Protocols, Declarations and the Charter of Fundamental Rights (OJ C 202, 7.6.2016)'
+    jurisdiction EU
+    language sk
+    source eu-cellar
+    mode mirror
+    status ok
+    units 958
+    sha256 27567306e343fefde8b7623113d87f7d8b3959e1820905d1a760d135f6eab94a
+    updated '2026-10-24T13:54:06.043Z'
+    sourceUrl 'https://eur-lex.europa.eu/legal-content/SK/TXT/?uri=OJ:C:2016:202:TOC'
+  eu/treaties/sl:
+    title 'Consolidated versions of the Treaty on European Union and the Treaty on the Functioning of the European Union, Protocols, Declarations and the Charter of Fundamental Rights (OJ C 202, 7.6.2016)'
+    jurisdiction EU
+    language sl
+    source eu-cellar
+    mode mirror
+    status ok
+    units 957
+    sha256 29f3e7d863dbf029612877c33abd5365ad437db5d3e6845beec757c52d802d2f
+    updated '2026-10-24T13:54:06.043Z'
+    sourceUrl 'https://eur-lex.europa.eu/legal-content/SL/TXT/?uri=OJ:C:2016:202:TOC'
+  eu/treaties/sv:
+    title 'Consolidated versions of the Treaty on European Union and the Treaty on the Functioning of the European Union, Protocols, Declarations and the Charter of Fundamental Rights (OJ C 202, 7.6.2016)'
+    jurisdiction EU
+    language sv
+    source eu-cellar
+    mode mirror
+    status ok
+    units 958
+    sha256 3d3faf2c54908a0a68a8b2d50162a33f5adffa5267e17eea9c74159e548fc8f9
+    updated '2026-10-24T13:54:06.043Z'
+    sourceUrl 'https://eur-lex.europa.eu/legal-content/SV/TXT/?uri=OJ:C:2016:202:TOC'
+  ge/civil-code/en:
+    title 'Civil Code of Georgia'
+    jurisdiction GE
+    language en
+    source ge-matsne
+    mode mirror
+    status ok
+    units 1671
+    sha256 98beb916856e571c5b82d031449a452ce2640ab2787192298440557162f34b47
+    updated '2026-10-24T13:54:06.043Z'
+    sourceUrl 'https://matsne.gov.ge/en/document/view/31702'
+  ge/civil-code/ka:
+    title 'Civil Code of Georgia'
+    jurisdiction GE
+    language ka
+    source ge-matsne
+    mode mirror
+    status ok
+    units 1703
+    sha256 07aaa55091bc52094985c3d099b83e119726e271748aa1afd7006c4982124f57
+    updated '2026-10-24T13:54:06.043Z'
+    sourceUrl 'https://matsne.gov.ge/ka/document/view/31702'
+  ge/civil-code/ru:
+    title 'Civil Code of Georgia'
+    jurisdiction GE
+    language ru
+    source ge-matsne
+    mode mirror
+    status ok
+    units 1608
+    sha256 fffeb390010836858ec4c1f883a41721a2b40c14f1390677dd4b388182a901fd
+    updated '2026-10-24T13:54:06.043Z'
+    sourceUrl 'https://matsne.gov.ge/ru/document/view/31702'
+  ge/criminal-code/en:
+    title 'Criminal Code of Georgia'
+    jurisdiction GE
+    language en
+    source ge-matsne
+    mode mirror
+    status ok
+    units 447
+    sha256 66c552401efad5252aacfc01bcdae6befecbb9a8d3800721f6d24a39490cd749
+    updated '2026-10-24T13:54:06.043Z'
+    sourceUrl 'https://matsne.gov.ge/en/document/view/16426'
+  ge/criminal-code/ka:
+    title 'Criminal Code of Georgia'
+    jurisdiction GE
+    language ka
+    source ge-matsne
+    mode mirror
+    status ok
+    units 621
+    sha256 fa9de4764a0820db9e1c34337f5c56f2f7619ffb461c6a8587a319054b283e92
+    updated '2026-10-24T13:54:06.043Z'
+    sourceUrl 'https://matsne.gov.ge/ka/document/view/16426'
+  ge/criminal-code/ru:
+    title 'Criminal Code of Georgia'
+    jurisdiction GE
+    language ru
+    source ge-matsne
+    mode mirror
+    status ok
+    units 632
+    sha256 6166512d9be6f1f4033aa7fd473a6ed0b9efdc9f939c30bea104d6ddb2156e54
+    updated '2026-10-24T13:54:06.043Z'
+    sourceUrl 'https://matsne.gov.ge/ru/document/view/16426'
+  us/usc/t1/en:
+    title 'Title 1 GENERAL PROVISIONS'
+    jurisdiction US
+    language en
+    source us-olrc
+    mode mirror
+    status ok
+    units 43
+    version 119-124
+    sha256 58a7b12689d55494a18003f8734ec37a2dc57cf334125e84c179e8ab3ae533e6
+    updated '2026-10-24T13:54:06.043Z'
+    sourceUrl 'https://uscode.house.gov/browse/prelim@title1&edition=prelim'
+  us/usc/t2/en:
+    title 'Title 2 THE CONGRESS'
+    jurisdiction US
+    language en
+    source us-olrc
+    mode mirror
+    status ok
+    units 1790
+    version 119-124
+    sha256 c1af08336294eba9eaf2e9185d1252bb96d28b684af7336f5ba9a193e8abc204
+    updated '2026-10-24T13:54:06.043Z'
+    sourceUrl 'https://uscode.house.gov/browse/prelim@title2&edition=prelim'
+  eu/ai-act/bg:
+    title 'Regulation (EU) 2024/1689 (Artificial Intelligence Act)'
+    jurisdiction EU
+    language bg
+    source eu-cellar
+    mode mirror
+    status ok
+    units 156
+    sha256 b4dbe54787ec1b9e7970791933f60790c29756bc2602d3bc5f0f5f769bb1aed7
+    updated '2026-10-24T13:54:06.043Z'
+    sourceUrl 'https://eur-lex.europa.eu/legal-content/BG/TXT/?uri=CELEX:32024R1689'
+  eu/ai-act/cs:
+    title 'Regulation (EU) 2024/1689 (Artificial Intelligence Act)'
+    jurisdiction EU
+    language cs
+    source eu-cellar
+    mode mirror
+    status ok
+    units 156
+    sha256 a025247a6bcadb2dfca669cd58b8057e72276c2a32e58e565d2b318cd93012a5
+    updated '2026-10-24T13:54:06.043Z'
+    sourceUrl 'https://eur-lex.europa.eu/legal-content/CS/TXT/?uri=CELEX:32024R1689'
+  eu/ai-act/da:
+    title 'Regulation (EU) 2024/1689 (Artificial Intelligence Act)'
+    jurisdiction EU
+    language da
+    source eu-cellar
+    mode mirror
+    status ok
+    units 156
+    sha256 f1bdc9baaf8ffa4853ced1b6c527e821de986aa5372685f844751bc49effb8c1
+    updated '2026-10-24T13:54:06.043Z'
+    sourceUrl 'https://eur-lex.europa.eu/legal-content/DA/TXT/?uri=CELEX:32024R1689'
+  eu/ai-act/de:
+    title 'Regulation (EU) 2024/1689 (Artificial Intelligence Act)'
+    jurisdiction EU
+    language de
+    source eu-cellar
+    mode mirror
+    status ok
+    units 156
+    sha256 126daa7d62d9b0e9f4700d9ba5504b4a59ca9205b8764a1a27e40817d3144b3b
+    updated '2026-10-24T13:54:06.043Z'
+    sourceUrl 'https://eur-lex.europa.eu/legal-content/DE/TXT/?uri=CELEX:32024R1689'
+  eu/ai-act/el:
+    title 'Regulation (EU) 2024/1689 (Artificial Intelligence Act)'
+    jurisdiction EU
+    language el
+    source eu-cellar
+    mode mirror
+    status ok
+    units 156
+    sha256 794a4d448179cb493f0bb344a651824ea42067bc21e59739c46afcbdb10f429c
+    updated '2026-10-24T13:54:06.043Z'
+    sourceUrl 'https://eur-lex.europa.eu/legal-content/EL/TXT/?uri=CELEX:32024R1689'
+  eu/ai-act/en:
+    title 'Regulation (EU) 2024/1689 (Artificial Intelligence Act)'
+    jurisdiction EU
+    language en
+    source eu-cellar
+    mode mirror
+    status ok
+    units 156
+    sha256 8f0b656302f9864cc87e040c371f209a9d65ae1a6cecc25ca5eb737e872d721a
+    updated '2026-10-24T13:54:06.043Z'
+    sourceUrl 'https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32024R1689'
+  eu/ai-act/es:
+    title 'Regulation (EU) 2024/1689 (Artificial Intelligence Act)'
+    jurisdiction EU
+    language es
+    source eu-cellar
+    mode mirror
+    status ok
+    units 156
+    sha256 0ef11d381226cde823d0bbf03ed195ec98645b9a0b7e06b1668c7f46751aad8c
+    updated '2026-10-24T13:54:06.043Z'
+    sourceUrl 'https://eur-lex.europa.eu/legal-content/ES/TXT/?uri=CELEX:32024R1689'
+  eu/ai-act/et:
+    title 'Regulation (EU) 2024/1689 (Artificial Intelligence Act)'
+    jurisdiction EU
+    language et
+    source eu-cellar
+    mode mirror
+    status ok
+    units 156
+    sha256 0dc5932d5ec5cd6b66fc1a5ee9c54352f9852b3d08379bf7455786c15fa6556a
+    updated '2026-10-24T13:54:06.043Z'
+    sourceUrl 'https://eur-lex.europa.eu/legal-content/ET/TXT/?uri=CELEX:32024R1689'
+  eu/ai-act/fi:
+    title 'Regulation (EU) 2024/1689 (Artificial Intelligence Act)'
+    jurisdiction EU
+    language fi
+    source eu-cellar
+    mode mirror
+    status ok
+    units 156
+    sha256 67eb1b5ff07dd76e80ef8931506bb7e8f1cdbf8a8b4aa07057d894bac4a9a38f
+    updated '2026-10-24T13:54:06.043Z'
+    sourceUrl 'https://eur-lex.europa.eu/legal-content/FI/TXT/?uri=CELEX:32024R1689'
+  eu/ai-act/fr:
+    title 'Regulation (EU) 2024/1689 (Artificial Intelligence Act)'
+    jurisdiction EU
+    language fr
+    source eu-cellar
+    mode mirror
+    status ok
+    units 156
+    sha256 d8b1a7775f597dc8d49a2bdc91af0dca3bc12ac558b97504685f9534660bb44e
+    updated '2026-10-24T13:54:06.043Z'
+    sourceUrl 'https://eur-lex.europa.eu/legal-content/FR/TXT/?uri=CELEX:32024R1689'
+  eu/ai-act/ga:
+    title 'Regulation (EU) 2024/1689 (Artificial Intelligence Act)'
+    jurisdiction EU
+    language ga
+    source eu-cellar
+    mode mirror
+    status ok
+    units 156
+    sha256 89e4d8093dca4e6edb360c22fb7cf6a681fa352c906aca49a849bb7d5f2eb0bb
+    updated '2026-10-24T13:54:06.043Z'
+    sourceUrl 'https://eur-lex.europa.eu/legal-content/GA/TXT/?uri=CELEX:32024R1689'
+  eu/ai-act/hr:
+    title 'Regulation (EU) 2024/1689 (Artificial Intelligence Act)'
+    jurisdiction EU
+    language hr
+    source eu-cellar
+    mode mirror
+    status ok
+    units 156
+    sha256 cc5d2eaedfd7d4d97a614b742c7ba47787ccc21bda52b80e5b9bf9e2e3eb5317
+    updated '2026-10-24T13:54:06.043Z'
+    sourceUrl 'https://eur-lex.europa.eu/legal-content/HR/TXT/?uri=CELEX:32024R1689'
+  eu/ai-act/hu:
+    title 'Regulation (EU) 2024/1689 (Artificial Intelligence Act)'
+    jurisdiction EU
+    language hu
+    source eu-cellar
+    mode mirror
+    status ok
+    units 156
+    sha256 515dcba079a68b44b8d2a16806abea34f7582ba2f8eb911e6d12fd1f33d0a5a5
+    updated '2026-10-24T13:54:06.043Z'
+    sourceUrl 'https://eur-lex.europa.eu/legal-content/HU/TXT/?uri=CELEX:32024R1689'
+  eu/ai-act/it:
+    title 'Regulation (EU) 2024/1689 (Artificial Intelligence Act)'
+    jurisdiction EU
+    language it
+    source eu-cellar
+    mode mirror
+    status ok
+    units 156
+    sha256 ba2ca075faa2ccfc19c57185692771db11319ecc3b4e5bb067a90f63aa8b2c86
+    updated '2026-10-24T13:54:06.043Z'
+    sourceUrl 'https://eur-lex.europa.eu/legal-content/IT/TXT/?uri=CELEX:32024R1689'
+  eu/ai-act/lt:
+    title 'Regulation (EU) 2024/1689 (Artificial Intelligence Act)'
+    jurisdiction EU
+    language lt
+    source eu-cellar
+    mode mirror
+    status ok
+    units 156
+    sha256 e3e915db23954bea147f2d8deda5723bed5ea1ccd35951099ac3d6a927d30827
+    updated '2026-10-24T13:54:06.043Z'
+    sourceUrl 'https://eur-lex.europa.eu/legal-content/LT/TXT/?uri=CELEX:32024R1689'
+  eu/ai-act/lv:
+    title 'Regulation (EU) 2024/1689 (Artificial Intelligence Act)'
+    jurisdiction EU
+    language lv
+    source eu-cellar
+    mode mirror
+    status ok
+    units 156
+    sha256 c9414ba26702d1df4ad9fa5b1c10e8a5b3bf19e40b5562ff05425966277e443e
+    updated '2026-10-24T13:54:06.043Z'
+    sourceUrl 'https://eur-lex.europa.eu/legal-content/LV/TXT/?uri=CELEX:32024R1689'
+  eu/ai-act/mt:
+    title 'Regulation (EU) 2024/1689 (Artificial Intelligence Act)'
+    jurisdiction EU
+    language mt
+    source eu-cellar
+    mode mirror
+    status ok
+    units 156
+    sha256 f8b3cef536530715d0016a22b15004831a94726459bf3ccdbd787c619b08af3b
+    updated '2026-10-24T13:54:06.043Z'
+    sourceUrl 'https://eur-lex.europa.eu/legal-content/MT/TXT/?uri=CELEX:32024R1689'
+  eu/ai-act/nl:
+    title 'Regulation (EU) 2024/1689 (Artificial Intelligence Act)'
+    jurisdiction EU
+    language nl
+    source eu-cellar
+    mode mirror
+    status ok
+    units 156
+    sha256 f054eff05f18abc2415bca1391f0bd01586698ba8f42ff37713b68dcae359f94
+    updated '2026-10-24T13:54:06.043Z'
+    sourceUrl 'https://eur-lex.europa.eu/legal-content/NL/TXT/?uri=CELEX:32024R1689'
+  eu/ai-act/pl:
+    title 'Regulation (EU) 2024/1689 (Artificial Intelligence Act)'
+    jurisdiction EU
+    language pl
+    source eu-cellar
+    mode mirror
+    status ok
+    units 156
+    sha256 37b91c6f5fdc6c2286285af5c87c8473496685ace62b9c9c3c5afc5a0b257360
+    updated '2026-10-24T13:54:06.043Z'
+    sourceUrl 'https://eur-lex.europa.eu/legal-content/PL/TXT/?uri=CELEX:32024R1689'
+  eu/ai-act/pt:
+    title 'Regulation (EU) 2024/1689 (Artificial Intelligence Act)'
+    jurisdiction EU
+    language pt
+    source eu-cellar
+    mode mirror
+    status ok
+    units 156
+    sha256 11c7f31fa5d9074f472d63f02ae58915319245cd33230637facb21bcce697af5
+    updated '2026-10-24T13:54:06.043Z'
+    sourceUrl 'https://eur-lex.europa.eu/legal-content/PT/TXT/?uri=CELEX:32024R1689'
+  eu/ai-act/ro:
+    title 'Regulation (EU) 2024/1689 (Artificial Intelligence Act)'
+    jurisdiction EU
+    language ro
+    source eu-cellar
+    mode mirror
+    status ok
+    units 156
+    sha256 d864ada9aeed9016037df837bbebf2d318c642568ba9e48df32801dbb8178011
+    updated '2026-10-24T13:54:06.043Z'
+    sourceUrl 'https://eur-lex.europa.eu/legal-content/RO/TXT/?uri=CELEX:32024R1689'
+  eu/ai-act/sk:
+    title 'Regulation (EU) 2024/1689 (Artificial Intelligence Act)'
+    jurisdiction EU
+    language sk
+    source eu-cellar
+    mode mirror
+    status ok
+    units 156
+    sha256 99fbb67d8b076e091003a500741af75677ab16271936a17ed771798fcba235f3
+    updated '2026-10-24T13:54:06.043Z'
+    sourceUrl 'https://eur-lex.europa.eu/legal-content/SK/TXT/?uri=CELEX:32024R1689'
+  eu/ai-act/sl:
+    title 'Regulation (EU) 2024/1689 (Artificial Intelligence Act)'
+    jurisdiction EU
+    language sl
+    source eu-cellar
+    mode mirror
+    status ok
+    units 156
+    sha256 1a75113d58ef3eda1ec4dbacfa542b3294721c773920bfeba5c90c27083f019f
+    updated '2026-10-24T13:54:06.043Z'
+    sourceUrl 'https://eur-lex.europa.eu/legal-content/SL/TXT/?uri=CELEX:32024R1689'
+  eu/ai-act/sv:
+    title 'Regulation (EU) 2024/1689 (Artificial Intelligence Act)'
+    jurisdiction EU
+    language sv
+    source eu-cellar
+    mode mirror
+    status ok
+    units 156
+    sha256 50f3792f465c74feca46a093b7e089e0d3be2af6b3664322a6187b73fb8b008d
+    updated '2026-10-24T13:54:06.043Z'
+    sourceUrl 'https://eur-lex.europa.eu/legal-content/SV/TXT/?uri=CELEX:32024R1689'
+  eu/dma/bg:
+    title 'Regulation (EU) 2022/1925 (Digital Markets Act)'
+    jurisdiction EU
+    language bg
+    source eu-cellar
+    mode mirror
+    status ok
+    units 62
+    sha256 8df0c30f8c6f0667e47bc21c1266022cba49313d3437d303a77444d9c7fbcded
+    updated '2026-10-24T13:54:06.043Z'
+    sourceUrl 'https://eur-lex.europa.eu/legal-content/BG/TXT/?uri=CELEX:32022R1925'
+  eu/dma/cs:
+    title 'Regulation (EU) 2022/1925 (Digital Markets Act)'
+    jurisdiction EU
+    language cs
+    source eu-cellar
+    mode mirror
+    status ok
+    units 62
+    sha256 0fdcbd9b26310b0501fdbda1c94ead420ac45a96d7a791775d343ec6d830bd14
+    updated '2026-10-24T13:54:06.043Z'
+    sourceUrl 'https://eur-lex.europa.eu/legal-content/CS/TXT/?uri=CELEX:32022R1925'
+  eu/dma/da:
+    title 'Regulation (EU) 2022/1925 (Digital Markets Act)'
+    jurisdiction EU
+    language da
+    source eu-cellar
+    mode mirror
+    status ok
+    units 62
+    sha256 183d1be73de2c027d5c8ac82db43c858b0826635d765fba77d560e5b64b0c07d
+    updated '2026-10-24T13:54:06.043Z'
+    sourceUrl 'https://eur-lex.europa.eu/legal-content/DA/TXT/?uri=CELEX:32022R1925'
+  eu/dma/de:
+    title 'Regulation (EU) 2022/1925 (Digital Markets Act)'
+    jurisdiction EU
+    language de
+    source eu-cellar
+    mode mirror
+    status ok
+    units 62
+    sha256 1abc8aebdf65f598acf294d4decdf83a241f3968b9a9920fe5d5cdf0098c732c
+    updated '2026-10-24T13:54:06.043Z'
+    sourceUrl 'https://eur-lex.europa.eu/legal-content/DE/TXT/?uri=CELEX:32022R1925'
+  eu/dma/el:
+    title 'Regulation (EU) 2022/1925 (Digital Markets Act)'
+    jurisdiction EU
+    language el
+    source eu-cellar
+    mode mirror
+    status ok
+    units 62
+    sha256 cc05659af38a2a728800f4e6ceb445d224ba94eb7fbe68f6bac86b151398d978
+    updated '2026-10-24T13:54:06.043Z'
+    sourceUrl 'https://eur-lex.europa.eu/legal-content/EL/TXT/?uri=CELEX:32022R1925'
+  eu/dma/en:
+    title 'Regulation (EU) 2022/1925 (Digital Markets Act)'
+    jurisdiction EU
+    language en
+    source eu-cellar
+    mode mirror
+    status ok
+    units 62
+    sha256 d6af21a4f11c2b001b0486391fbd0813deba32305fb0d3865fbceccd45b827eb
+    updated '2026-10-24T13:54:06.043Z'
+    sourceUrl 'https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32022R1925'
+  eu/dma/es:
+    title 'Regulation (EU) 2022/1925 (Digital Markets Act)'
+    jurisdiction EU
+    language es
+    source eu-cellar
+    mode mirror
+    status ok
+    units 62
+    sha256 83af6e75c43e6650fdceaf7a3b6532e162c1df6c2e4073a063bf178c9d0e46df
+    updated '2026-10-24T13:54:06.043Z'
+    sourceUrl 'https://eur-lex.europa.eu/legal-content/ES/TXT/?uri=CELEX:32022R1925'
+  eu/dma/et:
+    title 'Regulation (EU) 2022/1925 (Digital Markets Act)'
+    jurisdiction EU
+    language et
+    source eu-cellar
+    mode mirror
+    status ok
+    units 62
+    sha256 8ec17c15a929535bcd595c7a661b0dffe2e36d5abb1a32a16070bc427ffd850a
+    updated '2026-10-24T13:54:06.043Z'
+    sourceUrl 'https://eur-lex.europa.eu/legal-content/ET/TXT/?uri=CELEX:32022R1925'
+  eu/dma/fi:
+    title 'Regulation (EU) 2022/1925 (Digital Markets Act)'
+    jurisdiction EU
+    language fi
+    source eu-cellar
+    mode mirror
+    status ok
+    units 62
+    sha256 d7b34e4fe8e7e4b89458a3db1cb109cfa1d746aa39a7a8f7c808c500538f2816
+    updated '2026-10-24T13:54:06.043Z'
+    sourceUrl 'https://eur-lex.europa.eu/legal-content/FI/TXT/?uri=CELEX:32022R1925'
+  eu/dma/fr:
+    title 'Regulation (EU) 2022/1925 (Digital Markets Act)'
+    jurisdiction EU
+    language fr
+    source eu-cellar
+    mode mirror
+    status ok
+    units 62
+    sha256 09a13a47d435808529c84c8c22b0032d120da3e2778fe953bf437852ffa39a5d
+    updated '2026-10-24T13:54:06.043Z'
+    sourceUrl 'https://eur-lex.europa.eu/legal-content/FR/TXT/?uri=CELEX:32022R1925'
+  eu/dma/ga:
+    title 'Regulation (EU) 2022/1925 (Digital Markets Act)'
+    jurisdiction EU
+    language ga
+    source eu-cellar
+    mode mirror
+    status ok
+    units 62
+    sha256 639fd81f935ecb1e1798263cedd3870eaa67e294bf8cd0e66e905771dda2ec5f
+    updated '2026-10-24T13:54:06.043Z'
+    sourceUrl 'https://eur-lex.europa.eu/legal-content/GA/TXT/?uri=CELEX:32022R1925'
+  eu/dma/hr:
+    title 'Regulation (EU) 2022/1925 (Digital Markets Act)'
+    jurisdiction EU
+    language hr
+    source eu-cellar
+    mode mirror
+    status ok
+    units 62
+    sha256 bc7bedf4ca4cea051430b40471b5385fb22ff4462004ef010b9694a0571208b3
+    updated '2026-10-24T13:54:06.043Z'
+    sourceUrl 'https://eur-lex.europa.eu/legal-content/HR/TXT/?uri=CELEX:32022R1925'
+  eu/dma/hu:
+    title 'Regulation (EU) 2022/1925 (Digital Markets Act)'
+    jurisdiction EU
+    language hu
+    source eu-cellar
+    mode mirror
+    status ok
+    units 62
+    sha256 acb272f51acd6d7ef201d7d9168875a9e90ff6a974b22cbf48e81410b8df5ca4
+    updated '2026-10-24T13:54:06.043Z'
+    sourceUrl 'https://eur-lex.europa.eu/legal-content/HU/TXT/?uri=CELEX:32022R1925'
+  eu/dma/it:
+    title 'Regulation (EU) 2022/1925 (Digital Markets Act)'
+    jurisdiction EU
+    language it
+    source eu-cellar
+    mode mirror
+    status ok
+    units 62
+    sha256 7749e6379f5795f08e857671f680db527539f221262b4ba95e89f4df45287589
+    updated '2026-10-24T13:54:06.043Z'
+    sourceUrl 'https://eur-lex.europa.eu/legal-content/IT/TXT/?uri=CELEX:32022R1925'
+  eu/dma/lt:
+    title 'Regulation (EU) 2022/1925 (Digital Markets Act)'
+    jurisdiction EU
+    language lt
+    source eu-cellar
+    mode mirror
+    status ok
+    units 62
+    sha256 cf7eaac6f89cadeb7b67ea7a1209223506d2c63ba3541c799033f13fe506730f
+    updated '2026-10-24T13:54:06.043Z'
+    sourceUrl 'https://eur-lex.europa.eu/legal-content/LT/TXT/?uri=CELEX:32022R1925'
+  eu/dma/lv:
+    title 'Regulation (EU) 2022/1925 (Digital Markets Act)'
+    jurisdiction EU
+    language lv
+    source eu-cellar
+    mode mirror
+    status ok
+    units 62
+    sha256 ef7bcb9c0fc980b09a9b408d87f6800ed2ef43b9e8c5fc2836749895e380ed34
+    updated '2026-10-24T13:54:06.043Z'
+    sourceUrl 'https://eur-lex.europa.eu/legal-content/LV/TXT/?uri=CELEX:32022R1925'
+  eu/dma/mt:
+    title 'Regulation (EU) 2022/1925 (Digital Markets Act)'
+    jurisdiction EU
+    language mt
+    source eu-cellar
+    mode mirror
+    status ok
+    units 62
+    sha256 11489b6f3f80fd05bd396b9ef81d5a79eaef652322372b4e01274dc3d6edc224
+    updated '2026-10-24T13:54:06.043Z'
+    sourceUrl 'https://eur-lex.europa.eu/legal-content/MT/TXT/?uri=CELEX:32022R1925'
+  eu/dma/nl:
+    title 'Regulation (EU) 2022/1925 (Digital Markets Act)'
+    jurisdiction EU
+    language nl
+    source eu-cellar
+    mode mirror
+    status ok
+    units 62
+    sha256 84082f4b732b657975cf41280c75df8bfa0ca162ec1495c5dc5459dd63910729
+    updated '2026-10-24T13:54:06.043Z'
+    sourceUrl 'https://eur-lex.europa.eu/legal-content/NL/TXT/?uri=CELEX:32022R1925'
+  eu/dma/pl:
+    title 'Regulation (EU) 2022/1925 (Digital Markets Act)'
+    jurisdiction EU
+    language pl
+    source eu-cellar
+    mode mirror
+    status ok
+    units 62
+    sha256 60a916dc2d6808319154b239ffa02da1cf0def255a29eabaf10d8e060ff43b8b
+    updated '2026-10-24T13:54:06.043Z'
+    sourceUrl 'https://eur-lex.europa.eu/legal-content/PL/TXT/?uri=CELEX:32022R1925'
+  eu/dma/pt:
+    title 'Regulation (EU) 2022/1925 (Digital Markets Act)'
+    jurisdiction EU
+    language pt
+    source eu-cellar
+    mode mirror
+    status ok
+    units 62
+    sha256 60d3cc011359339782ad6ace0bff74d1e41814e0a3694cd55e28393570fc7ef7
+    updated '2026-10-24T13:54:06.043Z'
+    sourceUrl 'https://eur-lex.europa.eu/legal-content/PT/TXT/?uri=CELEX:32022R1925'
+  eu/dma/ro:
+    title 'Regulation (EU) 2022/1925 (Digital Markets Act)'
+    jurisdiction EU
+    language ro
+    source eu-cellar
+    mode mirror
+    status ok
+    units 62
+    sha256 5f4aecc29d7168401ff5f09f58397ce31aa91d9987bade92b51168c64111ac6e
+    updated '2026-10-24T13:54:06.043Z'
+    sourceUrl 'https://eur-lex.europa.eu/legal-content/RO/TXT/?uri=CELEX:32022R1925'
+  eu/dma/sk:
+    title 'Regulation (EU) 2022/1925 (Digital Markets Act)'
+    jurisdiction EU
+    language sk
+    source eu-cellar
+    mode mirror
+    status ok
+    units 62
+    sha256 f68f23396adfd73ab705b6a89ed01a2e6dd00069ed4cbb165411decff65d3ef2
+    updated '2026-10-24T13:54:06.043Z'
+    sourceUrl 'https://eur-lex.europa.eu/legal-content/SK/TXT/?uri=CELEX:32022R1925'
+  eu/dma/sl:
+    title 'Regulation (EU) 2022/1925 (Digital Markets Act)'
+    jurisdiction EU
+    language sl
+    source eu-cellar
+    mode mirror
+    status ok
+    units 62
+    sha256 31044964f3ad82ebea132cc1ce16ff7650074e80cd6899e9e783065bf8b16dcf
+    updated '2026-10-24T13:54:06.043Z'
+    sourceUrl 'https://eur-lex.europa.eu/legal-content/SL/TXT/?uri=CELEX:32022R1925'
+  eu/dma/sv:
+    title 'Regulation (EU) 2022/1925 (Digital Markets Act)'
+    jurisdiction EU
+    language sv
+    source eu-cellar
+    mode mirror
+    status ok
+    units 62
+    sha256 e6f5a41ba36eeb0813d17069d40b6986df49d688b962724e245750e41d6ba8fb
+    updated '2026-10-24T13:54:06.043Z'
+    sourceUrl 'https://eur-lex.europa.eu/legal-content/SV/TXT/?uri=CELEX:32022R1925'
+  eu/dsa/bg:
+    title 'Regulation (EU) 2022/2065 (Digital Services Act)'
+    jurisdiction EU
+    language bg
+    source eu-cellar
+    mode mirror
+    status ok
+    units 111
+    sha256 a562a97bef0f2c6a0ef0510fbabab7c9e873db924efdfc3905a6d05fbaa82ddc
+    updated '2026-10-24T13:54:06.043Z'
+    sourceUrl 'https://eur-lex.europa.eu/legal-content/BG/TXT/?uri=CELEX:32022R2065'
+  eu/dsa/cs:
+    title 'Regulation (EU) 2022/2065 (Digital Services Act)'
+    jurisdiction EU
+    language cs
+    source eu-cellar
+    mode mirror
+    status ok
+    units 111
+    sha256 95a21d93ee8db5858084bf33827d9dcce54809e49f6dfe5708e1b53c68ac8f17
+    updated '2026-10-24T13:54:06.043Z'
+    sourceUrl 'https://eur-lex.europa.eu/legal-content/CS/TXT/?uri=CELEX:32022R2065'
+  eu/dsa/da:
+    title 'Regulation (EU) 2022/2065 (Digital Services Act)'
+    jurisdiction EU
+    language da
+    source eu-cellar
+    mode mirror
+    status ok
+    units 111
+    sha256 f1de409699f70bfc0cc2b98e4e2ccf05b968df07a8e5a714331f00737718f2e4
+    updated '2026-10-24T13:54:06.043Z'
+    sourceUrl 'https://eur-lex.europa.eu/legal-content/DA/TXT/?uri=CELEX:32022R2065'
+  eu/dsa/de:
+    title 'Regulation (EU) 2022/2065 (Digital Services Act)'
+    jurisdiction EU
+    language de
+    source eu-cellar
+    mode mirror
+    status ok
+    units 111
+    sha256 6df8ce92d6f6ce95ad7f8fa6705644d02c53336866dea61501369cb53f156bc4
+    updated '2026-10-24T13:54:06.043Z'
+    sourceUrl 'https://eur-lex.europa.eu/legal-content/DE/TXT/?uri=CELEX:32022R2065'
+  eu/dsa/el:
+    title 'Regulation (EU) 2022/2065 (Digital Services Act)'
+    jurisdiction EU
+    language el
+    source eu-cellar
+    mode mirror
+    status ok
+    units 111
+    sha256 81b07f85231222431e266c5f305d3bf92496362f8b1017c2d1b866ae94a75c51
+    updated '2026-10-24T13:54:06.043Z'
+    sourceUrl 'https://eur-lex.europa.eu/legal-content/EL/TXT/?uri=CELEX:32022R2065'
+  eu/dsa/en:
+    title 'Regulation (EU) 2022/2065 (Digital Services Act)'
+    jurisdiction EU
+    language en
+    source eu-cellar
+    mode mirror
+    status ok
+    units 111
+    sha256 11b119a7d45f3a10cd41714061f9d907839ef5d1634e41774490f00b95856bbf
+    updated '2026-10-24T13:54:06.043Z'
+    sourceUrl 'https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32022R2065'
+  eu/dsa/es:
+    title 'Regulation (EU) 2022/2065 (Digital Services Act)'
+    jurisdiction EU
+    language es
+    source eu-cellar
+    mode mirror
+    status ok
+    units 111
+    sha256 348b288f9e5d18c2b3de0379299587868180c2032c26d85795305ea16653f271
+    updated '2026-10-24T13:54:06.043Z'
+    sourceUrl 'https://eur-lex.europa.eu/legal-content/ES/TXT/?uri=CELEX:32022R2065'
+  eu/dsa/et:
+    title 'Regulation (EU) 2022/2065 (Digital Services Act)'
+    jurisdiction EU
+    language et
+    source eu-cellar
+    mode mirror
+    status ok
+    units 111
+    sha256 7137df0a62c2fab02d17f4f40c0bbea97a9d20be55e3691a28bb7c8f38f92f78
+    updated '2026-10-24T13:54:06.043Z'
+    sourceUrl 'https://eur-lex.europa.eu/legal-content/ET/TXT/?uri=CELEX:32022R2065'
+  eu/dsa/fi:
+    title 'Regulation (EU) 2022/2065 (Digital Services Act)'
+    jurisdiction EU
+    language fi
+    source eu-cellar
+    mode mirror
+    status ok
+    units 111
+    sha256 d7b4b6b0a310a7e3939319bb6a6e6f74e6d0de656591f6579fc00f34297523d6
+    updated '2026-10-24T13:54:06.043Z'
+    sourceUrl 'https://eur-lex.europa.eu/legal-content/FI/TXT/?uri=CELEX:32022R2065'
+  eu/dsa/fr:
+    title 'Regulation (EU) 2022/2065 (Digital Services Act)'
+    jurisdiction EU
+    language fr
+    source eu-cellar
+    mode mirror
+    status ok
+    units 111
+    sha256 aa15213e301e9a864129b3af8017eea462395710c93852c4e9609155403d446f
+    updated '2026-10-24T13:54:06.043Z'
+    sourceUrl 'https://eur-lex.europa.eu/legal-content/FR/TXT/?uri=CELEX:32022R2065'
+  eu/dsa/ga:
+    title 'Regulation (EU) 2022/2065 (Digital Services Act)'
+    jurisdiction EU
+    language ga
+    source eu-cellar
+    mode mirror
+    status ok
+    units 111
+    sha256 9ce0cd5f7bff999d8fa1186a373ba0d386359b7689432455050258a9d677f6a5
+    updated '2026-10-24T13:54:06.043Z'
+    sourceUrl 'https://eur-lex.europa.eu/legal-content/GA/TXT/?uri=CELEX:32022R2065'
+  eu/dsa/hr:
+    title 'Regulation (EU) 2022/2065 (Digital Services Act)'
+    jurisdiction EU
+    language hr
+    source eu-cellar
+    mode mirror
+    status ok
+    units 111
+    sha256 15e59b64438b68b2029d914f4af3d3be684dc13e8246e52f27f118443e94af27
+    updated '2026-10-24T13:54:06.043Z'
+    sourceUrl 'https://eur-lex.europa.eu/legal-content/HR/TXT/?uri=CELEX:32022R2065'
+  eu/dsa/hu:
+    title 'Regulation (EU) 2022/2065 (Digital Services Act)'
+    jurisdiction EU
+    language hu
+    source eu-cellar
+    mode mirror
+    status ok
+    units 111
+    sha256 1229519c70dc2179baee15fe3a6b61981832a0c341ad26443fa48723d7457a26
+    updated '2026-10-24T13:54:06.043Z'
+    sourceUrl 'https://eur-lex.europa.eu/legal-content/HU/TXT/?uri=CELEX:32022R2065'
+  eu/dsa/it:
+    title 'Regulation (EU) 2022/2065 (Digital Services Act)'
+    jurisdiction EU
+    language it
+    source eu-cellar
+    mode mirror
+    status ok
+    units 111
+    sha256 41f303e6e9b56477a7e01119d47572a3a7bb718c3f5ce320930aa3763dba00b6
+    updated '2026-10-24T13:54:06.043Z'
+    sourceUrl 'https://eur-lex.europa.eu/legal-content/IT/TXT/?uri=CELEX:32022R2065'
+  eu/dsa/lt:
+    title 'Regulation (EU) 2022/2065 (Digital Services Act)'
+    jurisdiction EU
+    language lt
+    source eu-cellar
+    mode mirror
+    status ok
+    units 111
+    sha256 cfcdd2e46ae66a3268755e2107f3be00a002f79e54285049ad33c4984cd71658
+    updated '2026-10-24T13:54:06.043Z'
+    sourceUrl 'https://eur-lex.europa.eu/legal-content/LT/TXT/?uri=CELEX:32022R2065'
+  eu/dsa/lv:
+    title 'Regulation (EU) 2022/2065 (Digital Services Act)'
+    jurisdiction EU
+    language lv
+    source eu-cellar
+    mode mirror
+    status ok
+    units 111
+    sha256 5d2e57403dd6f03ae3b9844d4ac86fa0b43cd8bf92c2b57c8d90e8d341ca3871
+    updated '2026-10-24T13:54:06.043Z'
+    sourceUrl 'https://eur-lex.europa.eu/legal-content/LV/TXT/?uri=CELEX:32022R2065'
+  eu/dsa/mt:
+    title 'Regulation (EU) 2022/2065 (Digital Services Act)'
+    jurisdiction EU
+    language mt
+    source eu-cellar
+    mode mirror
+    status ok
+    units 111
+    sha256 74577e2ebd4334cebe82ce1bb43b956a13c2244ca086cc3eabf0ffa9d4f95e76
+    updated '2026-10-24T13:54:06.043Z'
+    sourceUrl 'https://eur-lex.europa.eu/legal-content/MT/TXT/?uri=CELEX:32022R2065'
+  eu/dsa/nl:
+    title 'Regulation (EU) 2022/2065 (Digital Services Act)'
+    jurisdiction EU
+    language nl
+    source eu-cellar
+    mode mirror
+    status ok
+    units 111
+    sha256 ea4d39234eeb6fd2bfe61060864ab97ad17f3d76d3058f2a249c787e3385ce8f
+    updated '2026-10-24T13:54:06.043Z'
+    sourceUrl 'https://eur-lex.europa.eu/legal-content/NL/TXT/?uri=CELEX:32022R2065'
+  eu/dsa/pl:
+    title 'Regulation (EU) 2022/2065 (Digital Services Act)'
+    jurisdiction EU
+    language pl
+    source eu-cellar
+    mode mirror
+    status ok
+    units 111
+    sha256 9a172eb95a1eed13b10c70964d53182721c6776ac55de9f58af3df0692cf1a3b
+    updated '2026-10-24T13:54:06.043Z'
+    sourceUrl 'https://eur-lex.europa.eu/legal-content/PL/TXT/?uri=CELEX:32022R2065'
+  eu/dsa/pt:
+    title 'Regulation (EU) 2022/2065 (Digital Services Act)'
+    jurisdiction EU
+    language pt
+    source eu-cellar
+    mode mirror
+    status ok
+    units 111
+    sha256 f48effffefa2280843713d4cfa73a54bf6890f7baf085e29a3434cf9e7d0c12d
+    updated '2026-10-24T13:54:06.043Z'
+    sourceUrl 'https://eur-lex.europa.eu/legal-content/PT/TXT/?uri=CELEX:32022R2065'
+  eu/dsa/ro:
+    title 'Regulation (EU) 2022/2065 (Digital Services Act)'
+    jurisdiction EU
+    language ro
+    source eu-cellar
+    mode mirror
+    status ok
+    units 111
+    sha256 29ee062d39e8faac0a2dacb2ac2352fbeffe96151dfbdcbbb650148e754537cb
+    updated '2026-10-24T13:54:06.043Z'
+    sourceUrl 'https://eur-lex.europa.eu/legal-content/RO/TXT/?uri=CELEX:32022R2065'
+  eu/dsa/sk:
+    title 'Regulation (EU) 2022/2065 (Digital Services Act)'
+    jurisdiction EU
+    language sk
+    source eu-cellar
+    mode mirror
+    status ok
+    units 111
+    sha256 d87b08b8d2a38bdc773b3dd0fae1a425fbe20a7f60414c71d0d90dbb329671d9
+    updated '2026-10-24T13:54:06.043Z'
+    sourceUrl 'https://eur-lex.europa.eu/legal-content/SK/TXT/?uri=CELEX:32022R2065'
+  eu/dsa/sl:
+    title 'Regulation (EU) 2022/2065 (Digital Services Act)'
+    jurisdiction EU
+    language sl
+    source eu-cellar
+    mode mirror
+    status ok
+    units 111
+    sha256 0f4a05df0b9b5f8002bdc95da4c4217aa86e92fe95fcc13b90674fed5ead16f1
+    updated '2026-10-24T13:54:06.043Z'
+    sourceUrl 'https://eur-lex.europa.eu/legal-content/SL/TXT/?uri=CELEX:32022R2065'
+  eu/dsa/sv:
+    title 'Regulation (EU) 2022/2065 (Digital Services Act)'
+    jurisdiction EU
+    language sv
+    source eu-cellar
+    mode mirror
+    status ok
+    units 111
+    sha256 a56486d6eed674238eaf127884f672c137651d8e936074eec55a9c0f14c432cd
+    updated '2026-10-24T13:54:06.043Z'
+    sourceUrl 'https://eur-lex.europa.eu/legal-content/SV/TXT/?uri=CELEX:32022R2065'
+  eu/gdpr/bg:
+    title 'Regulation (EU) 2016/679 (General Data Protection Regulation)'
+    jurisdiction EU
+    language bg
+    source eu-cellar
+    mode mirror
+    status ok
+    units 126
+    sha256 f46af44834fe667592238573edd195e70843c9c3bf26ea7d31dec8653e7240a9
+    updated '2026-10-24T13:54:06.043Z'
+    sourceUrl 'https://eur-lex.europa.eu/legal-content/BG/TXT/?uri=CELEX:32016R0679'
+  eu/gdpr/cs:
+    title 'Regulation (EU) 2016/679 (General Data Protection Regulation)'
+    jurisdiction EU
+    language cs
+    source eu-cellar
+    mode mirror
+    status ok
+    units 126
+    sha256 a1c44265819df1d14a265b29e283715cd10e07889d03ab371d6c3b3678fc6bca
+    updated '2026-10-24T13:54:06.043Z'
+    sourceUrl 'https://eur-lex.europa.eu/legal-content/CS/TXT/?uri=CELEX:32016R0679'
+  eu/gdpr/da:
+    title 'Regulation (EU) 2016/679 (General Data Protection Regulation)'
+    jurisdiction EU
+    language da
+    source eu-cellar
+    mode mirror
+    status ok
+    units 126
+    sha256 cbf446006e33d94d93659c4f9f24b3dcfb1415ffb6cf6391de1c09945f95749f
+    updated '2026-10-24T13:54:06.043Z'
+    sourceUrl 'https://eur-lex.europa.eu/legal-content/DA/TXT/?uri=CELEX:32016R0679'
+  eu/gdpr/de:
+    title 'Regulation (EU) 2016/679 (General Data Protection Regulation)'
+    jurisdiction EU
+    language de
+    source eu-cellar
+    mode mirror
+    status ok
+    units 126
+    sha256 219040a03cea829785c9f9752dcab9bfcee7b3c012092f5da8567640a816116d
+    updated '2026-10-24T13:54:06.043Z'
+    sourceUrl 'https://eur-lex.europa.eu/legal-content/DE/TXT/?uri=CELEX:32016R0679'
+  eu/gdpr/el:
+    title 'Regulation (EU) 2016/679 (General Data Protection Regulation)'
+    jurisdiction EU
+    language el
+    source eu-cellar
+    mode mirror
+    status ok
+    units 126
+    sha256 daf6524b188bba0e7c20c05d1f1afdf8ebe3cb9d511833c559014adb7a7fc78c
+    updated '2026-10-24T13:54:06.043Z'
+    sourceUrl 'https://eur-lex.europa.eu/legal-content/EL/TXT/?uri=CELEX:32016R0679'
+  eu/gdpr/en:
+    title 'Regulation (EU) 2016/679 (General Data Protection Regulation)'
+    jurisdiction EU
+    language en
+    source eu-cellar
+    mode mirror
+    status ok
+    units 126
+    sha256 962539af03738bf552319ff4ce42d69e5f95a576307c4dfed7bf87e81b646b9d
+    updated '2026-10-24T13:54:06.043Z'
+    sourceUrl 'https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32016R0679'
+  eu/gdpr/es:
+    title 'Regulation (EU) 2016/679 (General Data Protection Regulation)'
+    jurisdiction EU
+    language es
+    source eu-cellar
+    mode mirror
+    status ok
+    units 126
+    sha256 7e6f4309e448e2532be3fd9464f3de7929a0e25b5c4c53239b320669b9bce33b
+    updated '2026-10-24T13:54:06.043Z'
+    sourceUrl 'https://eur-lex.europa.eu/legal-content/ES/TXT/?uri=CELEX:32016R0679'
+  eu/gdpr/et:
+    title 'Regulation (EU) 2016/679 (General Data Protection Regulation)'
+    jurisdiction EU
+    language et
+    source eu-cellar
+    mode mirror
+    status ok
+    units 126
+    sha256 bddb41e1155171ceb8a84659502ca6b463a623440495077d4b4a79015ef49650
+    updated '2026-10-24T13:54:06.043Z'
+    sourceUrl 'https://eur-lex.europa.eu/legal-content/ET/TXT/?uri=CELEX:32016R0679'
+  eu/gdpr/fi:
+    title 'Regulation (EU) 2016/679 (General Data Protection Regulation)'
+    jurisdiction EU
+    language fi
+    source eu-cellar
+    mode mirror
+    status ok
+    units 126
+    sha256 00f162b79add20099d7552bcf73d6d3ee656112ca2c6f66f76db6cb58dbfd576
+    updated '2026-10-24T13:54:06.043Z'
+    sourceUrl 'https://eur-lex.europa.eu/legal-content/FI/TXT/?uri=CELEX:32016R0679'
+  eu/gdpr/fr:
+    title 'Regulation (EU) 2016/679 (General Data Protection Regulation)'
+    jurisdiction EU
+    language fr
+    source eu-cellar
+    mode mirror
+    status ok
+    units 126
+    sha256 27a2248cf0cf7c79a3ec7eae30b6e871817230d9f577632fed915181642144c2
+    updated '2026-10-24T13:54:06.043Z'
+    sourceUrl 'https://eur-lex.europa.eu/legal-content/FR/TXT/?uri=CELEX:32016R0679'
+  eu/gdpr/ga:
+    title 'Regulation (EU) 2016/679 (General Data Protection Regulation)'
+    jurisdiction EU
+    language ga
+    source eu-cellar
+    mode mirror
+    status ok
+    units 126
+    sha256 7913fb84724c7b0d4d3cc55204232bcf45fec7118bfe7c12e323574e080a1c39
+    updated '2026-10-24T13:54:06.043Z'
+    sourceUrl 'https://eur-lex.europa.eu/legal-content/GA/TXT/?uri=CELEX:32016R0679'
+  eu/gdpr/hr:
+    title 'Regulation (EU) 2016/679 (General Data Protection Regulation)'
+    jurisdiction EU
+    language hr
+    source eu-cellar
+    mode mirror
+    status ok
+    units 126
+    sha256 a6a852388d0060534bae521e8449ee7cabfe2738e93f240afd4c6c6217808805
+    updated '2026-10-24T13:54:06.043Z'
+    sourceUrl 'https://eur-lex.europa.eu/legal-content/HR/TXT/?uri=CELEX:32016R0679'
+  eu/gdpr/hu:
+    title 'Regulation (EU) 2016/679 (General Data Protection Regulation)'
+    jurisdiction EU
+    language hu
+    source eu-cellar
+    mode mirror
+    status ok
+    units 126
+    sha256 e0ab0287e7c9331481bff28c0406fa4b616a55f849864d3b36f70acf6818e28b
+    updated '2026-10-24T13:54:06.043Z'
+    sourceUrl 'https://eur-lex.europa.eu/legal-content/HU/TXT/?uri=CELEX:32016R0679'
+  eu/gdpr/it:
+    title 'Regulation (EU) 2016/679 (General Data Protection Regulation)'
+    jurisdiction EU
+    language it
+    source eu-cellar
+    mode mirror
+    status ok
+    units 126
+    sha256 52dbf00e8092bbff225158d1ce09ed3e4a6d2712f2bb9d5c6bfdf1d1b61b9f0a
+    updated '2026-10-24T13:54:06.043Z'
+    sourceUrl 'https://eur-lex.europa.eu/legal-content/IT/TXT/?uri=CELEX:32016R0679'
+  eu/gdpr/lt:
+    title 'Regulation (EU) 2016/679 (General Data Protection Regulation)'
+    jurisdiction EU
+    language lt
+    source eu-cellar
+    mode mirror
+    status ok
+    units 126
+    sha256 34dab912a30940daf11b8f74ff1e045344c485d50c0b1158e563848112a68492
+    updated '2026-10-24T13:54:06.043Z'
+    sourceUrl 'https://eur-lex.europa.eu/legal-content/LT/TXT/?uri=CELEX:32016R0679'
+  eu/gdpr/lv:
+    title 'Regulation (EU) 2016/679 (General Data Protection Regulation)'
+    jurisdiction EU
+    language lv
+    source eu-cellar
+    mode mirror
+    status ok
+    units 126
+    sha256 ee20f9f40103d67771ca3bbe480036576d813db93d940239547b436e2c93d6ab
+    updated '2026-10-24T13:54:06.043Z'
+    sourceUrl 'https://eur-lex.europa.eu/legal-content/LV/TXT/?uri=CELEX:32016R0679'
+  eu/gdpr/mt:
+    title 'Regulation (EU) 2016/679 (General Data Protection Regulation)'
+    jurisdiction EU
+    language mt
+    source eu-cellar
+    mode mirror
+    status ok
+    units 126
+    sha256 905b18fdf30f8f26618b6cd75261f515f344d1d5cfcce74ef7e55c8483000538
+    updated '2026-10-24T13:54:06.043Z'
+    sourceUrl 'https://eur-lex.europa.eu/legal-content/MT/TXT/?uri=CELEX:32016R0679'
+  eu/gdpr/nl:
+    title 'Regulation (EU) 2016/679 (General Data Protection Regulation)'
+    jurisdiction EU
+    language nl
+    source eu-cellar
+    mode mirror
+    status ok
+    units 126
+    sha256 47da4f0697695d87067c6a2ed58659768adce12b0657da9efc51c3a8a305f37d
+    updated '2026-10-24T13:54:06.043Z'
+    sourceUrl 'https://eur-lex.europa.eu/legal-content/NL/TXT/?uri=CELEX:32016R0679'
+  eu/gdpr/pl:
+    title 'Regulation (EU) 2016/679 (General Data Protection Regulation)'
+    jurisdiction EU
+    language pl
+    source eu-cellar
+    mode mirror
+    status ok
+    units 126
+    sha256 4b44ea95933447cc42eb0c0bae62d27bda5855732ee929692b2e241775c78b2d
+    updated '2026-10-24T13:54:06.043Z'
+    sourceUrl 'https://eur-lex.europa.eu/legal-content/PL/TXT/?uri=CELEX:32016R0679'
+  eu/gdpr/pt:
+    title 'Regulation (EU) 2016/679 (General Data Protection Regulation)'
+    jurisdiction EU
+    language pt
+    source eu-cellar
+    mode mirror
+    status ok
+    units 126
+    sha256 0ebcc5c12d3d3cc61c680cd75415c813fbbb1326e392d277a91f84ce37989470
+    updated '2026-10-24T13:54:06.043Z'
+    sourceUrl 'https://eur-lex.europa.eu/legal-content/PT/TXT/?uri=CELEX:32016R0679'
+  eu/gdpr/ro:
+    title 'Regulation (EU) 2016/679 (General Data Protection Regulation)'
+    jurisdiction EU
+    language ro
+    source eu-cellar
+    mode mirror
+    status ok
+    units 126
+    sha256 bb84c6c725284518799070f4efb7278ea976d101d110baee51548cfd0d4b534c
+    updated '2026-10-24T13:54:06.043Z'
+    sourceUrl 'https://eur-lex.europa.eu/legal-content/RO/TXT/?uri=CELEX:32016R0679'
+  eu/gdpr/sk:
+    title 'Regulation (EU) 2016/679 (General Data Protection Regulation)'
+    jurisdiction EU
+    language sk
+    source eu-cellar
+    mode mirror
+    status ok
+    units 126
+    sha256 8bfbd4a3e83c85c63c04c1f7ce87b4b85fd5f1bb2265d181494f3c1c1609f398
+    updated '2026-10-24T13:54:06.043Z'
+    sourceUrl 'https://eur-lex.europa.eu/legal-content/SK/TXT/?uri=CELEX:32016R0679'
+  eu/gdpr/sl:
+    title 'Regulation (EU) 2016/679 (General Data Protection Regulation)'
+    jurisdiction EU
+    language sl
+    source eu-cellar
+    mode mirror
+    status ok
+    units 126
+    sha256 f658fc9155bedf31fdee18c6478bc16e6403c635c1a422068b5030668629e866
+    updated '2026-10-24T13:54:06.043Z'
+    sourceUrl 'https://eur-lex.europa.eu/legal-content/SL/TXT/?uri=CELEX:32016R0679'
+  eu/gdpr/sv:
+    title 'Regulation (EU) 2016/679 (General Data Protection Regulation)'
+    jurisdiction EU
+    language sv
+    source eu-cellar
+    mode mirror
+    status ok
+    units 126
+    sha256 b02b4aaea8d94fb47f8a602ab3cd0bbd2316727ea7e5642be6e081f2df1e6138
+    updated '2026-10-24T13:54:06.043Z'
+    sourceUrl 'https://eur-lex.europa.eu/legal-content/SV/TXT/?uri=CELEX:32016R0679'
+  us/cfr/t1/en:
+    title 'Title 1—General Provisions--Volume 1'
+    jurisdiction US
+    language en
+    source us-govinfo
+    mode mirror
+    status ok
+    units 367
+    version '11-Aug-2026 20:55'
+    sha256 82b20b348c0b4b19dc270bed494eb10fca01c5408b5f282ec91087aa34609306
+    updated '2026-10-24T13:54:06.043Z'
+    sourceUrl 'https://www.ecfr.gov/current/title-1'
+  us/cfr/t2/en:
+    title 'Title 2—Federal Financial Assistance--Volume 1'
+    jurisdiction US
+    language en
+    source us-govinfo
+    mode mirror
+    status ok
+    units 2273
+    version '19-Aug-2026 20:28'
+    sha256 118da26a4b4b55a0c8f85a611aa976d62e5dc155dc27cd679043e8b140df174d
+    updated '2026-10-24T13:54:06.043Z'
+    sourceUrl 'https://www.ecfr.gov/current/title-2'
+  ru/constitution/ru:
+    title 'Конституция Российской Федерации'
+    jurisdiction RU
+    language ru
+    source ru-kremlin
+    mode mirror
+    status ok
+    units 156
+    sha256 bc7188c87050aa9b8136fa9f0d5b2ba49903f67e256aaca07eb4ec108e9ef3df
+    updated '2026-10-24T12:43:29.010Z'
+    sourceUrl 'http://www.kremlin.ru/acts/constitution/item'
+  ru/civil-code-1/ru:
+    title 'Гражданский кодекс Российской Федерации. Часть первая (от 30.11.1994 № 51-ФЗ)'
+    jurisdiction RU
+    language ru
+    source ru-kremlin
+    mode mirror
+    status ok
+    units 662
+    sha256 a23df315d4b9ff1e3714bcc4326199cd9c0ffd9f2efde35eba694d926c950bda
+    updated '2026-10-24T12:43:29.010Z'
+    sourceUrl 'http://www.kremlin.ru/acts/bank/7279'
+  ru/administrative-offences-code/ru:
+    title 'Кодекс Российской Федерации об административных правонарушениях (от 30.12.2001 № 195-ФЗ)'
+    jurisdiction RU
+    language ru
+    source ru-kremlin
+    mode mirror
+    status ok
+    units 1168
+    sha256 9a9fb66a2941a5a68d125e5260b3937e16ecc1047c144937d5a6fdf50c2333df
+    updated '2026-10-24T12:43:29.010Z'
+    sourceUrl 'http://www.kremlin.ru/acts/bank/17704'
+  ru/criminal-procedure-code/ru:
+    title 'Уголовно-процессуальный кодекс Российской Федерации (от 18.12.2001 № 174-ФЗ)'
+    jurisdiction RU
+    language ru
+    source ru-kremlin
+    mode mirror
+    status ok
+    units 644
+    sha256 fcdc693a14953ac2f5cddb1efc9479c99549f75a9d2c7caf2dc16f1744e31e6c
+    updated '2026-10-24T12:43:29.010Z'
+    sourceUrl 'http://www.kremlin.ru/acts/bank/17643'
+  ru/tax-code-1/ru:
+    title 'Налоговый кодекс Российской Федерации. Часть первая (от 31.07.1998 № 146-ФЗ)'
+    jurisdiction RU
+    language ru
+    source ru-kremlin
+    mode mirror
+    status ok
+    units 323
+    sha256 a16eb3c9fa7b4bbc85d2bd6fdd164046b161c00a4674ac6699d7d5d657a40467
+    updated '2026-10-24T12:43:29.010Z'
+    sourceUrl 'http://www.kremlin.ru/acts/bank/12755'
+  ru/budget-code/ru:
+    title 'Бюджетный кодекс Российской Федерации (от 31.07.1998 № 145-ФЗ)'
+    jurisdiction RU
+    language ru
+    source ru-kremlin
+    mode mirror
+    status ok
+    units 493
+    sha256 48e31d21898b4bf523e14a2aa2ab6e52b46c0fdbacbecd3ca0f6a596d792743a
+    updated '2026-10-24T12:43:29.010Z'
+    sourceUrl 'http://www.kremlin.ru/acts/bank/12754'
+  ru/tax-code-2/ru:
+    title 'Налоговый кодекс Российской Федерации. Часть вторая (от 05.08.2000 № 117-ФЗ)'
+    jurisdiction RU
+    language ru
+    source ru-kremlin
+    mode mirror
+    status ok
+    units 569
+    sha256 3320e14ce45d69eb172603152d22e121e736abd8793f7f23bdc74d2976c43c6c
+    updated '2026-10-24T12:43:29.010Z'
+    sourceUrl 'http://www.kremlin.ru/acts/bank/15925'

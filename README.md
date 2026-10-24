@@ -6,6 +6,45 @@ This repository publishes the real test package
 `@link-foundation/example-package-name` so the template release pipeline is
 validated end to end with npm trusted publishing.
 
+## Laws Browser
+
+This repository is also a static laws browser for legal agents and people,
+published at <https://link-assistant.github.io/law/>. Every law it knows how
+to download is listed in [`data/registry.lino`](data/registry.lino) (Links
+Notation), together with the legal basis that decides how it may be shown:
+
+- **mirror**: the publisher's terms or the law itself allow copying, so CI
+  downloads the official text, converts it to the unified law model and
+  publishes it as `laws/<key>.json.gz` plus anchored static HTML, always
+  linking back to the original;
+- **dynamic** (live): copying is not allowed, so nothing is stored here; the
+  viewer downloads the original in your browser and converts it with the
+  same converter;
+- **blocked**: the source cannot be downloaded automatically (robots.txt,
+  bot protection or PDF-only texts); the catalog says why and links to it.
+
+The registry covers the United States (Constitution, U.S. Code, eCFR), the
+European Union (treaties and key regulations in all 24 official languages),
+China, India, Russia and Georgia. The conversion algorithm in `src/law/` is
+isomorphic: the same code runs in CI/CD, locally (`law` CLI) and in the
+browser bundle (`src/web/viewer.js`).
+
+```bash
+npm run law:validate                         # check data/registry.lino
+node bin/law.js list                         # documents and their modes
+node bin/law.js fetch ru/constitution/ru     # one law as unified JSON
+node bin/law.js probe                        # robots.txt, CORS, HTTP status
+node bin/law.js build --only us/,eu/gdpr/    # static site in build/site
+npx http-server build/site                   # browse it locally
+```
+
+The `laws.yml` workflow validates the registry on pull requests and builds a
+subset; on `main`, daily and on demand it rebuilds the full site, reuses the
+previously published copy when a source is temporarily unreachable, deploys
+GitHub Pages and commits the refreshed [`data/catalog.lino`](data/catalog.lino).
+The research behind the registry is in
+[`docs/case-studies/issue-1`](docs/case-studies/issue-1/README.md).
+
 ## Features
 
 - **Multi-runtime support**: Works with Bun, Node.js, and Deno
@@ -65,11 +104,16 @@ node bin/example-package-name.js add 2 3
 ├── .changeset/           # Changeset configuration
 ├── .github/workflows/    # GitHub Actions CI/CD
 ├── .husky/               # Git hooks (pre-commit)
+├── bin/law.js            # Laws CLI (validate, list, fetch, probe, build)
+├── data/registry.lino    # Laws, sources and legal basis (Links Notation)
+├── data/catalog.lino     # Build results, written by laws.yml
 ├── examples/             # Usage examples
 │   └── universal-app/    # React + GitHub Pages + Electron + Capacitor app
 ├── scripts/              # Build and release scripts
 ├── src/                  # Source code
 │   ├── index.js          # Main entry point
+│   ├── law/              # Isomorphic download and conversion pipeline
+│   ├── web/              # Browser viewer for mirrored and live laws
 │   └── index.d.ts        # TypeScript definitions
 ├── tests/                # Test files
 ├── .eslintrc.js          # ESLint configuration
@@ -212,17 +256,18 @@ The CI/CD pipeline is designed to handle concurrent PRs gracefully:
 
 This design decouples PR validation from the need to pull changes from the default branch, reducing conflicts and ensuring that even if CI/CD fails, all unpublished changesets will still get published when the error is resolved.
 
-### Deploying the example app
+### Deploying the laws site
 
-The `example-app.yml` workflow deploys the universal example app to GitHub
-Pages on every push to `main`. Before the first run on `main` in a new
-repository created from this template, open **Settings → Pages** and set
-**Source = GitHub Actions**. This is a one-time manual step and cannot be
-configured from a workflow because the Pages source defaults to
-_Deploy from a branch_. Without it, the `pages-deploy` job fails on
-`actions/deploy-pages` with `Get Pages site failed` /
-`Failed to create deployment`. After flipping the source, the workflow
-provisions the Pages site on its first run.
+GitHub Pages hosts the laws browser, deployed by the `laws.yml` workflow; the
+`example-app.yml` workflow builds the universal example app as a downloadable
+artifact. Before the first run on `main` in a new repository, open
+**Settings → Pages** and set **Source = GitHub Actions**. This is a one-time
+manual step and cannot be configured from a workflow because the Pages source
+defaults to _Deploy from a branch_. Without it, the `pages-deploy` job fails
+on `actions/deploy-pages` with `Get Pages site failed` /
+`Failed to create deployment`. Committing `data/catalog.lino` back to `main`
+needs the `RELEASE_PR_TOKEN` secret; without it the `catalog-commit` job
+fails with an explicit message.
 
 ### Auto-regenerated preview screenshots
 
@@ -354,6 +399,9 @@ Configured in `.prettierrc`:
 | `npm run example:desktop:package`    | Package the Electron desktop app locally              |
 | `npm run example:mobile:sync`        | Build and sync the app bundle into Capacitor projects |
 | `bun run changeset`                  | Create a new changeset                                |
+| `npm run law:validate`               | Validate `data/registry.lino`                         |
+| `npm run law:probe`                  | Probe every law source (robots.txt, CORS, status)     |
+| `npm run law:build`                  | Build the static laws site into `build/site`          |
 
 ## Contributing
 

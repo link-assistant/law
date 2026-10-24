@@ -1,0 +1,267 @@
+== https://uscode.house.gov/robots.txt
+200 text/plain 30
+User-agent: Slurp
+Disallow: /
+== https://uscode.house.gov/download/download.shtml
+500 text/html 75
+The page cannot be displayed because an internal server error has occurred.
+== https://www.govinfo.gov/robots.txt
+200 text/plain 5092
+#
+# robots.txt
+#
+User-agent: *
+# CSS, JS, Images
+Allow: /core/*.css$
+Allow: /core/*.css?
+Allow: /core/*.js$
+Allow: /core/*.js?
+Allow: /core/*.gif
+Allow: /core/*.jpg
+Allow: /core/*.jpeg
+Allow: /core/*.png
+Allow: /core/*.svg
+Allow: /profiles/*.css$
+Allow: /profiles/*.css?
+Allow: /profiles/*.js$
+Allow: /profiles/*.js?
+Allow: /profiles/*.gif
+Allow: /profiles/*.jpg
+Allow: /profiles/*.jpeg
+Allow: /profi
+== https://www.archives.gov/robots.txt
+200 text/plain 2189
+#
+# robots.txt
+#
+# This file is to prevent the crawling and indexing of certain parts
+# of your site by web crawlers and spiders run by sites like Yahoo!
+# and Google. By telling these "robots" where not to go on your site,
+# you save bandwidth and server resources.
+#
+# This file will be ignored unless it is at the root of your host:
+# Used:    http://example.com/robots.txt
+# Ignored: http://examp
+== https://eur-lex.europa.eu/robots.txt
+202 text/html; charset=UTF-8 0
+
+== https://publications.europa.eu/robots.txt
+301 text/html 134
+<html>
+<head><title>301 Moved Permanently</title></head>
+<body>
+<center><h1>301 Moved Permanently</h1></center>
+</body>
+</html>
+
+== https://flk.npc.gov.cn/robots.txt
+200 text/plain; charset=utf-8 206
+#禁止使用任何自动化工具、脚本、爬虫程序采集或复制网站数据
+User-agent: *
+Disallow: /
+User-agent: *
+Disallow: /private/
+Disallow: /temp/
+User-agent: BadBot
+Disallow: /admin/
+== https://www.npc.gov.cn/robots.txt
+000  0
+#禁止使用任何自动化工具、脚本、爬虫程序采集或复制网站数据
+User-agent: *
+Disallow: /
+User-agent: *
+Disallow: /private/
+Disallow: /temp/
+User-agent: BadBot
+Disallow: /admin/
+== https://www.gov.cn/robots.txt
+200 text/plain 811
+﻿User-agent: * 
+Allow: /1
+Sitemap:http://www.gov.cn/baidu.xml 
+Sitemap:http://www.gov.cn/google.xml
+Sitemap:http://www.gov.cn/bing.xml
+Sitemap:http://www.gov.cn/sogou.xml
+Disallow:/2016gov/
+Disallow:/2016shuju/
+Disallow:/2016guoqing/
+Disallow:/2016zhengce/
+Disallow:/2016hudong/
+Disallow:/2016fuwu/
+Disallow:/2016xinwen/
+Disallow:/premier/
+Disallow:/2016guowuyuan/
+Disallow:/2016publ
+== https://www.indiacode.nic.in/robots.txt
+403 text/html 390
+<HTML><HEAD>
+<TITLE>Access Denied</TITLE>
+</HEAD><BODY>
+<H1>Access Denied</H1>
+ 
+You don't have permission to access "http&#58;&#47;&#47;www&#46;indiacode&#46;nic&#46;in&#47;robots&#46;txt" on this server.<P>
+Reference&#32;&#35;18&#46;84cf3617&#46;1792839631&#46;debd6ad
+<P>https&#58;&#47;&#47;errors&#46;edgesuite&#46;net&#47;18&#46;84cf3617&#46;1792839631&#46;debd6ad</P>
+</BODY>
+</HTML>
+
+== https://indiacode.gov.in/robots.txt
+500 text/html; charset=utf-8 148
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Error</title>
+</head>
+<body>
+<pre>Internal Server Error</pre>
+</body>
+</html>
+
+== https://www.indiacode.gov.in/robots.txt
+000  0
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Error</title>
+</head>
+<body>
+<pre>Internal Server Error</pre>
+</body>
+</html>
+
+== https://legislative.gov.in/robots.txt
+302  0
+
+== http://publication.pravo.gov.ru/robots.txt
+200 text/plain 286
+User-agent: *
+Disallow: /Error
+Disallow: /Rss
+Disallow: /app
+Disallow: /js
+Disallow: /images
+Disallow: /lib
+Disallow: /css
+Disallow: /Svg
+Disallow: /webfonts
+Disallow: /HtmlConstructor
+Disallow: /Search
+Disallow: /File
+Sitemap: http://publication.pravo.gov.ru/sitemap.xml
+
+== http://pravo.gov.ru/robots.txt
+000  0
+User-agent: *
+Disallow: /Error
+Disallow: /Rss
+Disallow: /app
+Disallow: /js
+Disallow: /images
+Disallow: /lib
+Disallow: /css
+Disallow: /Svg
+Disallow: /webfonts
+Disallow: /HtmlConstructor
+Disallow: /Search
+Disallow: /File
+Sitemap: http://publication.pravo.gov.ru/sitemap.xml
+
+== https://matsne.gov.ge/robots.txt
+200 text/plain; charset=UTF-8 2212
+#### 555
+#
+# robots.txt
+#
+# This file is to prevent the crawling and indexing of certain parts
+# of your site by web crawlers and spiders run by sites like Yahoo!
+# and Google. By telling these "robots" where not to go on your site,
+# you save bandwidth and server resources.
+#
+# This file will be ignored unless it is at the root of your host:
+# Used:    http://example.com/robots.txt
+# Ignored: htt
+== https://www.ecfr.gov/robots.txt
+200 text/plain; charset=utf-8 435
+# See http://www.robotstxt.org/robotstxt.html for documentation on how to use the robots.txt file
+
+User-agent: *
+
+  Sitemap: https://www.ecfr.gov/sitemaps/sitemap.xml.gz
+  Disallow: /search
+  Disallow: /recent-changes
+  Disallow: /on/
+  Disallow: /compare/
+  Disallow: /my/
+  Disallow: /auth/ofr
+  Disallow: /auth/sign_in
+
+
+  # Don't index developer tool links
+  Disallow: /api/renderer/v1/content/
+ 
+== https://www.federalregister.gov/robots.txt
+200 text/plain; charset=utf-8 320
+  Sitemap: https://www.federalregister.gov/sitemaps/sitemap.xml.gz
+
+  User-Agent: *
+  Disallow: /documents/current
+  Disallow: /documents/email-a-friend
+
+  Disallow: /articles/search
+  Disallow: /documents/search
+  Disallow: /public-inspection/search
+  Disallow: /regulations/search
+
+  Disallow: /my/
+  Disallow: /auth/
+
+== https://api.govinfo.gov/
+301 text/html 162
+<html>
+<head><title>301 Moved Permanently</title></head>
+<body>
+<center><h1>301 Moved Permanently</h1></center>
+<hr><center>nginx</center>
+</body>
+</html>
+
+== https://www.consultant.ru/robots.txt
+200 text/plain; charset=utf-8 1176
+User-Agent: *
+Disallow: /sys/404/
+Disallow: /sys/ban_test/
+Disallow: /js/
+Disallow: /css/
+Disallow: /images/
+Disallow: /*search/
+Disallow: /obj/
+Disallow: /files/
+Disallow: /php/
+Disallow: /edu/auth/
+Disallow: /edu/rating*?v*
+Disallow: /edu/student/concurs/game_*/
+Disallow: /edu/center/training/*/theme*/minitest/
+Disallow: /edu/center/tts/
+Disallow: /online/base/
+Disallow: /index.h
+== https://constitution.kremlin.ru/robots.txt
+000  0
+User-Agent: *
+Disallow: /sys/404/
+Disallow: /sys/ban_test/
+Disallow: /js/
+Disallow: /css/
+Disallow: /images/
+Disallow: /*search/
+Disallow: /obj/
+Disallow: /files/
+Disallow: /php/
+Disallow: /edu/auth/
+Disallow: /edu/rating*?v*
+Disallow: /edu/student/concurs/game_*/
+Disallow: /edu/center/training/*/theme*/minitest/
+Disallow: /edu/center/tts/
+Disallow: /online/base/
+Disallow: /index.h
