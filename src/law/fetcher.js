@@ -4,7 +4,8 @@
  * - One queue per host with a minimum interval (default 1500 ms, raised to
  *   the robots.txt Crawl-delay when it is larger).
  * - robots.txt is honoured for automated runs (Node.js / CI), on every
- *   redirect target too. In the browser the user is the agent, so
+ *   redirect target too. A 5xx answer or an HTML page in place of
+ *   robots.txt disallows the whole host. In the browser the user is the agent, so
  *   `robots: false` is the default there. A Crawl-delay above one minute
  *   stops requests to that host; the delay is never shortened.
  * - Per-host intervals from the registry (`crawlDelay` on a source).
@@ -61,6 +62,7 @@ const REFUSALS = new Set([403, 429]);
 const MAX_INTERVAL_MS = 60000;
 const MAX_REDIRECTS = 5;
 const REDIRECTS = new Set([301, 302, 303, 307, 308]);
+const DISALLOW_ALL = 'User-agent: *\nDisallow: /';
 export const DEFAULT_MAX_BYTES = 512 * 1024 * 1024;
 
 const failure = (message, extra) => Object.assign(new Error(message), extra);
@@ -180,8 +182,17 @@ export class PoliteFetcher {
         this.request(`${origin}/robots.txt`, {})
       );
       // RFC 9309: 4xx means no restrictions; 5xx means assume full disallow.
+      // An HTML page served as robots.txt (a challenge or a homepage) says
+      // nothing about the rules, so it is read as a full disallow too.
+      const html = /html/i.test(response.headers.get('content-type') ?? '');
       if (response.status >= 500) {
-        text = 'User-agent: *\nDisallow: /';
+        text = DISALLOW_ALL;
+      } else if (response.ok && html) {
+        await response.body?.cancel();
+        this.log(
+          `robots.txt for ${origin} is an HTML page; treating the host as disallowed`
+        );
+        text = DISALLOW_ALL;
       } else if (response.ok) {
         text = await response.text();
       }

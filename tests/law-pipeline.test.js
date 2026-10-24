@@ -218,6 +218,34 @@ describe('PoliteFetcher safeguards', () => {
     ]);
   });
 
+  it('treats an HTML page served as robots.txt as a full disallow', async () => {
+    const calls = [];
+    const html = (status) => () =>
+      new Response(status === 202 ? null : '<html><body>Home</body></html>', {
+        status,
+        headers: { 'content-type': 'text/html; charset=UTF-8' },
+      });
+    const fetcher = fast(
+      {
+        'https://challenge.test/robots.txt': html(202),
+        'https://challenge.test/law': 'law',
+        'https://home.test/robots.txt': html(200),
+        'https://home.test/law': 'law',
+        'https://missing.test/robots.txt': html(404),
+        'https://missing.test/law': 'law',
+      },
+      calls
+    );
+    for (const host of ['challenge.test', 'home.test']) {
+      const error = await fetcher
+        .text(`https://${host}/law`)
+        .catch((caught) => caught);
+      expect(error.code).toBe('ROBOTS_DISALLOWED');
+    }
+    expect(calls.some((call) => call.url.endsWith('/law'))).toBe(false);
+    expect(await fetcher.text('https://missing.test/law')).toBe('law');
+  });
+
   it('limits response bodies to maxBytes', async () => {
     const fetcher = fast({
       'https://big.test/robots.txt': '',
