@@ -212,6 +212,28 @@ export function summarize(entries) {
   return summary;
 }
 
+/** Build report as Markdown (GitHub step summary). */
+export function buildMarkdown(entries) {
+  const text = (value) =>
+    String(value ?? '')
+      .replace(/\s+/gu, ' ')
+      .replaceAll('|', '\\|');
+  const counts = Object.entries(summarize(entries))
+    .map(([status, count]) => `${status}: ${count}`)
+    .join(', ');
+  const lines = [
+    `### Law build (${counts})`,
+    '',
+    '| Document | Status | Mode | Units | Error |',
+    '| --- | --- | --- | --- | --- |',
+    ...entries.map(
+      (entry) =>
+        `| ${text(entry.key)} | ${text(entry.status)} | ${text(entry.mode)} | ${text(entry.units ?? '—')} | ${text(entry.error)} |`
+    ),
+  ];
+  return `${lines.join('\n')}\n`;
+}
+
 /** Catalog as Links Notation, keyed by document key (stable fields only). */
 export function catalogLino(entries, previous = {}) {
   const records = {};

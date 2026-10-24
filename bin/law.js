@@ -3,7 +3,13 @@
  * law: download, convert and publish laws listed in data/registry.lino.
  * Run `law --help` for commands.
  */
-import { readFile, writeFile, copyFile, mkdir } from 'node:fs/promises';
+import {
+  appendFile,
+  copyFile,
+  mkdir,
+  readFile,
+  writeFile,
+} from 'node:fs/promises';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { parseArgs } from 'node:util';
@@ -14,10 +20,11 @@ import { buildTarget } from '../src/law/pipeline.js';
 import { probe, probeMarkdown } from '../src/law/probe.js';
 import {
   expandRegistry,
+  hostIntervals,
   parseRegistry,
   validateRegistry,
 } from '../src/law/registry.js';
-import { buildSite } from '../src/law/site.js';
+import { buildMarkdown, buildSite } from '../src/law/site.js';
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '..');
 
@@ -40,6 +47,7 @@ Options:
   --previous <url>    Previous site, reused when a download fails
   --catalog <path>    Links Notation catalog to update (data/catalog.lino)
   --proxy <url>       Proxy template ({url} = encoded target URL)
+  --min-ok <n>        Fail the build when fewer documents are published
   --format, --profile, --selector  Conversion options for convert
   --output <path>     Write JSON to a file (default: stdout)
   --help              Show this help`;
@@ -53,6 +61,7 @@ const options = {
   previous: { type: 'string', default: '' },
   catalog: { type: 'string', default: '' },
   proxy: { type: 'string', default: '' },
+  'min-ok': { type: 'string', default: '0' },
   format: { type: 'string', default: 'html' },
   profile: { type: 'string' },
   selector: { type: 'string' },
@@ -66,8 +75,13 @@ async function loadRegistry(values) {
   return parseRegistry(await readFile(values.registry, 'utf8'));
 }
 
-function fetcherFor(values, extra = {}) {
-  return new PoliteFetcher({ proxy: values.proxy, log, ...extra });
+function fetcherFor(values, registry, extra = {}) {
+  return new PoliteFetcher({
+    proxy: values.proxy,
+    hostIntervals: hostIntervals(registry),
+    log,
+    ...extra,
+  });
 }
 
 async function emit(values, value) {
@@ -138,7 +152,7 @@ const commands = {
     }
     const result = await buildTarget(
       { ...target, mode: target.mode === 'blocked' ? 'blocked' : 'mirror' },
-      { fetcher: fetcherFor(values), registry }
+      { fetcher: fetcherFor(values, registry), registry }
     );
     if (!result.document) {
       console.error(result.error);
@@ -151,7 +165,7 @@ const commands = {
   async probe(values) {
     const registry = await loadRegistry(values);
     const rows = await probe(registry, {
-      fetcher: fetcherFor(values, { retries: 1, timeoutMs: 30000 }),
+      fetcher: fetcherFor(values, registry, { retries: 1, timeoutMs: 30000 }),
       only: split(values.only),
     });
     const markdown = probeMarkdown(rows, { agent: ROBOTS_TOKEN });
@@ -163,10 +177,11 @@ const commands = {
 
   async build(values) {
     await mkdir(values.out, { recursive: true });
+    const registryText = await readFile(values.registry, 'utf8');
     const result = await buildSite({
-      registryText: await readFile(values.registry, 'utf8'),
+      registryText,
       outDir: values.out,
-      fetcher: fetcherFor(values),
+      fetcher: fetcherFor(values, parseRegistry(registryText)),
       only: split(values.only),
       limit: Number(values.limit),
       htmlBudget: Number(values['html-budget']) * 1024 * 1024,
@@ -175,9 +190,22 @@ const commands = {
       log,
     });
     await bundleViewer(values.out);
+    if (process.env.GITHUB_STEP_SUMMARY) {
+      await appendFile(
+        process.env.GITHUB_STEP_SUMMARY,
+        buildMarkdown(result.entries)
+      );
+    }
     console.log(
       JSON.stringify({ summary: result.summary, htmlBytes: result.htmlBytes })
     );
+    const published = (result.summary.ok ?? 0) + (result.summary.reused ?? 0);
+    if (published < Number(values['min-ok'])) {
+      console.error(
+        `Only ${published} document(s) published; expected at least ${values['min-ok']}`
+      );
+      return 1;
+    }
     return 0;
   },
 };

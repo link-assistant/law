@@ -14,6 +14,7 @@ import {
   shardUnits,
 } from '../src/law/render.js';
 import {
+  buildMarkdown,
   buildSite,
   catalogLino,
   plan,
@@ -216,6 +217,10 @@ describe('static site build', () => {
       expect(documents['ru/a/ru'].status).toBe('ok');
       expect(documents['ru/a/ru'].updated).toBe('2026-01-01T00:00:00Z');
       expect(documents['cn/c/zh'].mode).toBe('dynamic');
+      const report = buildMarkdown(result.entries);
+      expect(report).toContain('### Law build (dynamic: 1, ok: 1, reused: 1)');
+      expect(report).toContain('| ru/a/ru | ok | mirror | 2 |  |');
+      expect(report).toContain('| ru/b/ru | reused | mirror |');
     } finally {
       await rm(outDir, { recursive: true, force: true });
     }
