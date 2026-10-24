@@ -127,14 +127,14 @@ export class PoliteFetcher {
     return rules;
   }
 
-  request(url, init) {
+  request(url, { timeoutMs = this.timeoutMs, ...init }) {
     const headers = new Headers(init.headers ?? {});
     if (!isBrowser() && !headers.has('user-agent')) {
       headers.set('user-agent', USER_AGENT);
     }
     const signal =
       typeof AbortSignal.timeout === 'function'
-        ? AbortSignal.timeout(this.timeoutMs)
+        ? AbortSignal.timeout(timeoutMs)
         : undefined;
     return this.fetchImpl(applyProxy(url, this.proxy), {
       ...init,
@@ -146,7 +146,7 @@ export class PoliteFetcher {
   /**
    * Fetch a URL politely. Resolves with the `Response` (any status).
    * @param {string} url
-   * @param {RequestInit & { robots?: boolean }} [init]
+   * @param {RequestInit & { robots?: boolean, timeoutMs?: number }} [init]
    */
   async fetch(url, init = {}) {
     const { robots = this.robots, ...rest } = init;

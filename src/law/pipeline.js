@@ -145,14 +145,12 @@ async function* uscode(collection, { fetcher }) {
   }
 }
 
-const jsonHeaders = { accept: 'application/json' };
+const listing = { headers: { accept: 'application/json' }, timeoutMs: 30000 };
 
 /** Code of Federal Regulations: govinfo eCFR bulk data, one XML per title. */
 async function* govinfoEcfr(collection, { fetcher }) {
-  const listing = await fetcher.json(collection.index, {
-    headers: jsonHeaders,
-  });
-  const titles = listing.files
+  const index = await fetcher.json(collection.index, listing);
+  const titles = index.files
     .filter((item) => item.folder && Number.isFinite(item.cfrTitle))
     .sort((a, b) => a.cfrTitle - b.cfrTitle);
   for (const folder of titles) {
@@ -163,7 +161,7 @@ async function* govinfoEcfr(collection, { fetcher }) {
       sourceUrl: `https://www.ecfr.gov/current/title-${title}`,
       live: `https://www.ecfr.gov/api/versioner/v1/full/{date}/title-${title}.xml`,
       load: async () => {
-        const files = await fetcher.json(folder.link, { headers: jsonHeaders });
+        const files = await fetcher.json(folder.link, listing);
         const file = files.files.find((item) => item.fileExtension === 'xml');
         if (!file) {
           throw new Error(`No XML file in ${folder.link}`);
@@ -227,6 +225,14 @@ export async function buildTarget(target, { fetcher, registry, retrievedAt }) {
       fetched,
       { source: registry.sources[target.source], retrievedAt }
     );
+    const minUnits = Number(target.minUnits ?? 2);
+    if (document.units.length < minUnits) {
+      // A layout change at the publisher usually shows up as an almost
+      // empty conversion; fail so the previous copy is kept.
+      throw new Error(
+        `only ${document.units.length} unit(s) converted from ${target.pages?.[0] ?? target.key}; the publisher layout may have changed`
+      );
+    }
     return { target, document };
   } catch (error) {
     return { target, error: error.message, code: error.code ?? null };

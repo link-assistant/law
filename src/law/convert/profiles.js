@@ -27,6 +27,7 @@ const usConstitution = {
     },
     {
       kind: 'amendment',
+      reset: true,
       pattern: new RegExp(`^Amendment\\s+(?<num>[IVXLC]+)\\.?${tail}$`, 'iu'),
     },
     {

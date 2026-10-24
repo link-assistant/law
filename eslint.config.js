@@ -147,4 +147,16 @@ export default [
       'docs/case-studies/*/data/**',
     ],
   },
+  {
+    // Browser-only law viewer
+    files: ['src/web/**/*.js'],
+    languageOptions: {
+      globals: {
+        window: 'readonly',
+        document: 'readonly',
+        location: 'readonly',
+        localStorage: 'readonly',
+      },
+    },
+  },
 ];

@@ -46,11 +46,13 @@ describe('publishable package metadata', () => {
     );
   });
 
-  it('defines a globally installable CLI command', () => {
+  it('defines globally installable CLI commands', () => {
     expect(packageJson.bin).toEqual({
       'example-package-name': './bin/example-package-name.js',
+      law: './bin/law.js',
     });
     expect(existsSync('bin/example-package-name.js')).toBe(true);
+    expect(existsSync('bin/law.js')).toBe(true);
   });
 
   it('runs package functions through the CLI command', () => {
@@ -103,6 +105,7 @@ describe('publishable package metadata', () => {
     expect(packageJson.files).toEqual([
       'bin/',
       'src/',
+      'data/registry.lino',
       'CHANGELOG.md',
       'LICENSE',
       'README.md',

@@ -103,7 +103,8 @@ sources:
     legal:
       status conditional
       mirror not-allowed
-      basis 'Copyright Act, 1957, s. 52(1)(q)(ii): an Act of a Legislature may be reproduced only together with commentary or other original matter, so verbatim mirrors are avoided and texts are loaded on the client.'
+      basis 'Copyright Act, 1957, s. 52(1)(q)(ii): an Act of a Legislature may be reproduced only together with commentary or other original matter, so verbatim texts are not mirrored here; they are candidates for client-side loading only (see blocked).'
+      basisUrl 'https://www.indiacode.nic.in/handle/123456789/1367'
 documents:
   us/constitution:
     source us-archives
@@ -173,7 +174,7 @@ documents:
     format html
     profile ru
     selector '.lead--constitution, .read__internal_content'
-    url 'http://www.kremlin.ru/acts/constitution'
+    url 'http://www.kremlin.ru/acts/constitution/item'
     priority 1
   ru/civil-code-1:
     source ru-kremlin
@@ -236,8 +237,8 @@ collections:
     source us-olrc
     adapter uscode
     title 'United States Code'
-    index 'https://uscode.house.gov/download/download.shtml'
-    indexFallback 'https://uscode.house.gov/download.html'
+    index 'https://uscode.house.gov/download.html'
+    indexFallback 'https://uscode.house.gov/download/download.shtml'
     priority 2
   us/cfr:
     source us-govinfo

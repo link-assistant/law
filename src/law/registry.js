@@ -141,6 +141,7 @@ export function documentTargets(id, raw, sources) {
       headers: headersFor(entry, lang),
       sourceUrl: fillTemplate(entry.sourceUrl, lang) ?? url,
       priority: Number(entry.priority ?? 9),
+      minUnits: Number(entry.minUnits ?? 2),
       mode: modeOf(source, entry),
       blocked: source.blocked ?? entry.blocked ?? null,
       cors: source.cors === true,
