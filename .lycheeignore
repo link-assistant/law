@@ -24,3 +24,8 @@ https://medium\.com
 
 # Web Archive returns 502 to link checkers (bot protection)
 https://web\.archive\.org
+
+# The laws site is published by this repository's laws.yml workflow, so it
+# only exists after the first deploy from main (Settings → Pages → Source =
+# GitHub Actions); the pages-deploy job reports a missing Pages source.
+https://link-assistant\.github\.io/law
