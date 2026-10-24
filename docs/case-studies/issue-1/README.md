@@ -32,7 +32,14 @@ Raw evidence is in [`data/`](data/):
 | `govinfo-stall.txt`                                 | Intermittent 21 s govinfo bulk-data stalls that a retry fixes.                                                            |
 | `uscode-size.txt`                                   | Sizes of all 54 U.S. Code titles (178.9 MB XML, 40.8 MB gzip).                                                            |
 | `ecfr-sizes.txt`                                    | Sizes of all 50 eCFR titles from the versioner API (829.9 MB).                                                            |
+| `build-ru.txt`                                      | Build of the 7 RU codes from kremlin.ru: all ok, 4 015 units, 25.6 MB HTML, 119 min 47 s.                                 |
+| `build-without-ru.txt`                              | Build of every non-RU law (`--limit 2` per collection): 135 ok, 2 blocked, 0 errors, 85 MB HTML, 9 min 22 s.              |
 | `eu-languages-before.txt`, `eu-languages-after.txt` | Unit counts per EU act in all 24 languages before and after the multilingual converter fix.                               |
+
+The committed [`data/catalog.lino`](../../../data/catalog.lino) merges the
+catalogs of these two builds (`experiments/merge-catalogs.mjs`): 142 ok and 2
+blocked. The U.S. Code and the eCFR list only their first two titles until
+the first full build on `main` rewrites the catalog.
 
 Experiments that produced the data are in [`experiments/`](../../../experiments/).
 The runnable offline example is
@@ -159,10 +166,26 @@ robots token `link-assistant-law`.
   (`data/build-sample.txt`). Fix: `crawlDelay 6` for the source. After a
   failed attempt the fetcher doubles the host's interval (up to 60 s). After
   a 403 or 429 it marks the host refused and does not retry. Result of an
-  RU-only build with the fix: constitution 156 units, civil code part 1 662,
-  administrative offences code 1168, criminal procedure code 644, tax code
-  part 1 323, budget code and tax code part 2 (see the PR description for the
-  final numbers). One socket close was retried successfully.
+  RU-only build with the fix (`data/build-ru.txt`): all 7 codes ok,
+  constitution 156 units, civil code part 1 662, administrative offences code
+  1168, criminal procedure code 644, tax code part 1 323, budget code 493 and
+  tax code part 2 569, 25.6 MB of HTML, in 119 min 47 s. One socket close was
+  retried successfully.
+- **Build time** — kremlin.ru serves one page per 6 s, so the RU codes alone
+  take about two hours; everything else took 9 min 22 s with two titles per
+  collection (`data/build-without-ru.txt`). One after another, the full build
+  would come close to the 180-minute job limit. The builder therefore runs
+  one lane per source at the same time (each lane in plan order, and the
+  fetcher still spaces requests per host), and starts the bulk eCFR
+  collection (`priority 6`) after the other lanes, so it cannot use up the
+  HTML budget first. The full build then takes about as long as its slowest
+  source plus the eCFR.
+- **Same result in the browser** — the viewer converted the Chinese
+  constitution live from www.gov.cn (the only source that sends CORS
+  headers) into 157 units with source SHA-256 `c529b6c7…5ab98`, exactly what
+  the Node build stored in its catalog (`docs/screenshots/law-viewer-live.png`).
+  For EUR-Lex, which sends no CORS header, the viewer explains that a CORS
+  proxy is needed (see Settings) and keeps the mirrored copy.
 - **Stalls (govinfo)** — `data/govinfo-stall.txt`: two requests timed out
   after about 21.5 s; a retry succeeded. Fix: retries with backoff, and the
   `--previous` site is reused when a refresh fails.
