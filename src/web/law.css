@@ -80,6 +80,18 @@ small,
   width: 100%;
   border-collapse: collapse;
   font-size: 0.95rem;
+  table-layout: fixed;
+  overflow-wrap: anywhere;
+}
+/* Same column widths in every jurisdiction section. */
+.catalog th:nth-child(1) {
+  width: 42%;
+}
+.catalog th:nth-child(2) {
+  width: 8%;
+}
+.catalog th:nth-child(3) {
+  width: 30%;
 }
 .catalog th,
 .catalog td {
