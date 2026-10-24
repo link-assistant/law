@@ -110,7 +110,9 @@ describe('structure profiles', () => {
     expect(georgian[0].kind).toBe('article');
     expect(georgian[0].heading).toBe('სახელმწიფო');
   });
+});
 
+describe('Official Journal and Indian profiles', () => {
   it('converts Official Journal articles in any language', () => {
     const units = withProfile(
       'eu-oj',
@@ -121,6 +123,73 @@ describe('structure profiles', () => {
       ['article-1', 'Subject-matter'],
       ['article-2', null],
       ['annex-1', null],
+    ]);
+  });
+
+  it('reads Official Journal numbering of all 24 languages', () => {
+    const art = (text) => `<p class="oj-ti-art">${text}</p><p>…</p>`;
+    const section = (text) => `<p class="oj-ti-section-1">${text}</p>`;
+    const annex = (text) => `<p class="oj-doc-ti">${text}</p><p>…</p>`;
+    const units = withProfile(
+      'eu-oj',
+      `<body>${[
+        section('I. FEJEZET'),
+        art('1 artikla'),
+        art('2. cikk'),
+        art('Članak 3.'),
+        art('Artigo 4.o'),
+        art('Article premier'),
+        art('Άρθρο11'),
+        section('ΤΙΤΛΟΣ ΙV'),
+        art('9 a artikla'),
+        art('Article 9 ter'),
+        art('Artigo 9.o –C'),
+        art('Член 9г'),
+        art('9e. cikk'),
+        art('Article 23f (1)'),
+        art('Article 37 (ex Article 38)'),
+        section('IV.A SADAĻA'),
+        section('III ANTRAŠTINĖ DALIS'),
+        annex('III PIELIKUMS'),
+        annex('ΠΑΡΑΡΤΗΜΑ ΙΙ'),
+        annex('PRILOG IV.'),
+      ].join('')}</body>`
+    );
+    expect(units.map((item) => [item.id, item.kind])).toEqual([
+      ['fejezet-1', 'fejezet'],
+      ['article-1', 'article'],
+      ['article-2', 'article'],
+      ['article-3', 'article'],
+      ['article-4', 'article'],
+      ['article-1', 'article'],
+      ['article-11', 'article'],
+      ['fejezet-1-τιτλος-4', 'τιτλος'],
+      ['article-9a', 'article'],
+      ['article-9b', 'article'],
+      ['article-9c', 'article'],
+      ['article-9d', 'article'],
+      ['article-9e', 'article'],
+      ['article-23f', 'article'],
+      ['article-37', 'article'],
+      ['fejezet-1-τιτλος-4-sadaļa-4a', 'sadaļa'],
+      ['fejezet-1-τιτλος-4-sadaļa-4a-antraštinė-dalis-3', 'antraštinė-dalis'],
+      ['annex-3', 'annex'],
+      ['annex-2', 'annex'],
+      ['annex-4', 'annex'],
+    ]);
+  });
+
+  it('tells the label of ordinal-word headings by how often it repeats', () => {
+    const section = (text) => `<p class="oj-ti-section-1">${text}</p>`;
+    const headings = (lines) =>
+      ids(withProfile('eu-oj', `<body>${lines.map(section).join('')}</body>`));
+    expect(headings(['ERSTER TEIL', 'ZWEITER TEIL'])).toEqual([
+      'teil-erster',
+      'teil-zweiter',
+    ]);
+    expect(headings(['PARTEA A DOUA', 'PARTEA A TREIA'])).toEqual([
+      'partea-a-doua',
+      'partea-a-treia',
     ]);
   });
 

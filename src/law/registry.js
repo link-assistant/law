@@ -11,7 +11,7 @@ export const FORMATS = ['html', 'uslm', 'ecfr', 'pdf'];
 export const CONVERTIBLE = new Set(['html', 'uslm', 'ecfr']);
 export const JURISDICTIONS = ['US', 'EU', 'CN', 'IN', 'RU', 'GE'];
 
-/** ISO 639-1 → ISO 639-2/B codes used by the EU Publications Office. */
+/** ISO 639-1 → three-letter codes of the EU Publications Office language authority (ISO 639-2/T). */
 const ISO3 = {
   bg: 'bul',
   cs: 'ces',

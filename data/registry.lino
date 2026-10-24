@@ -119,7 +119,7 @@ documents:
   eu/treaties:
     source eu-cellar
     title 'Consolidated versions of the Treaty on European Union and the Treaty on the Functioning of the European Union, Protocols, Declarations and the Charter of Fundamental Rights (OJ C 202, 7.6.2016)'
-    languages en de fr
+    languages bg cs da de el en es et fi fr ga hr hu it lt lv mt nl pl pt ro sk sl sv
     format html
     profile eu-oj-issue
     selector body
@@ -131,25 +131,25 @@ documents:
     source eu-cellar
     title 'Regulation (EU) 2016/679 (General Data Protection Regulation)'
     celex 32016R0679
-    languages en de fr
+    languages bg cs da de el en es et fi fr ga hr hu it lt lv mt nl pl pt ro sk sl sv
     priority 3
   eu/ai-act:
     source eu-cellar
     title 'Regulation (EU) 2024/1689 (Artificial Intelligence Act)'
     celex 32024R1689
-    languages en de fr
+    languages bg cs da de el en es et fi fr ga hr hu it lt lv mt nl pl pt ro sk sl sv
     priority 3
   eu/dsa:
     source eu-cellar
     title 'Regulation (EU) 2022/2065 (Digital Services Act)'
     celex 32022R2065
-    languages en de fr
+    languages bg cs da de el en es et fi fr ga hr hu it lt lv mt nl pl pt ro sk sl sv
     priority 3
   eu/dma:
     source eu-cellar
     title 'Regulation (EU) 2022/1925 (Digital Markets Act)'
     celex 32022R1925
-    languages en de fr
+    languages bg cs da de el en es et fi fr ga hr hu it lt lv mt nl pl pt ro sk sl sv
     priority 3
   cn/constitution:
     source cn-govcn

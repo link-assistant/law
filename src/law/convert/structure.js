@@ -6,7 +6,16 @@ import { unit } from '../model.js';
 import { cleanLine, normalizeNumber, slug } from '../text.js';
 import { getProfile } from './profiles.js';
 
-function matchRule(profile, block) {
+/** Groups from a rule's `parse` function or its `pattern`, or null. */
+function ruleGroups(rule, text, context) {
+  if (rule.parse) {
+    return rule.parse(text, context);
+  }
+  const match = text.match(rule.pattern);
+  return match ? (match.groups ?? {}) : null;
+}
+
+function matchRule(profile, block, context) {
   for (const rule of profile.rules) {
     if (rule.className && !rule.className.test(block.className)) {
       continue;
@@ -14,12 +23,12 @@ function matchRule(profile, block) {
     if (rule.maxLength && block.text.length > rule.maxLength) {
       continue;
     }
-    if (!rule.pattern) {
+    if (!rule.pattern && !rule.parse) {
       return { rule, groups: {} };
     }
-    const match = block.text.match(rule.pattern);
-    if (match) {
-      return { rule, groups: match.groups ?? {} };
+    const groups = ruleGroups(rule, block.text, context);
+    if (groups) {
+      return { rule, groups };
     }
   }
   return null;
@@ -150,12 +159,27 @@ function ordinalFor(rule, counters) {
   return String(counters.get(rule));
 }
 
+/** Leaves take the caller's kind when one is given. */
+const unitKind = (rule, groups, leafKind) =>
+  rule.leaf && leafKind ? leafKind : kindOf(rule, groups);
+
+/** Text before the first unit becomes a leading `front` unit. */
+function withFront(units, front) {
+  if (!front.text) {
+    return units;
+  }
+  const head = unit({ id: 'front', kind: 'front', level: 0 });
+  return [{ ...head, text: front.text }, ...units];
+}
+
 function runProfile(blocks, profile, { leafKind, contents }) {
   const units = [];
   const front = { text: '' };
   const skipper = contentsSkipper(profile, contents);
   const namespaceKind = profile.rules.find((rule) => rule.namespace)?.kind;
   const counters = new Map();
+  // Document-wide facts a profile's `parse` rules may rely on.
+  const context = profile.prepare?.(blocks) ?? null;
   const state = { current: null, lastRule: null };
   let stack = [];
   for (let index = 0; index < blocks.length; index += 1) {
@@ -164,7 +188,7 @@ function runProfile(blocks, profile, { leafKind, contents }) {
     if (isChrome(profile, block, text) || skipper.skip(text)) {
       continue;
     }
-    const matched = matchRule(profile, { ...block, text });
+    const matched = matchRule(profile, { ...block, text }, context);
     const lastRule = state.lastRule;
     state.lastRule = matched?.rule ?? null;
     if (!matched) {
@@ -175,7 +199,7 @@ function runProfile(blocks, profile, { leafKind, contents }) {
     if (mergeHeading({ ...state, lastRule }, rule, groups)) {
       continue;
     }
-    const kind = rule.leaf && leafKind ? leafKind : kindOf(rule, groups);
+    const kind = unitKind(rule, groups, leafKind);
     const { heading, consumed } = takeHeading(rule, groups, blocks[index + 1]);
     index += consumed ? 1 : 0;
     stack = openStack(stack, rule, kind);
@@ -195,13 +219,7 @@ function runProfile(blocks, profile, { leafKind, contents }) {
       stack.push(current);
     }
   }
-  if (front.text) {
-    units.unshift({
-      ...unit({ id: 'front', kind: 'front', level: 0 }),
-      text: front.text,
-    });
-  }
-  return { units, unfinished: skipper.skipping };
+  return { units: withFront(units, front), unfinished: skipper.skipping };
 }
 
 /**

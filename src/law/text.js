@@ -130,12 +130,18 @@ const englishOrdinals = [
   'twenty',
 ];
 
-/** Convert an ordinal word (первая, второй, One, Twelve) to an integer. */
+// French numbers a first article "Article premier".
+const firstWords = new Set(['premier', 'première']);
+
+/** Convert an ordinal word (первая, второй, One, premier) to an integer. */
 export function fromOrdinalWord(text) {
   const value = String(text).toLowerCase();
   const english = englishOrdinals.indexOf(value);
   if (english >= 0) {
     return english + 1;
+  }
+  if (firstWords.has(value)) {
+    return 1;
   }
   if (!/^[а-яё]+$/u.test(value)) {
     return null;
@@ -155,7 +161,8 @@ export function normalizeNumber(text) {
   if (chinese !== null && !/^\d+$/u.test(value)) {
     return String(chinese);
   }
-  const roman = fromRoman(value);
+  // Greek texts write Roman numerals with Greek capitals (Ι, Χ).
+  const roman = fromRoman(value.replace(/Ι/gu, 'I').replace(/Χ/gu, 'X'));
   if (roman !== null && value.length > 0 && !/^[a-z]$/u.test(value)) {
     return String(roman);
   }

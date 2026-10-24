@@ -12,8 +12,11 @@
  * `namespace` units (numbered by occurrence) prefix every leaf below them,
  * `merge` joins consecutive matches of one rule into a single heading,
  * `reset` closes every open level, `skipText`/`skipClass` drop page chrome
- * and `stopAt` marks a table of contents to skip.
+ * and `stopAt` marks a table of contents to skip. A rule may `parse` the
+ * line itself (returning the groups or null), given what the profile's
+ * `prepare` collected from all blocks of the document.
  */
+import { cleanLine, fromRoman } from '../text.js';
 
 const dash = '\\s*(?:[–—-]|\\.)?\\s*';
 const tail = `(?:${dash}(?<heading>.*))?`;
@@ -42,26 +45,170 @@ const usConstitution = {
 
 const ojClass = (name) => new RegExp(`(?:^|\\s)(?:oj-)?${name}(?:\\s|$)`, 'u');
 
+/** "ANNEX" in the 24 official EU languages, as printed in OJ titles. */
+const annexWords = [
+  'ANNEX',
+  'ANNEXE',
+  'ANHANG',
+  'ALLEGATO',
+  'BIJLAGE',
+  'ANEXO',
+  'ANEXA',
+  'ANEXĂ',
+  'ANNESS',
+  'ZAŁĄCZNIK',
+  'ПРИЛОЖЕНИЕ',
+  'PŘÍLOHA',
+  'PRÍLOHA',
+  'PRILOG',
+  'PRILOGA',
+  'BILAG',
+  'BILAGA',
+  'LIITE',
+  'LISA',
+  'PIELIKUMS',
+  'PRIEDAS',
+  'MELLÉKLET',
+  'ΠΑΡΑΡΤΗΜΑ',
+  'IARSCRÍBHINN',
+].join('|');
+// Greek texts write Roman numerals with Greek capitals (Ι, Χ) mixed with V.
+const ojNumeral = '[IVXLCΙΧ]+|\\d+';
+const toLatin = (text) => text.replace(/Ι/gu, 'I').replace(/Χ/gu, 'X');
+
+// Inserted provisions: "62a", "62 a", "62.a", "62.o-A", "62 bis", "62 ter".
+const latinOrdinals = [
+  'bis',
+  'ter',
+  'quater',
+  'quinquies',
+  'sexies',
+  'septies',
+  'octies',
+  'nonies',
+  'decies',
+];
+// Bulgarian and Greek texts letter them in their own alphabet ("62б", "62β").
+const alphabets = [
+  'abcdefghijklmnopqrstuvwxyz',
+  'абвгдежзийклмнопрстуфхцчшщъьюя',
+  'αβγδεζηθικλμνξοπρστυφχψω',
+];
+const suffix = `(?:${latinOrdinals.join('|')}|\\p{L})(?!\\p{L})`;
+const suffixLetter = (value) => {
+  if (!value) {
+    return '';
+  }
+  const letter = value.toLowerCase();
+  const ordinal = latinOrdinals.indexOf(letter);
+  const at =
+    ordinal >= 0
+      ? ordinal
+      : alphabets.map((list) => list.indexOf(letter)).find((i) => i >= 0);
+  return at >= 0 ? alphabets[0][at] : letter;
+};
+const separateOrdinal = new RegExp(
+  `\\s+(${latinOrdinals.join('|')})(?=\\s|$)`,
+  'gu'
+);
+const headingNumeral = new RegExp(
+  `^(?<value>\\d+|(?=[IVXLCDM])M{0,4}(?:CM|CD|D?C{0,3})(?:XC|XL|L?X{0,3})(?:IX|IV|V?I{0,3}))(?:[.-]?(?<suffix>${suffix}))?\\.?$`,
+  'u'
+);
+
+/** "IV", "4.", "IV.a", "ΙV": the number as written in ids ("4a"), or null. */
+function numeralOf(word) {
+  const match = toLatin(word).match(headingNumeral);
+  if (!match) {
+    return null;
+  }
+  const { value } = match.groups;
+  const number = /^\d+$/u.test(value) ? value : String(fromRoman(value));
+  return `${number}${suffixLetter(match.groups.suffix)}`;
+}
+
+/** How often each word starts or ends an OJ section heading of a document. */
+function headingWords(blocks) {
+  const counts = new Map();
+  for (const block of blocks) {
+    if (ojClass('ti-section-1').test(block.className ?? '')) {
+      for (const word of cleanLine(block.text).toUpperCase().split(' ')) {
+        counts.set(word, (counts.get(word) ?? 0) + 1);
+      }
+    }
+  }
+  return counts;
+}
+
+/**
+ * Split an OJ section heading into label and number in any language:
+ * "CHAPTER I", "I. FEJEZET", "III ANTRAŠTINĖ DALIS", "GLAVA IV.a". Ordinal
+ * words ("PART ONE", "ERSTER TEIL", "PARTEA A DOUA") carry no numeral; there
+ * the label is the edge word repeated by more headings of the document.
+ */
+function ojHeading(text, counts) {
+  const words = text.replace(separateOrdinal, '$1').split(' ');
+  if (words.length < 2) {
+    return null;
+  }
+  const last = words.length - 1;
+  const at = [0, last].find((index) => numeralOf(words[index]) !== null);
+  if (at !== undefined) {
+    return {
+      label: words.filter((_, index) => index !== at).join(' '),
+      num: numeralOf(words[at]),
+    };
+  }
+  // The label is the first or the last word, whichever more headings share.
+  const count = (word) => counts?.get(word.toUpperCase()) ?? 0;
+  return count(words[last]) > count(words[0])
+    ? { label: words[last], num: words.slice(0, last).join(' ') }
+    : { label: words[0], num: words.slice(1).join(' ') };
+}
+
+// The number may come first ("1 artikla", "1. cikk"), carry an ordinal mark
+// ("Artigo 1.o"), a footnote reference ("Article 23a (1)") or the former
+// number ("Article 37 (ex Article 38)").
+const ojArticleTitle = new RegExp(
+  `^(?:\\p{L}+\\s*)?(?<num>\\d+|premier)\\.?[oº°]?\\s*[-–]?\\s*(?<suffix>${suffix})?\\.?(?:\\s+\\p{L}+)?(?:\\s*\\([^)]*\\))?$`,
+  'u'
+);
+
+function ojArticle(text) {
+  const match = text.match(ojArticleTitle);
+  return match
+    ? { num: `${match.groups.num}${suffixLetter(match.groups.suffix)}` }
+    : null;
+}
+
 const ojRules = [
   {
     kind: 'annex',
     reset: true,
     className: ojClass('doc-ti'),
-    pattern:
-      /^(?<label>ANNEX|ANHANG|ANNEXE|ALLEGATO|BIJLAGE|ANEXO|ZAŁĄCZNIK)\s*(?<num>[IVXLC\d]*)$/u,
+    pattern: new RegExp(
+      `^(?:${annexWords})(?:\\s+(?<num>${ojNumeral})\\.?)?$`,
+      'u'
+    ),
+  },
+  {
+    kind: 'annex',
+    reset: true,
+    className: ojClass('doc-ti'),
+    pattern: new RegExp(`^(?<num>${ojNumeral})\\.?\\s+(?:${annexWords})$`, 'u'),
   },
   {
     kind: 'heading',
     className: ojClass('ti-section-1'),
     kindFromLabel: true,
-    pattern: /^(?<label>\S+)\s+(?<num>\S+)$/u,
+    parse: ojHeading,
     headingNext: ojClass('ti-section-2'),
   },
   {
     kind: 'article',
     leaf: true,
     className: ojClass('ti-art'),
-    pattern: /^(?<label>\S+)\s+(?<num>\d+[a-z]*)$/u,
+    parse: ojArticle,
     headingNext: ojClass('sti-art'),
   },
 ];
@@ -69,7 +216,11 @@ const ojRules = [
 const ojSkip = /(?:^|\s)(?:oj-)?(?:hd-|note|separator|doc-end)/u;
 
 /** Official Journal of the EU (Cellar/EUR-Lex XHTML), any language. */
-const euOfficialJournal = { rules: ojRules, skipClass: ojSkip };
+const euOfficialJournal = {
+  rules: ojRules,
+  skipClass: ojSkip,
+  prepare: headingWords,
+};
 
 /**
  * A whole Official Journal issue holding several acts (e.g. OJ C 202/2016:
@@ -78,7 +229,7 @@ const euOfficialJournal = { rules: ojRules, skipClass: ojSkip };
  */
 const euOfficialJournalIssue = {
   rules: [
-    ojRules[0],
+    ...ojRules.slice(0, 2),
     {
       kind: 'document',
       reset: true,
@@ -87,9 +238,10 @@ const euOfficialJournalIssue = {
       className: ojClass('doc-ti'),
       pattern: /^(?<heading>.+)$/u,
     },
-    ...ojRules.slice(1),
+    ...ojRules.slice(2),
   ],
   skipClass: ojSkip,
+  prepare: headingWords,
 };
 
 const chineseNumber = '[零〇一二两三四五六七八九十百千\\d]+';
